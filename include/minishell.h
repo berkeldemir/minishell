@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/06 11:41:27 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:45:23 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,18 @@
 
 typedef struct s_data
 {
-	char *input;
-	char **args;
-}   t_data;
+	char	*input;
+	char	**args;
+}				t_data;
 
-void wait_input(t_data *data);
+//-------- MAIN FUNCS ---------
+void	wait_input(t_data *data);
+int		parser(t_data *data);
+
+//-------- PARSER UTILS --------
+char	*ft_strndup(char *str, size_t n);
+int		is_space(char c);
+int		word_len(char *str);
+int		count_words(char *str);
 
 #endif

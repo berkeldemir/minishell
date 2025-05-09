@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+         #
+#    By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/06 11:29:21 by beldemir          #+#    #+#              #
-#    Updated: 2025/05/06 11:32:39 by beldemir         ###   ########.fr        #
+#    Updated: 2025/05/09 18:41:21 by tmidik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = minishell
 CC = cc
 CFLAGS = #-Wall -Wextra -Werror
 READLINEFLAGS = -lreadline
-SRCS = src/main.c src/utils/wait_input.c
+SRCS =	src/main.c src/utils/wait_input.c \
+	src/parser/parser.c src/parser/parser_utils.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

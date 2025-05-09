@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/06 11:41:23 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:47:45 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static void	prompt(t_data *data)
 	}
 }
 
-void wait_input(t_data *data)
+void	wait_input(t_data *data)
 {
-    prompt(data);
-    
+	prompt(data);
 }
