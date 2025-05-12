@@ -6,13 +6,13 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/05/12 18:42:50 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:55:55 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	is_space(char c)
+int	is_space(char c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
 		return (1);
