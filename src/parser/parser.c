@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/12 12:54:46 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/05/12 18:44:13 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	handle_vars_and_quotes(t_data *data)
+{
+	char	*new;
+
+	while (data->input)
+	handle_vars(data);
+}
 
 int	parser(t_data *data)
 {
@@ -20,8 +28,8 @@ int	parser(t_data *data)
 
 	i = 0;
 	arg_i = 0;
-	data->arg_count = count_words(data->input);
-	data->args = malloc(sizeof(char *) * (data->arg_count + 1));
+	data->arg_count = count_args(data->input);
+	data->args = (char **)malloc(sizeof(char *) * (data->arg_count + 1));
 	if (!data->args)
 		return (1);
 	while (data->input[i])
@@ -37,5 +45,5 @@ int	parser(t_data *data)
 		}
 	}
 	data->args[arg_i] = NULL;
-	return (0);
+	return (handle_vars_and_quotes(data));
 }

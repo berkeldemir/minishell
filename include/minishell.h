@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/12 12:54:26 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/05/12 15:20:09 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 # define BLUE "\033[38;2;8;99;117m"
 # define ORANGE "\033[38;2;255;202;58m"
 # define DEFAULT "\033[0m"
+
+typedef enum e_bool
+{
+	FALSE,
+	TRUE,
+}	t_bool;
 
 typedef struct s_data
 {

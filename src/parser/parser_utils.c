@@ -3,66 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/05/12 13:03:59 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/05/12 18:42:50 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*ft_strndup(char *str, size_t n)
-{
-	char	*dest;
-	int		i;
-
-	i = 0;
-	dest = (char *)malloc(sizeof(char) * (n + 1));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (str[i] != '\0' && i < n)
-	{
-		dest[i] = str[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-int	is_space(char c)
+static int	is_space(char c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
 		return (1);
 	return (0);
 }
 
-int	word_len(char *str)
+static int	count_handle_quote(char *str, int *count)
 {
-	int	len;
+	int		i;
+	char	quote;
+	int		quote_count;
 
-	len = 0;
-	while (str[len] && !is_space(str[len]))
-		len++;
-	return (len);
+	i = 0;
+	quote = str[i];
+	quote_count = 1;
+	while (!((str[++i] == quote) && (quote_count % 2 == 1) && \
+	(str[i + 1] == '\0' || str[i + 1] == ' ')))
+	{	
+		if (str[i] == quote)
+			quote_count++;
+		if (str[i] == '\0')
+			return (0);
+	}
+	*count++;
+	return (++i);
 }
 
-int	count_words(char *str)
+int	count_args(char *str)
 {
-	int	count = 0;
-	int	i = 0;
+	int		i;
+	int		count;
 
-	while (str[i])
+	i = -1;
+	count = 0;
+	while (str[++i])
 	{
-		while (str[i] && is_space(str[i]))
+		while (is_space(str[i]))
 			i++;
-		if (str[i] && !is_space(str[i]))
+		if (str[i] && str[i] != '\'' && str[i] != '\"')
 		{
 			count++;
-			while (str[i] && !is_space(str[i]))
+			while (str[i] && !is_space(str[i]) && \
+			str[i] != '\"' && str[i] != '\'')
 				i++;
 		}
+		if (str[i] == '\"' || str[i] == '\'')
+			i += count_handle_quote(&str[i], &count);
+		if (str[i] == '\"' || str[i] == '\'')
+			exit_freely();
 	}
 	return (count);
 }
