@@ -6,23 +6,22 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/09 18:47:22 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/05/12 12:54:46 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	lexer(t_data *data)
+int	parser(t_data *data)
 {
 	int		i;
 	int		arg_i;
 	int		len;
-	int		word_count;
 
 	i = 0;
 	arg_i = 0;
-	word_count = count_words(data->input);
-	data->args = malloc(sizeof(char *) * (word_count + 1));
+	data->arg_count = count_words(data->input);
+	data->args = malloc(sizeof(char *) * (data->arg_count + 1));
 	if (!data->args)
 		return (1);
 	while (data->input[i])
@@ -38,11 +37,5 @@ static int	lexer(t_data *data)
 		}
 	}
 	data->args[arg_i] = NULL;
-	return (0);
-}
-
-int	parser(t_data *data)
-{
-	lexer(data);
 	return (0);
 }

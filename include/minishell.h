@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/09 18:45:23 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/05/12 12:54:26 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_data
 {
 	char	*input;
 	char	**args;
+	int		arg_count;
 }				t_data;
 
 //-------- MAIN FUNCS ---------

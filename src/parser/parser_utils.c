@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/05/09 18:47:03 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/05/12 13:03:59 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,17 @@ int	word_len(char *str)
 
 int	count_words(char *str)
 {
-	int	count;
-	int	i;
+	int	count = 0;
+	int	i = 0;
 
-	count = 0;
-	i = 0;
 	while (str[i])
 	{
-		if (str[i] && is_space(str[i]))
+		while (str[i] && is_space(str[i]))
 			i++;
 		if (str[i] && !is_space(str[i]))
 		{
 			count++;
-			while (!is_space(str[i]))
+			while (str[i] && !is_space(str[i]))
 				i++;
 		}
 	}
