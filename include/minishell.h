@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/12 15:20:09 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:56:00 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_data
 {
 	char	*input;
 	char	**args;
+	char	**tokens;
 	int		arg_count;
 }				t_data;
 
@@ -48,6 +49,6 @@ int		parser(t_data *data);
 char	*ft_strndup(char *str, size_t n);
 int		is_space(char c);
 int		word_len(char *str);
-int		count_words(char *str);
+int		count_args(char *str, t_data *data);
 
 #endif

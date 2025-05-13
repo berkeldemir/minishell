@@ -6,25 +6,30 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/12 22:00:58 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:11:14 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
 static int	handle_vars_and_quotes(t_data *data)
 {
 	char	*new;
 
 	while (data->input)
 	handle_vars(data);
+	return (0);
 }
 
 int	find_arg_len(char *str)
 {
 	int	len;
+	int	i;
 
 	len = ft_strlen(str);
+	
+	
 	// BURADA KALDIM!
 	// TIRNAKLARA VE GLOBAL DEĞİŞKENLERE GÖRE İŞLEM YAPILACAK
 	// TEK BAŞINA TEK TIRNAK ('') İÇİNE YAZILAN HER ŞEY OLDUĞU GİBİ KALIR
@@ -32,6 +37,8 @@ int	find_arg_len(char *str)
 	// ÇİFT TIRNAK İÇİNE ÇİFT TIRNAK İÇİNDE YAZILANLAR TIRNAKLAR OLMADAN ALINIR.
 	// BLA BLA BİSSÜRÜ KURAL.
 }
+*/
+
 
 int	parser(t_data *data)
 {
@@ -42,6 +49,10 @@ int	parser(t_data *data)
 	i = 0;
 	arg_i = 0;
 	data->arg_count = count_args(data->input);
+	int j = -1;
+	while (++j < data->arg_count)
+		printf("%s\n", data->args[j]);
+	/*
 	data->args = (char **)malloc(sizeof(char *) * (data->arg_count + 1));
 	if (!data->args)
 		return (1);
@@ -57,5 +68,6 @@ int	parser(t_data *data)
 		arg_i++;
 	}
 	data->args[arg_i] = NULL;
+	*/
 	return (0);
 }
