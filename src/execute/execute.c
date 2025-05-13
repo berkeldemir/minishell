@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:04:27 by tmidik            #+#    #+#             */
-/*   Updated: 2025/05/12 18:00:07 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/05/13 20:09:01 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	execute(t_data *data)
 	pid = fork();
 	if (pid == 0)
 	{
-		path = find_path(data->args[0], data->envp);
+		path = get_command_path(data->args[0], data->envp);
 		if (!path)
 			(perror("Command not found!"), exit(EXIT_FAILURE));
 		execve(path, data->args, data->envp);

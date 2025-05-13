@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/09 18:47:45 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/05/13 20:41:49 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ static void	prompt(t_data *data)
 		data->input = readline("\033[38;2;8;99;117m>₺ \033[0m");
 		if (!data->input)
 			break ;
+		if (data->input[0] != '\0')
+		{
+			parser(data);
+			execute(data);
+		}
+		free(data->input);
 	}
 }
 
