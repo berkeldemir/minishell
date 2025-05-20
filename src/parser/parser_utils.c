@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/05/13 13:31:10 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:55:29 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_space(char c)
 	return (0);
 }
 
-static int	count_handle_quote(char *str, int *count)
+static int	count_handle_quote(t_data *data, char *str, int *count)
 {
 	int		i;
 	char	quote;
@@ -41,7 +41,7 @@ static int	count_handle_quote(char *str, int *count)
 		if (str[i] == quote)
 			quote_count++;
 		if (str[i] == '\0')
-			return (-1);
+			exit_freely(data);
 		if (quote_count % 2 == 0 && str[i + 1] == ' ')
 			break ;
 	}
@@ -52,7 +52,6 @@ static int	count_handle_quote(char *str, int *count)
 int	count_args(char *str, t_data *data)
 {
 	int		i;
-	int		j;
 	int		count;
 
 	i = -1;
@@ -68,18 +67,19 @@ int	count_args(char *str, t_data *data)
 				i++;
 		}
 		if (str[i] == '\'' || str[i] == '\"')
-		{
-			j = count_handle_quote(&str[i], &count);
-			if (j == -1)
-				exit_freely(data);
-			i += j;
-		}
+			i += count_handle_quote(data, &str[i], &count);
+		if (!str[i])
+			break ;
 	}
 	return (count);
 }
+/*
 int main(void)
 {
 	t_data *data;
-	printf("count: %d", count_args("echo 'merhaba' bubideneme", data));
+	
+	printf("count: %d\n", count_args("  'A\"B'C\"D E\"'F'  \
+	'G\"'H\"I'J  K\"L'M  N\"O'P  ", NULL));
 	return (0);
 }
+*/

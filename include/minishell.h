@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/13 14:56:00 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:33:30 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,34 @@
 # define ORANGE "\033[38;2;255;202;58m"
 # define DEFAULT "\033[0m"
 
+# define COMMAND 'c'
+# define ARGUMENT 'a'
+# define DQUOTE 'd'
+# define SQUOTE 's'
+# define PIPE '|'
+# define REDIR_IN '<'
+# define REDIR_OUT '>'
+# define APPEND 'A'
+# define HEREDOC 'H'
+
 typedef enum e_bool
 {
 	FALSE,
 	TRUE,
 }	t_bool;
 
+typedef struct s_args
+{
+	char	*s;
+	char	token;
+	int		index;
+}	t_args;
+
+
 typedef struct s_data
 {
 	char	*input;
-	char	**args;
+	t_args	*args;
 	char	**tokens;
 	int		arg_count;
 }				t_data;
@@ -46,6 +64,8 @@ void	wait_input(t_data *data);
 int		parser(t_data *data);
 
 //-------- PARSER UTILS --------
+int		is_space(char c);
+int		exit_freely(t_data *data);
 char	*ft_strndup(char *str, size_t n);
 int		is_space(char c);
 int		word_len(char *str);
