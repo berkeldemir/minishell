@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/20 19:33:30 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:40:25 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ typedef struct s_data
 {
 	char	*input;
 	t_args	*args;
-	char	**tokens;
 	int		arg_count;
-}				t_data;
+}	t_data;
 
 //-------- MAIN FUNCS ---------
 void	wait_input(t_data *data);
 int		parser(t_data *data);
 
 //-------- PARSER UTILS --------
+void	tokenize(t_data *data, int arg_i);
 int		is_space(char c);
 int		exit_freely(t_data *data);
 char	*ft_strndup(char *str, size_t n);

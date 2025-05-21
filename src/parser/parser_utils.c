@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/05/20 19:55:29 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/21 13:21:42 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	count_handle_quote(t_data *data, char *str, int *count)
 	quote = str[i];
 	quote_count = 1;
 	while (str[++i] && !((str[i] == quote) && (quote_count % 2 == 1) && \
-	(str[i + 1] == '\0' || str[i + 1] == ' ')))
+	(str[i + 1] == '\0' || is_space(str[i + 1]))))
 	{	
 		if (str[i] == quote)
 			quote_count++;
@@ -83,3 +83,4 @@ int main(void)
 	return (0);
 }
 */
+
