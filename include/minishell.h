@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/21 12:40:25 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:34:41 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_args
 
 typedef struct s_data
 {
+	char	*program_name;
 	char	*input;
 	t_args	*args;
 	int		arg_count;

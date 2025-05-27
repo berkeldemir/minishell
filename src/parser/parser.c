@@ -6,125 +6,134 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/21 13:29:29 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:57:40 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	handle_env_vars(char *str, int len, int ind)
+static void	assign_arg(t_data *data, char *input, int len, int arg_i)
 {
-	int	i;
-	int	total;
-	int	var_len = 0;
+	int		i;
+	int		j;
+	char	quote;
 
+	data->args[arg_i].s = (char *)malloc(sizeof(char) * len);
+	if (!data->args[arg_i].s)
+		return ;
 	i = 0;
-	total = len;
-	while (i < ind)
+	j = 0;
+	while (input[i])
 	{
-		var_len = 0;
-		if (str[i++] == '$')
+		quote = input[i];
+		if (input[i] == '\'' || input[i] == '\"')
 		{
-			while (!is_space(str[i++]))
+			while (input[++i] && input[i] != quote)
 			{
-				total--;
-				var_len++;
+				if (input[i] == '$')
+					i += handle_env_var(data, &input[i], arg_i, quote, j);
+				else
+					data->args[arg_i].s[j++] = input[i];
 			}
-			//(...)
+			if (is_space(input[++i]))
+				break ;
+		}
+		if ()
+		{
+			while (input[++i] && input[i] != '\'' && input[i] != '\"')
+			{
+				if (input[i] == '$')
+					i += handle_env_var(data, &input[i], arg_i, '\0', j);
+				else
+					data->args[arg_i].s[j++] = input[i];
+			}
+			if (is_space(input[++i]))
+				break ;
 		}
 	}
 }
 
-static int	handle_quote(char *str, int *ind)
+static int	calc_env_var_len(t_data *data, char *input, char quote, int *len)
+{
+	int		i;
+	char	*key;
+	char	*val;
+
+	i = 0;
+	if (quote == '\'')
+		return (++i);
+	if ((input[i] <= '9' && input[i] >= '0') || input[i] == '#')
+	{
+		if (input[i] == '0')
+			*len += ft_strlen(data->program_name);
+		if (input[i] == '#')
+			*len += 1;
+		return (++i);
+	}
+	while ((input[i] >= 'A' && input[i] <= 'Z') || \
+	(input[i] >= 'a' && input[i] <= 'z') || \
+	(input[i] >= '0' && input[i] <= '9') || input[i] == '_')
+		i++;
+	key = ft_substr(&input[i], 0, i);
+	val = get_env_val(data, key);
+	free(key);
+	*len += ft_strlen(val);
+	return (i);
+}
+
+static int	calc_arg_len(t_data *data, char *input, int *len_ptr)
 {
 	int		i;
 	int		len;
 	char	quote;
-	int		quote_count;
 
 	i = 0;
 	len = 0;
-	quote = str[0];
-	quote_count = 1;
-	while (str[++i] && !((str[i] == quote) && (quote_count % 2 == 1) && \
-	(str[i + 1] == '\0' || str[i + 1] == ' ')))
+	while (input[i])
 	{
-		len++;
-		if (str[i] == quote)
-			quote_count++;
-		if (quote_count % 2 == 0 && str[i + 1] == ' ')
+		quote = input[i];
+		if (quote == '\'' || quote == '\"')
+			while (input[++i] && input[i] != quote && len++)
+				if (input[i] == '$')
+					i += calc_env_var_len(data, &input[i], quote, &len);
+		if (is_space(input[++i]))
+			break ;
+		if (input[i] != '\'' && input[i] != '\"')
+			while (input[++i] && input[i] != '\'' && input[i] != '\"' && len++)
+				if (input[i] == '$')
+					i += calc_env_var_len(data, &input[i], '\0', &len);
+		if (is_space(input[++i]))
 			break ;
 	}
-	*ind += i;
-	return (len - quote_count + 1);
-}
-
-int	find_arg_len(char *str)
-{
-	int	len;
-	int	i;
-
-	i = 0;
-	len = 0;
-	while (is_space(str[i]))
-		i++;
-	if (str[i] && str[i] != '\'' && str[i] != '\"')
-	{
-		while (str[i] && !is_space(str[i]))
-		{
-			if (str[i] == '\'' || str[i] == '\"')
-				break ;
-			len++;
-			i++;
-		}
-	}
-	if (str[i] == '\'' || str[i] == '\"')
-		len += handle_quote(&str[i], &i);
-	return (handle_env_vars(str, len, i));
-}
-
-int	main(void)
-{
-	printf("%d\n", find_arg_len("aa\'DE\"N\"E'M'E\'M_a ikinciagruman"));
-	return (0);
-}
-
-int	ft_putarg(t_data *data, int arg_i)
-{
-	int	i;
-
-	i = -1;
-	while (data->input[++i])
-	{
-		//data->args[arg_i].s[j] = data->input[i];
-	}
-	data->args[arg_i].index = arg_i;
-	return (0);
+	*len_ptr = len;
+	return (i);
 }
 
 int	parser(t_data *data)
 {
 	int		i;
-	int		arg_i;
+	int		j;
 	int		len;
+	int		arg_i;
 
 	data->arg_count = count_args(data->input, data);
-	data->args = (t_args *)malloc(sizeof(t_args) * data->arg_count);
+	data->args = malloc(sizeof(char *) * (data->arg_count + 1));
 	if (!data->args)
 		return (1);
 	i = 0;
+	len = 0;
 	arg_i = 0;
 	while (data->input[i])
 	{
-		while (is_space(data->input[i]))
+		while (data->input[i] && is_space(data->input[i]))
 			i++;
-		len = find_arg_len(&data->input[i]);
-		data->args[arg_i].s = (char *)malloc(sizeof(char) * (len + 1));
-		if (!data->args[arg_i].s)
-			exit_freely(data);
-		i += ft_putarg(data, arg_i);
-		tokenize(data, arg_i);
-		arg_i++;
+		if (data->input[i])
+		{
+			j = calc_arg_len(data, &data->input[i], &len);
+			assign_arg(data, &data->input[i], len, arg_i);
+			arg_i++;
+			i += j;
+		}
 	}
 	return (0);
 }
