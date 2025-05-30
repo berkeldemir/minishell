@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/27 15:34:41 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:58:45 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,38 @@ typedef struct s_args
 	int		index;
 }	t_args;
 
+typedef struct s_tmps
+{
+	int	len;
+	int	arg_i;
+	int	quote;
+}	t_tmps;
 
 typedef struct s_data
 {
 	char	*program_name;
+	char	**env;
 	char	*input;
 	t_args	*args;
+	t_tmps	tmps;
 	int		arg_count;
 }	t_data;
 
-//-------- MAIN FUNCS ---------
-void	wait_input(t_data *data);
+//-------- PARSER ------------
+int		put_value_in_place(t_data *data, char *str, int j);
+char	*get_env_val(t_data *data, char *key);
+int		count_args(char *str, t_data *data);
 int		parser(t_data *data);
 
-//-------- PARSER UTILS --------
-void	tokenize(t_data *data, int arg_i);
+//-------- LIBFT --------------
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strdup(const char *s);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+int		ft_strlen(const char *s);
+
+
+//-------- UTILS ---------------
 int		is_space(char c);
 int		exit_freely(t_data *data);
-char	*ft_strndup(char *str, size_t n);
-int		is_space(char c);
-int		word_len(char *str);
-int		count_args(char *str, t_data *data);
 
 #endif

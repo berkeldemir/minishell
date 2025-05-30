@@ -6,24 +6,49 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/05/27 17:21:17 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:36:57 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	exit_freely(t_data *data)
+int	put_value_in_place(t_data *data, char *str, int j)
 {
-	if (data)
-		free(data);
-	exit(1);
+	int	i;
+
+	i = 0;
+	if (!str || !str[i])
+		return (0);
+	while (str[++i])
+	{
+		data->args[data->tmps.arg_i].s[j] = str[i];
+		j++;
+		i++;
+	}
+	if (str)
+		free(str);
+	return (i);
 }
 
-int	is_space(char c)
+char	*get_env_val(t_data *data, char *key)
 {
-	if ((c >= 9 && c <= 13) || c == 32)
-		return (1);
-	return (0);
+	int				i;
+	char			*ptr;
+	unsigned int	key_lenght;
+
+	i = 0;
+	ptr = NULL;
+	key_lenght = ft_strlen(key);
+	while (data->env[i])
+	{
+		if (!ft_strncmp(data->env[i], key, key_lenght) && \
+		data->env[i][key_lenght] == '=')
+			ptr = &data->env[i][key_lenght + 1];
+		i++;
+	}
+	if (key)
+		free(key);
+	return (ptr);
 }
 
 static int	count_handle_quote(t_data *data, char *str, int *count)

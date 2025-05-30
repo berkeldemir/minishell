@@ -6,13 +6,27 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:41:04 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/21 11:27:18 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:58:41 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int		ft_strlen(char *s)
+int	exit_freely(t_data *data)
+{
+	if (data)
+		free(data);
+	exit(1);
+}
+
+int	is_space(char c)
+{
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
+}
+
+int		ft_strlen(const char *s)
 {
 	int	i;
 
@@ -20,6 +34,37 @@ static int		ft_strlen(char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n == 0)
+		return (0);
+	while ((s1[i] != '\0' || s2[i] != '\0') && i < n)
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_strdup(const char *s)
+{
+	int		i;
+	char	*toreturn;
+
+	i = -1;
+	toreturn = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!toreturn)
+		return (NULL);
+	while (s[++i] != '\0')
+		toreturn[i] = s[i];
+	toreturn[i] = '\0';
+	return (toreturn);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
