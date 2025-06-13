@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/30 19:59:36 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:14:14 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ static int	parser_tester(t_data *data)
 	if (!data->input)
 		return (0);
 	parser(data);
+	/*
 	i = -1;
 	while (++i < data->arg_count)
 		printf("%s\n", data->args[i]);
+	*/
 	free(data->input);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/30 19:57:46 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:57:21 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ static void	assign_arg(t_data *data, char *input)
 					i += assign_arg_helper(data, &input[i], j);
 		if (is_space(input[++i]))
 			break ;
-		if (input[i] != '\'' && input[i] != '\"')
-			while (input[++i] && input[i] != '\'' && input[i] != '\"')
+		if (input[i] && input[i] != '\'' && input[i] != '\"')
+			while (input[i] && input[i] != '\'' && input[i] != '\"' && \
+			!is_space(input[i]))
 					i += assign_arg_helper(data, &input[i], j);
 		if (is_space(input[++i]))
 			break ;
@@ -71,7 +72,7 @@ static int	calc_env_var_len(t_data *data, char *input)
 	int		i;
 	char	*val;
 
-	i = 1;
+	i = 0;
 	if (data->tmps.quote == '\'')
 		return (++(data->tmps.len) && 1);
 	if ((input[i] <= '9' && input[i] >= '0') || input[i] == '#')
@@ -100,6 +101,7 @@ static int	calc_arg_len(t_data *data, char *input)
 
 	i = 0;
 	len = 0;
+	printf("Input: %s\n");
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
@@ -109,14 +111,16 @@ static int	calc_arg_len(t_data *data, char *input)
 					i += calc_env_var_len(data, &input[i]);
 		if (is_space(input[++i]))
 			break ;
-		if (input[i] != '\'' && input[i] != '\"')
-			while (input[++i] && input[i] != '\'' && input[i] != '\"' && ++len)
+		if (input[i] && input[i] != '\'' && input[i] != '\"')
+			while (input[i] && input[i] != '\'' && input[i] != '\"' && \
+			!is_space(input[i]) && i++ && ++len)
 				if (input[i] == '$' && len--)
 					i += calc_env_var_len(data, &input[i]);
-		if (is_space(input[++i]))
+		if (is_space(input[i]))
 			break ;
 	}
 	data->tmps.len = len;
+	printf("Arg Len: %d\n", data->tmps.len);
 	return (i);
 }
 
@@ -126,6 +130,7 @@ int	parser(t_data *data)
 	int		j;
 
 	data->arg_count = count_args(data->input, data);
+	printf("Arg Count: %d\n", data->arg_count);
 	data->args = malloc(sizeof(char *) * (data->arg_count + 1));
 	if (!data->args)
 		return (1);

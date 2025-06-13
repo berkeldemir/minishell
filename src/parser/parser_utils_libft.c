@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:41:04 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/30 19:58:41 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:44:59 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,18 @@ int	is_space(char c)
 	return (0);
 }
 
-int		ft_strlen(const char *s)
-{
-	int	i;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+size_t	ft_strlen(char const *str)
+{
+	int	len;
+
+	len = 0;
+	while (*str != '\0')
+	{
+		len++;
+		str++;
+	}
+	return (len);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
