@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/30 22:57:21 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/14 00:46:40 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	assign_arg_helper(t_data *data, char *input, int j)
 		(input[i] >= 'a' && input[i] <= 'z') || \
 		(input[i] >= '0' && input[i] <= '9') || input[i] == '_')
 			i++;
-		val = get_env_val(data, ft_substr(&input[1], 0, i)); // NOT!!!: GET_ENV_VAL KEY'İ FREELEMELİ
+		val = get_env_val(data, ft_substr(&input[1], 0, i));
 		return (put_value_in_place(data, val, j)); // NOT!!!: PUT_VALUE_IN_PLACE STR'YI ""GEREKİRSE"" FREELEMELİ
 	}
 	return (1);
@@ -52,16 +52,15 @@ static void	assign_arg(t_data *data, char *input)
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
-		if (input[i] == '\'' || input[i] == '\"')
+		if (is_quote(data->tmps.quote))
 			while (input[++i] && input[i] != data->tmps.quote)
 					i += assign_arg_helper(data, &input[i], j);
-		if (is_space(input[++i]))
+		if (is_quote(input[i]) && is_space(input[++i]))
 			break ;
-		if (input[i] && input[i] != '\'' && input[i] != '\"')
-			while (input[i] && input[i] != '\'' && input[i] != '\"' && \
-			!is_space(input[i]))
+		if (input[i] && !is_quote(input[i]))
+			while (input[i] && !is_quote(input[i]) && !is_space(input[i]))
 					i += assign_arg_helper(data, &input[i], j);
-		if (is_space(input[++i]))
+		if (is_space(input[i]))
 			break ;
 	}
 	data->args[data->tmps.arg_i].s[j] = '\0';
@@ -97,29 +96,28 @@ static int	calc_arg_len(t_data *data, char *input)
 {
 	int		i;
 	int		len;
-	char	quote;
 
 	i = 0;
 	len = 0;
-	printf("Input: %s\n");
+	printf("Input: %s\n", input);
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
-		if (data->tmps.quote == '\'' || data->tmps.quote == '\"')
+		if (is_quote(data->tmps.quote))
 			while (input[++i] && input[i] != data->tmps.quote && ++len)
 				if (input[i] == '$' && len--)
 					i += calc_env_var_len(data, &input[i]);
-		if (is_space(input[++i]))
+		if (is_quote(input[i]) && is_space(input[++i]))
 			break ;
-		if (input[i] && input[i] != '\'' && input[i] != '\"')
-			while (input[i] && input[i] != '\'' && input[i] != '\"' && \
-			!is_space(input[i]) && i++ && ++len)
+		if (input[i] && !is_quote(input[i]))
+			while (input[i] && !is_quote(input[i]) && !is_space(input[i]) && \
+			++i && ++len)
 				if (input[i] == '$' && len--)
 					i += calc_env_var_len(data, &input[i]);
 		if (is_space(input[i]))
 			break ;
 	}
-	data->tmps.len = len;
+	data->tmps.len = len;	
 	printf("Arg Len: %d\n", data->tmps.len);
 	return (i);
 }

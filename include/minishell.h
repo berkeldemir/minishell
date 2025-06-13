@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/30 20:45:21 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:55:48 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ size_t	ft_strlen(char const *str);
 
 //-------- UTILS ---------------
 int		is_space(char c);
+int		is_quote(char c);
 int		exit_freely(t_data *data);
 
 #endif
