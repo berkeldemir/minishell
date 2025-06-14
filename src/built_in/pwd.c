@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/14 22:08:30 by tmidik           ###   ########.fr       */
+/*   Created: 2025/06/14 20:03:16 by tmidik            #+#    #+#             */
+/*   Updated: 2025/06/14 22:10:21 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int main(int ac, char **av, char **envp)
+void	ft_pwd(t_data *data)
 {
-	t_data	*data;
-	char	*str[5] = {"echo", "-n", "-n","tibet", "berk"};
-
-	
-
-	data = malloc(sizeof(t_data));
-	data->args = str;
-	if (!data)
-	{
-		return (1);	
-	}
-	data->envp = envp;
-	getcwd(data->currend_dir, sizeof(data->currend_dir));
-	ft_pwd(data);
-	return (0);
+	printf("%s\n", data->currend_dir);
 }

@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/14 05:18:09 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/14 22:09:50 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_data
 {
 	char	*input;
 	char	**args;
+	char	currend_dir[4096];
 	char	**envp;
 	int		arg_count;
 }				t_data;
@@ -41,6 +42,7 @@ int		parser(t_data *data);
 
 //-------- BUILT-IN -----------
 int		ft_echo(t_data *data);
+void	ft_pwd(t_data *data);
 
 //-------- PARSER UTILS --------
 char	*ft_strndup(char *str, size_t n);
