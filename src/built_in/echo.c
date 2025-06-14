@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 01:12:45 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/14 05:17:54 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/14 19:08:54 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_echo(t_data *data)
 
 	i = 1;
 	new_line = 1;
-	data->arg_count = 4;
+	data->arg_count = 5;
 	while (i < data->arg_count && is_valid_n(data->args[i]))
 	{
 		new_line = 0;

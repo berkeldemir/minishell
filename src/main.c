@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/14 05:15:11 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/14 19:08:51 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int main(int ac, char **av, char **envp)
 {
 	t_data	*data;
-	char	*str[4] = {"echo", "-nnnnnnnnnnnbnn","tibet", "berk"};
+	char	*str[5] = {"echo", "-n", "-n","tibet", "berk"};
 
 	
 
@@ -26,6 +26,6 @@ int main(int ac, char **av, char **envp)
 		return (1);	
 	}
 	data->envp = envp;
-	ft_echo(data->args, data);
+	ft_echo(data);
 	return (0);
 }
