@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/13 23:55:35 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/14 03:48:44 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_env_val(t_data *data, char *key)
 		free(key);
 	return (ptr);
 }
-
+/*
 static int	count_handle_quote(t_data *data, char *str, int *count)
 {
 	int		i;
@@ -80,28 +80,33 @@ static int	count_handle_quote(t_data *data, char *str, int *count)
 	*count += 1;
 	return (++i);
 }
+*/
 
-int	count_args(char *str, t_data *data)
+int	count_args(char *input, t_data *data)
 {
 	int		i;
 	int		count;
 
-	i = -1;
+	i = 0;
 	count = 0;
-	while (str[++i])
+	while (input[i])
 	{
-		while (is_space(str[i]))
-			i++;
-		if (str[i] && str[i] != '\'' && str[i] != '\"')
+		data->tmps.quote = input[i];
+		if (is_quote(data->tmps.quote) && i++)
+			while (input[i] && input[i] != data->tmps.quote)
+				i++;
+		if (is_quote(input[i]) && is_space(input[++i]))
+			count++;
+		if (input[i] && !is_quote(input[i]))
+			while (input[i] && !is_quote(input[i]) && !is_space(input[i]))
+				i++;
+		if (!input[i])
 		{
 			count++;
-			while (str[i] && !is_space(str[i]))
-				i++;
-		}
-		if (str[i] == '\'' || str[i] == '\"')
-			i += count_handle_quote(data, &str[i], &count);
-		if (!str[i])
 			break ;
+		}
+		if (is_space(input[i]) && i++)
+			count++;
 	}
 	return (count);
 }

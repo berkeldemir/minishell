@@ -6,13 +6,13 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/14 00:46:40 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:28:37 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	assign_arg_helper(t_data *data, char *input, int j)
+static int	assign_arg_helper(t_data *data, char *input, int *j)
 {
 	int		i;
 	char	*val;
@@ -25,17 +25,19 @@ static int	assign_arg_helper(t_data *data, char *input, int j)
 		if ((input[i] <= '9' && input[i] >= '0') || input[i] == '#')
 		{
 			if (input[i] == '0')
-				return (put_value_in_place(data, data->program_name, j));
+				return (put_value_in_place(data, data->program_name, *j));
 			if (input[i] == '#')
-				return (put_value_in_place(data, "0", j));
+				return (put_value_in_place(data, "0", *j));
 		}
 		while ((input[i] >= 'A' && input[i] <= 'Z') || \
 		(input[i] >= 'a' && input[i] <= 'z') || \
 		(input[i] >= '0' && input[i] <= '9') || input[i] == '_')
 			i++;
 		val = get_env_val(data, ft_substr(&input[1], 0, i));
-		return (put_value_in_place(data, val, j)); // NOT!!!: PUT_VALUE_IN_PLACE STR'YI ""GEREKİRSE"" FREELEMELİ
+		return (put_value_in_place(data, val, *j));
 	}
+	data->args[data->tmps.arg_i].s[*j] = *input;
+	*j += 1;
 	return (1);
 }
 
@@ -52,14 +54,14 @@ static void	assign_arg(t_data *data, char *input)
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
-		if (is_quote(data->tmps.quote))
-			while (input[++i] && input[i] != data->tmps.quote)
-					i += assign_arg_helper(data, &input[i], j);
+		if (is_quote(data->tmps.quote) && i++)
+			while (input[i] && input[i] != data->tmps.quote)
+					i += assign_arg_helper(data, &input[i], &j);
 		if (is_quote(input[i]) && is_space(input[++i]))
 			break ;
 		if (input[i] && !is_quote(input[i]))
 			while (input[i] && !is_quote(input[i]) && !is_space(input[i]))
-					i += assign_arg_helper(data, &input[i], j);
+					i += assign_arg_helper(data, &input[i], &j);
 		if (is_space(input[i]))
 			break ;
 	}
@@ -134,9 +136,9 @@ int	parser(t_data *data)
 		return (1);
 	i = 0;
 	data->tmps.len = 0;
+	data->tmps.arg_i = 0;
 	while (data->input[i])
 	{
-		data->tmps.arg_i = 0;
 		data->tmps.quote = '\0';
 		while (data->input[i] && is_space(data->input[i]))
 			i++;
