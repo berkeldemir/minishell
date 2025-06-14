@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:41:04 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/30 20:44:59 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:56:55 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,16 @@ char	*ft_strdup(const char *s)
 		toreturn[i] = s[i];
 	toreturn[i] = '\0';
 	return (toreturn);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	c = (unsigned char)c;
+	while (*s != c && *s != 0)
+		s++;
+	if (*s == c)
+		return ((char *)s);
+	return (NULL);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)

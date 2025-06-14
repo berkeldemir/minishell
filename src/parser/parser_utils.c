@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/14 17:39:36 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:57:18 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,20 @@ int	put_value_in_place(t_data *data, char *str, int j)
 
 char	*get_env_val(t_data *data, char *key)
 {
-	int				i;
-	char			*ptr;
-	unsigned int	key_lenght;
+	t_env	*tmp;
+	char	*val;
 
-	i = 0;
-	ptr = NULL;
-	key_lenght = ft_strlen(key);
-	while (data->env[i])
+	tmp = *data->env;
+	while (tmp)
 	{
-		if (!ft_strncmp(data->env[i], key, key_lenght) && \
-		data->env[i][key_lenght] == '=')
-			ptr = &data->env[i][key_lenght + 1];
-		i++;
+		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
+		{
+			val = ft_strdup(tmp->value);
+			return (val);
+		}
+		tmp = tmp->next;
 	}
-	if (key)
-		free(key);
-	return (ptr);
+	return (val);
 }
 /*
 static int	count_handle_quote(t_data *data, char *str, int *count)

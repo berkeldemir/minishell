@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/14 17:21:24 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:58:44 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,28 +68,28 @@ static void	assign_arg(t_data *data, char *input)
 	data->args[data->tmps.arg_i].s[j] = '\0';
 }
 
-static int	calc_env_var_len(t_data *data, char *input)
+static int	calc_env_var_len(t_data *data, char *input, int *len)
 {
 	int		i;
 	char	*val;
 
 	i = 0;
 	if (data->tmps.quote == '\'')
-		return (++(data->tmps.len) && 1);
+		return (++(*len) && 1);
 	if ((input[i] <= '9' && input[i] >= '0') || input[i] == '#')
 	{
 		if (input[i] == '0')
-			data->tmps.len += ft_strlen(data->program_name);
-		if (input[i] == '#')
-			data->tmps.len += 1;
-		return (i);
+			*len += ft_strlen(data->program_name);
+		if (input[i] == '?')
+			*len += 1;
+		return (1);
 	}
 	while ((input[i] >= 'A' && input[i] <= 'Z') || \
 	(input[i] >= 'a' && input[i] <= 'z') || \
 	(input[i] >= '0' && input[i] <= '9') || input[i] == '_')
 		i++;
-	val = get_env_val(data, ft_substr(&input[1], 0, i));
-	data->tmps.len += ft_strlen(val);
+	val = get_env_val(data, ft_substr(&input[0], 0, i));
+	*len += ft_strlen(val);
 	free(val);
 	return (i);
 }
@@ -107,15 +107,15 @@ static int	calc_arg_len(t_data *data, char *input)
 		data->tmps.quote = input[i];
 		if (is_quote(data->tmps.quote))
 			while (input[++i] && input[i] != data->tmps.quote && ++len)
-				if (input[i] == '$' && len--)
-					i += calc_env_var_len(data, &input[i]);
+				if (input[i] == '$' && len-- && ++i)
+					i += calc_env_var_len(data, &input[i], &len);
 		if (is_quote(input[i]) && is_space(input[++i]))
 			break ;
 		if (input[i] && !is_quote(input[i]))
-			while (input[i] && !is_quote(input[i]) && !is_space(input[i]) && \
-			++i && ++len)
-				if (input[i] == '$' && len--)
-					i += calc_env_var_len(data, &input[i]);
+			while (input[i] && !is_quote(input[i]) && !is_space(input[i]) \
+			&& ++i && ++len)
+				if (input[i - 1] == '$' && len--)
+					i += calc_env_var_len(data, &input[i], &len);
 		if (is_space(input[i]))
 			break ;
 	}

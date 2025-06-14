@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/14 16:37:40 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:58:00 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,28 @@
 
 static int	init_program(t_data *data, int ac, char **av, char **envp)
 {
-	int	i;
+	int		i;
+	char	*key;
+	char	*val;
+	t_env	*node;
 
 	if (ac != 1)
 		return (1);
 	data->program_name = ft_strdup(av[0]);
-	i = -1;
-	while (envp[++i])
-		i++;
-	data->env = (char **)malloc(i + 1);
+	data->env = (t_env **)malloc(sizeof(t_env *));
 	if (!data->env)
 		return (1);
+	data->env[0] = NULL;
 	i = -1;
 	while (envp[++i])
-		data->env[i] = ft_strdup(envp[i]);
-	data->env[i] = NULL;
+	{
+		key = ft_substr(envp[i], 0, ft_strchr(envp[i], '=') - envp[i]);
+		val = ft_substr(envp[i], ft_strchr(envp[i], '=') - envp[i] + 1, \
+		ft_strlen(envp[i]));
+		node = env_new(key, val);
+		env_add_back(data->env, node);
+		(free(key), free(val));
+	}
 	return (0);
 }
 
