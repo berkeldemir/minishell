@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/14 03:48:44 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:39:36 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,18 @@ static int	count_handle_quote(t_data *data, char *str, int *count)
 }
 */
 
+int	count_helper(char *input, int *count)
+{
+	int	i;
+
+	i = 0;
+	while (is_space(input[i]))
+		i++;
+	if (input[i])
+		*count += 1;
+	return (i);
+}
+
 int	count_args(char *input, t_data *data)
 {
 	int		i;
@@ -92,21 +104,21 @@ int	count_args(char *input, t_data *data)
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
-		if (is_quote(data->tmps.quote) && i++)
+		if (is_quote(data->tmps.quote) && ++i)
 			while (input[i] && input[i] != data->tmps.quote)
 				i++;
 		if (is_quote(input[i]) && is_space(input[++i]))
-			count++;
+			i += count_helper(&input[i], &count);
 		if (input[i] && !is_quote(input[i]))
 			while (input[i] && !is_quote(input[i]) && !is_space(input[i]))
-				i++;
+				++i;
+		if (is_space(input[i]) && i++)
+			i += count_helper(&input[i], &count);
 		if (!input[i])
 		{
 			count++;
 			break ;
 		}
-		if (is_space(input[i]) && i++)
-			count++;
 	}
 	return (count);
 }

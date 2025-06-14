@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/14 01:28:37 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:21:24 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	assign_arg(t_data *data, char *input)
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
-		if (is_quote(data->tmps.quote) && i++)
+		if (is_quote(data->tmps.quote) && ++i)
 			while (input[i] && input[i] != data->tmps.quote)
 					i += assign_arg_helper(data, &input[i], &j);
 		if (is_quote(input[i]) && is_space(input[++i]))
