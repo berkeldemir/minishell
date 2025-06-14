@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/13 20:31:26 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/14 05:18:09 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ typedef struct s_data
 //-------- MAIN FUNCS ---------
 void	wait_input(t_data *data);
 int		parser(t_data *data);
+
+//-------- BUILT-IN -----------
+int		ft_echo(t_data *data);
 
 //-------- PARSER UTILS --------
 char	*ft_strndup(char *str, size_t n);

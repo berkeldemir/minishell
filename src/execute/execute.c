@@ -6,16 +6,16 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:04:27 by tmidik            #+#    #+#             */
-/*   Updated: 2025/05/13 20:09:01 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/14 05:19:10 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	is_built_in(char *function_name)
+static int	is_built_in(char *function_name, char **args, t_data *data)
 {
 	if (ft_strcmp(function_name, "echo") == 0)
-		return 1;
+		return (ft_echo(data));
 	else if (ft_strcmp(function_name, "cd") == 0)
 		return 1;
 	else if (ft_strcmp(function_name, "pwd") == 0)
@@ -37,7 +37,7 @@ int	execute(t_data *data)
 	pid_t	pid;
 	char	*path;
 	
-	if (is_built_in(data->args[0]))
+	if (is_built_in(data->args[0], data->args, data))
 		return 1;
 	pid = fork();
 	if (pid == 0)
