@@ -29,3 +29,19 @@ void	env_add_back(t_env **lst, t_env *new)
 		tmp = tmp->next;
 	tmp->next = new;
 }
+
+char	*get_env_val(t_data *data, char *key)
+{
+	t_env	*tmp;
+	char	*val;
+
+	tmp = *data->env;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0 && \
+		ft_strlen(key) == ft_strlen(tmp->key))
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}

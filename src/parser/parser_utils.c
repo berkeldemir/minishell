@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/14 23:57:18 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:42:22 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,41 +19,21 @@ int	is_quote(char c)
 	return (0);
 }
 
-int	put_value_in_place(t_data *data, char *str, int j)
+int	put_value_in_place(t_data *data, char *str, int *j)
 {
 	int	i;
 
-	i = 0;
-	if (!str || !str[i])
-		return (0);
+	if (!str || !str[0])
+		return (1);
+	i = -1;
 	while (str[++i])
 	{
-		data->args[data->tmps.arg_i].s[j] = str[i];
-		j++;
-		i++;
-	}
-	if (str)
-		free(str);
-	return (i);
+		data->args[data->tmps.arg_i].s[*j] = str[i];
+		*j += 1;
+	}	
+	return (i + 1);
 }
 
-char	*get_env_val(t_data *data, char *key)
-{
-	t_env	*tmp;
-	char	*val;
-
-	tmp = *data->env;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
-		{
-			val = ft_strdup(tmp->value);
-			return (val);
-		}
-		tmp = tmp->next;
-	}
-	return (val);
-}
 /*
 static int	count_handle_quote(t_data *data, char *str, int *count)
 {

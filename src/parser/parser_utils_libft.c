@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:41:04 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/14 23:56:55 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:17:48 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ int	is_space(char c)
 
 size_t	ft_strlen(char const *str)
 {
-	int	len;
+	size_t	i;
 
-	len = 0;
-	while (*str != '\0')
-	{
-		len++;
-		str++;
-	}
-	return (len);
+	i = 0;
+	if (!str || !str[0])
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -107,5 +106,59 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	while (i < len)
 		new[i++] = s[start++];
 	new[i] = '\0';
+	return (new);
+}
+
+static int	ft_findsize(int n)
+{
+	int	size;
+
+	size = 0;
+	if (n <= 0)
+	{
+		size++;
+		n *= -1;
+	}
+	while (n > 0)
+	{
+		size++;
+		n /= 10;
+	}
+	return (size);
+}
+
+static char	*ft_writenum(char *ptr, int num, int size)
+{
+	int	sign;
+
+	sign = 1;
+	if (num < 0)
+	{
+		sign = -1;
+		num = -num;
+	}
+	ptr[size] = '\0';
+	while (size > 0)
+	{
+		ptr[--size] = (num % 10) + '0';
+		num /= 10;
+	}
+	if (sign == -1)
+		ptr[0] = '-';
+	return (ptr);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*new;
+	int		size;
+
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	size = ft_findsize(n);
+	new = (char *)malloc(sizeof(char) * (size + 1));
+	if (!new)
+		return (NULL);
+	new = ft_writenum(new, n, size);
 	return (new);
 }

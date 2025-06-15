@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/14 23:58:44 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:31:41 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,22 @@ static int	assign_arg_helper(t_data *data, char *input, int *j)
 
 	if (input[0] == '$')
 	{
-		i = 1;
 		if (data->tmps.quote == '\'')
-			return (0);
-		if ((input[i] <= '9' && input[i] >= '0') || input[i] == '#')
+			return (1);
+		i = 1;
+		if ((input[i] <= '9' && input[i] >= '0') || input[i] == '?')
 		{
 			if (input[i] == '0')
-				return (put_value_in_place(data, data->program_name, *j));
-			if (input[i] == '#')
-				return (put_value_in_place(data, "0", *j));
+				return (put_value_in_place(data, data->program_name, j));
+			if (input[i] == '?')
+				return (put_value_in_place(data, "0", j));
 		}
 		while ((input[i] >= 'A' && input[i] <= 'Z') || \
 		(input[i] >= 'a' && input[i] <= 'z') || \
 		(input[i] >= '0' && input[i] <= '9') || input[i] == '_')
 			i++;
-		val = get_env_val(data, ft_substr(&input[1], 0, i));
-		return (put_value_in_place(data, val, *j));
+		val = get_env_val(data, ft_substr(&input[1], 0, i - 1));
+		return (put_value_in_place(data, val, j));
 	}
 	data->args[data->tmps.arg_i].s[*j] = *input;
 	*j += 1;
@@ -54,8 +54,8 @@ static void	assign_arg(t_data *data, char *input)
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
-		if (is_quote(data->tmps.quote) && ++i)
-			while (input[i] && input[i] != data->tmps.quote)
+		if (is_quote(data->tmps.quote))
+			while (input[++i] && input[i] != data->tmps.quote)
 					i += assign_arg_helper(data, &input[i], &j);
 		if (is_quote(input[i]) && is_space(input[++i]))
 			break ;
@@ -81,7 +81,7 @@ static int	calc_env_var_len(t_data *data, char *input, int *len)
 		if (input[i] == '0')
 			*len += ft_strlen(data->program_name);
 		if (input[i] == '?')
-			*len += 1;
+			*len += ft_strlen(ft_itoa(data->rec_ret));
 		return (1);
 	}
 	while ((input[i] >= 'A' && input[i] <= 'Z') || \
@@ -90,7 +90,6 @@ static int	calc_env_var_len(t_data *data, char *input, int *len)
 		i++;
 	val = get_env_val(data, ft_substr(&input[0], 0, i));
 	*len += ft_strlen(val);
-	free(val);
 	return (i);
 }
 
@@ -119,7 +118,7 @@ static int	calc_arg_len(t_data *data, char *input)
 		if (is_space(input[i]))
 			break ;
 	}
-	data->tmps.len = len;	
+	data->tmps.len = len;
 	printf("Arg Len: %d\n", data->tmps.len);
 	return (i);
 }
