@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/15 20:31:41 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/16 02:41:51 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,18 @@ static int	assign_arg_helper(t_data *data, char *input, int *j)
 		if ((input[i] <= '9' && input[i] >= '0') || input[i] == '?')
 		{
 			if (input[i] == '0')
-				return (put_value_in_place(data, data->program_name, j));
+				return (put_value_in_place(data, data->program_name, j), i);
 			if (input[i] == '?')
-				return (put_value_in_place(data, "0", j));
+				return (put_value_in_place(data, "0", j), i);
 		}
 		while ((input[i] >= 'A' && input[i] <= 'Z') || \
 		(input[i] >= 'a' && input[i] <= 'z') || \
 		(input[i] >= '0' && input[i] <= '9') || input[i] == '_')
 			i++;
 		val = get_env_val(data, ft_substr(&input[1], 0, i - 1));
-		return (put_value_in_place(data, val, j));
+		if (!val)
+			return (i);
+		return (put_value_in_place(data, val, j), i);
 	}
 	data->args[data->tmps.arg_i].s[*j] = *input;
 	*j += 1;
@@ -54,8 +56,8 @@ static void	assign_arg(t_data *data, char *input)
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
-		if (is_quote(data->tmps.quote))
-			while (input[++i] && input[i] != data->tmps.quote)
+		if (is_quote(data->tmps.quote) && ++i)
+			while (input[i] && input[i] != data->tmps.quote)
 					i += assign_arg_helper(data, &input[i], &j);
 		if (is_quote(input[i]) && is_space(input[++i]))
 			break ;
@@ -76,12 +78,17 @@ static int	calc_env_var_len(t_data *data, char *input, int *len)
 	i = 0;
 	if (data->tmps.quote == '\'')
 		return (++(*len) && 1);
-	if ((input[i] <= '9' && input[i] >= '0') || input[i] == '#')
+	if ((input[i] <= '9' && input[i] >= '0') || input[i] == '#' || \
+	input[i] == ' ' || input[i] == '\0' || input[i] == data->tmps.quote) 
 	{
 		if (input[i] == '0')
 			*len += ft_strlen(data->program_name);
-		if (input[i] == '?')
+		else if (input[i] == '?')
 			*len += ft_strlen(ft_itoa(data->rec_ret));
+		else if (input[i] == ' ')
+			*len += 2;
+		else if (input[i] == '\0' || input[i] == data->tmps.quote)
+			*len += 1;
 		return (1);
 	}
 	while ((input[i] >= 'A' && input[i] <= 'Z') || \
@@ -89,8 +96,11 @@ static int	calc_env_var_len(t_data *data, char *input, int *len)
 	(input[i] >= '0' && input[i] <= '9') || input[i] == '_')
 		i++;
 	val = get_env_val(data, ft_substr(&input[0], 0, i));
-	*len += ft_strlen(val);
-	return (i);
+	printf("X:Val: %s$-len: %i\n", val, *len);
+	if (val)
+		*len += ft_strlen(val);
+	printf("Y:Val: %s$-len: %i\n", val, *len);
+	return (i - 1);
 }
 
 static int	calc_arg_len(t_data *data, char *input)
@@ -106,7 +116,7 @@ static int	calc_arg_len(t_data *data, char *input)
 		data->tmps.quote = input[i];
 		if (is_quote(data->tmps.quote))
 			while (input[++i] && input[i] != data->tmps.quote && ++len)
-				if (input[i] == '$' && len-- && ++i)
+				if (input[i] == '$' && input[i + 1] && len-- && ++i)
 					i += calc_env_var_len(data, &input[i], &len);
 		if (is_quote(input[i]) && is_space(input[++i]))
 			break ;

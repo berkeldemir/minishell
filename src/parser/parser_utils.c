@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/15 20:42:22 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:26:40 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ int	put_value_in_place(t_data *data, char *str, int *j)
 {
 	int	i;
 
-	if (!str || !str[0])
-		return (1);
 	i = -1;
 	while (str[++i])
 	{
 		data->args[data->tmps.arg_i].s[*j] = str[i];
 		*j += 1;
-	}	
+	}
+	if (str)
+		free(str);
 	return (i + 1);
 }
 
