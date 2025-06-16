@@ -3,14 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/05/12 13:02:07 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:44:02 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static int	init_program(t_data *data, int ac, char **av, char **envp)
+{
+	int		i;
+	char	*key;
+	char	*val;
+	t_env	*node;
+
+	if (ac != 1)
+		return (1);
+	data->program_name = ft_strdup(av[0]);
+	data->env = (t_env **)malloc(sizeof(t_env *));
+	if (!data->env)
+		return (1);
+	data->env[0] = NULL;
+	i = -1;
+	while (envp[++i])
+	{
+		key = ft_substr(envp[i], 0, ft_strchr(envp[i], '=') - envp[i]);
+		val = ft_substr(envp[i], ft_strchr(envp[i], '=') - envp[i] + 1, \
+		ft_strlen(envp[i]));
+		node = env_new(key, val);
+		env_add_back(data->env, node);
+	}
+	return (0);
+}
+
+static int	parser_tester(t_data *data)
+{
+	int	i;
+	t_env	*ptr;
+
+	ptr = *data->env;
+	while (ptr)
+	{
+		printf("%s = %s\n", ptr->key, ptr->value);
+		ptr = ptr->next;
+	}	
+	printf("%s%s@:%s deneme\n%s", GREEN, getenv("USER"), ORANGE, DEFAULT);
+	data->input = readline("\033[38;2;8;99;117m>₺ \033[0m");
+	if (!data->input)
+		return (0);
+	parser(data);
+	i = -1;
+	while (++i < data->arg_count)
+		printf("%s\n", data->args[i].s);
+	free(data->input);
+	return (0);
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -19,10 +68,18 @@ int	main(int ac, char **av, char **envp)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);
+	if (ac != 1)
+		return (1);
+	init_program(data, ac, av, envp);
+
+	// PARSER TESTER
+	parser_tester(data);
+	// PARSER TESTER
+}/*
 	wait_input(data);
 	parser(data);
 	int i = -1;
 	while (++i < data->arg_count)
 		printf("%s\n", data->args[i]);
 	return (0);
-}
+}*/

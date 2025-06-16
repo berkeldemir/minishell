@@ -3,66 +3,110 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/05/12 13:03:59 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/16 00:26:40 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*ft_strndup(char *str, size_t n)
+int	is_quote(char c)
 {
-	char	*dest;
-	int		i;
-
-	i = 0;
-	dest = (char *)malloc(sizeof(char) * (n + 1));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (str[i] != '\0' && i < n)
-	{
-		dest[i] = str[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-int	is_space(char c)
-{
-	if ((c >= 9 && c <= 13) || c == 32)
+	if (c == '\'' || c == '\"')
 		return (1);
 	return (0);
 }
 
-int	word_len(char *str)
+int	put_value_in_place(t_data *data, char *str, int *j)
 {
-	int	len;
+	int	i;
 
-	len = 0;
-	while (str[len] && !is_space(str[len]))
-		len++;
-	return (len);
+	i = -1;
+	while (str[++i])
+	{
+		data->args[data->tmps.arg_i].s[*j] = str[i];
+		*j += 1;
+	}
+	if (str)
+		free(str);
+	return (i + 1);
 }
 
-int	count_words(char *str)
+/*
+static int	count_handle_quote(t_data *data, char *str, int *count)
 {
-	int	count = 0;
-	int	i = 0;
+	int		i;
+	char	quote;
+	int		quote_count;
 
-	while (str[i])
+	i = 0;
+	quote = str[i];
+	quote_count = 1;
+	while (str[++i] && !((str[i] == quote) && (quote_count % 2 == 1) && \
+	(str[i + 1] == '\0' || is_space(str[i + 1]))))
+	{	
+		if (str[i] == quote)
+			quote_count++;
+		if (str[i] == '\0')
+			exit_freely(data);
+		if (quote_count % 2 == 0 && str[i + 1] == ' ')
+			break ;
+	}
+	*count += 1;
+	return (++i);
+}
+*/
+
+int	count_helper(char *input, int *count)
+{
+	int	i;
+
+	i = 0;
+	while (is_space(input[i]))
+		i++;
+	if (input[i])
+		*count += 1;
+	return (i);
+}
+
+int	count_args(char *input, t_data *data)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (input[i])
 	{
-		while (str[i] && is_space(str[i]))
-			i++;
-		if (str[i] && !is_space(str[i]))
+		data->tmps.quote = input[i];
+		if (is_quote(data->tmps.quote) && ++i)
+			while (input[i] && input[i] != data->tmps.quote)
+				i++;
+		if (is_quote(input[i]) && is_space(input[++i]))
+			i += count_helper(&input[i], &count);
+		if (input[i] && !is_quote(input[i]))
+			while (input[i] && !is_quote(input[i]) && !is_space(input[i]))
+				++i;
+		if (is_space(input[i]) && i++)
+			i += count_helper(&input[i], &count);
+		if (!input[i])
 		{
 			count++;
-			while (str[i] && !is_space(str[i]))
-				i++;
+			break ;
 		}
 	}
 	return (count);
 }
+/*
+int main(void)
+{
+	t_data *data;
+	
+	printf("count: %d\n", count_args("  'A\"B'C\"D E\"'F'  \
+	'G\"'H\"I'J  K\"L'M  N\"O'P  ", NULL));
+	return (0);
+}
+*/
+
