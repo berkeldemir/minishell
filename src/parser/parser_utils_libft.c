@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:41:04 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/15 20:17:48 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:42:16 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	is_space(char c)
 		return (1);
 	return (0);
 }
-
 
 size_t	ft_strlen(char const *str)
 {

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/16 02:41:51 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:44:20 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,17 +114,18 @@ static int	calc_arg_len(t_data *data, char *input)
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
+		printf("\n++\n%s\n++\n", &input[i]);
 		if (is_quote(data->tmps.quote))
 			while (input[++i] && input[i] != data->tmps.quote && ++len)
 				if (input[i] == '$' && input[i + 1] && len-- && ++i)
 					i += calc_env_var_len(data, &input[i], &len);
 		if (is_quote(input[i]) && is_space(input[++i]))
 			break ;
+		printf("\n--\n%s\n--\n", &input[i]);
 		if (input[i] && !is_quote(input[i]))
-			while (input[i] && !is_quote(input[i]) && !is_space(input[i]) \
-			&& ++i && ++len)
-				if (input[i - 1] == '$' && len--)
-					i += calc_env_var_len(data, &input[i], &len);
+			while (input[i] && !is_quote(input[i]) && !is_space(input[i]))
+				if (++len && ++i && input[i - 1] == '$' && len--)
+					i += calc_env_var_len(data, &input[i], &len) + 1;
 		if (is_space(input[i]))
 			break ;
 	}
