@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/16 15:44:02 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:48:08 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,12 @@ static int	parser_tester(t_data *data)
 	{
 		printf("%s = %s\n", ptr->key, ptr->value);
 		ptr = ptr->next;
-	}	
+	}
+	printf("-----------------------");
+	char	**e = env_converter(data);
+	i = -1;
+	while (e[++i])
+		printf("%s\n", e[i]);
 	printf("%s%s@:%s deneme\n%s", GREEN, getenv("USER"), ORANGE, DEFAULT);
 	data->input = readline("\033[38;2;8;99;117m>₺ \033[0m");
 	if (!data->input)
@@ -56,7 +61,7 @@ static int	parser_tester(t_data *data)
 	parser(data);
 	i = -1;
 	while (++i < data->arg_count)
-		printf("%s\n", data->args[i].s);
+		printf("%s$\n", data->args[i].s);
 	free(data->input);
 	return (0);
 }

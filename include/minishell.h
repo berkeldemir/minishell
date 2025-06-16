@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/15 20:10:13 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:04:29 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,27 @@
 # define APPEND 'A'
 # define HEREDOC 'H'
 
-typedef enum	e_bool
+typedef enum e_bool
 {
 	FALSE,
 	TRUE,
 }	t_bool;
 
-typedef struct	s_args
+typedef struct s_args
 {
 	char	*s;
 	char	token;
 	int		index;
 }	t_args;
 
-typedef struct	s_tmps
+typedef struct s_tmps
 {
 	int	len;
 	int	arg_i;
 	int	quote;
 }	t_tmps;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*key;
 	char			*value;
@@ -89,13 +89,14 @@ size_t	ft_strlen(char const *str);
 char	*ft_strchr(const char *s, int c);
 char	*ft_itoa(int n);
 
-
 //-------- UTILS ---------------
 int		is_space(char c);
 int		is_quote(char c);
 int		exit_freely(t_data *data);
 
+//--------  ENV  -------------- 
 t_env	*env_new(char *key, char *value);
 void	env_add_back(t_env **lst, t_env *new);
+char	**env_converter(t_data *data);
 
 #endif
