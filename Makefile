@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+         #
+#    By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/06 11:29:21 by beldemir          #+#    #+#              #
-#    Updated: 2025/06/16 16:13:23 by beldemir         ###   ########.fr        #
+#    Updated: 2025/06/17 16:55:20 by tmidik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,10 @@ CC = cc
 CFLAGS = #-Wall -Wextra -Werror
 READLINEFLAGS = -lreadline
 SRCS =	src/main.c src/utils/wait_input.c src/env.c \
-	src/parser/parser.c src/parser/parser_utils.c src/parser/parser_utils_libft.c
+	src/parser/parser.c src/parser/parser_utils.c \
+	src/parser/parser_utils_libft.c src/execute/execute.c \
+	src/execute/find_path.c src/execute/ft_split.c src/execute/utils.c
+	
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

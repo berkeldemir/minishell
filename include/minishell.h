@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/16 18:04:29 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:57:17 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,25 @@ size_t	ft_strlen(char const *str);
 char	*ft_strchr(const char *s, int c);
 char	*ft_itoa(int n);
 
+//-------- EXECUTE -------------
+int		execute(t_data *data);
+char	*get_command_path(char *str, t_data *data);
+void	wait_input(t_data *data);
+
 //-------- UTILS ---------------
 int		is_space(char c);
 int		is_quote(char c);
 int		exit_freely(t_data *data);
+char	**ft_split(char *s, char c);
+void	free_array(char **array);
 
 //--------  ENV  -------------- 
 t_env	*env_new(char *key, char *value);
 void	env_add_back(t_env **lst, t_env *new);
 char	**env_converter(t_data *data);
+int	ms_ft_strcmp(char *s1, char *s2);
+int	ms_ft_strncmp(char *s1, char *s2, int n);
+int	ms_ft_strlen(char *str);
+char	*ms_ft_strjoin(char *s2, char *s1);
 
 #endif

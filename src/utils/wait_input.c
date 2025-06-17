@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/16 16:11:57 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:12:45 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,16 @@ static void	prompt(t_data *data)
 		data->input = readline("\033[38;2;8;99;117m>₺ \033[0m");
 		if (!data->input)
 			break ;
+		if (data->input[0] != '\0')
+		{
+			parser(data);
+			execute(data);
+		}
+		free(data->input);
 	}
 }
 
 void	wait_input(t_data *data)
 {
 	prompt(data);
-	parser(data);
 }

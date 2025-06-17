@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/16 15:58:39 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:04:47 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static int	calc_arg_len(t_data *data, char *input)
 
 	i = 0;
 	len = 0;
-	printf("Input: %s\n", input);
+	//printf("Input: %s\n", input);
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
@@ -126,7 +126,7 @@ static int	calc_arg_len(t_data *data, char *input)
 			break ;
 	}
 	data->tmps.len = len;
-	printf("Arg Len: %d\n", data->tmps.len);
+	//printf("Arg Len: %d\n", data->tmps.len);
 	return (i);
 }
 
@@ -136,7 +136,7 @@ int	parser(t_data *data)
 	int		j;
 
 	data->arg_count = count_args(data->input, data);
-	printf("Arg Count: %d\n", data->arg_count);
+	//printf("Arg Count: %d\n", data->arg_count);
 	data->args = malloc(sizeof(char *) * (data->arg_count + 1));
 	if (!data->args)
 		return (1);

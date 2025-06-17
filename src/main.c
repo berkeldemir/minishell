@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/17 16:23:36 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/17 17:14:53 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,5 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 1)
 		return (1);
 	init_program(data, ac, av, envp);
-	t_env	*ptr;
-	char **current_env = env_converter(data);
-	char *path = get_env_val(data, "PATH");
-	ptr = *data->env;
-	while (ptr)
-	{
-		printf("%s = %s\n", ptr->key, ptr->value);
-		ptr = ptr->next;
-	}
-	printf("---------------------\n");
-	int i = 0;
-	while (current_env[i])
-	{
-		printf("%s\n", current_env[i]);
-		i++;
-	}
-	printf("---------------------\n");
-	printf("%s\n", path);
+	wait_input(data);
 }
