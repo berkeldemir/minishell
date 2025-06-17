@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:47:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/16 22:07:44 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:29:00 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,25 @@ char	*get_env_val(t_data *data, char *key)
 	return (NULL);
 }
 
-static char	*env_converter_helper(t_env *lst)
+static char *env_converter_helper(t_env *lst)
 {
-	char	*new;
-	char	*ptr;
+	char *new;
+	char *ptr;
+	char *k;
+	char *v;
 
-	new = malloc((ft_strlen(lst->key) + ft_strlen(lst->value) + 2));
+	k = lst->key;
+	v = lst->value;
+	new = malloc(ft_strlen(k) + ft_strlen(v) + 2);
 	if (!new)
-		return (NULL);
+		return NULL;
 	ptr = new;
-	while (*lst->key)
-		*(new)++ = *(lst->key)++;
-	*new = '=';
-	while (*lst->value)
-		*(new)++ = *(lst->value)++;
-	return (ptr);
+	while (*k)
+		*new++ = *k++;
+	*new++ = '=';
+	while (*v)
+		*new++ = *v++;
+	return ptr;
 }
 
 char	**env_converter(t_data *data)

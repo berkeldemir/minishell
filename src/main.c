@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/16 18:48:08 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:23:36 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	init_program(t_data *data, int ac, char **av, char **envp)
 	return (0);
 }
 
-static int	parser_tester(t_data *data)
+/*static int	parser_tester(t_data *data)
 {
 	int	i;
 	t_env	*ptr;
@@ -64,7 +64,7 @@ static int	parser_tester(t_data *data)
 		printf("%s$\n", data->args[i].s);
 	free(data->input);
 	return (0);
-}
+}*/
 
 int	main(int ac, char **av, char **envp)
 {
@@ -76,15 +76,22 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 1)
 		return (1);
 	init_program(data, ac, av, envp);
-
-	// PARSER TESTER
-	parser_tester(data);
-	// PARSER TESTER
-}/*
-	wait_input(data);
-	parser(data);
-	int i = -1;
-	while (++i < data->arg_count)
-		printf("%s\n", data->args[i]);
-	return (0);
-}*/
+	t_env	*ptr;
+	char **current_env = env_converter(data);
+	char *path = get_env_val(data, "PATH");
+	ptr = *data->env;
+	while (ptr)
+	{
+		printf("%s = %s\n", ptr->key, ptr->value);
+		ptr = ptr->next;
+	}
+	printf("---------------------\n");
+	int i = 0;
+	while (current_env[i])
+	{
+		printf("%s\n", current_env[i]);
+		i++;
+	}
+	printf("---------------------\n");
+	printf("%s\n", path);
+}
