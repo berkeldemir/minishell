@@ -6,7 +6,7 @@
 #    By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/06 11:29:21 by beldemir          #+#    #+#              #
-#    Updated: 2025/06/17 16:55:20 by tmidik           ###   ########.fr        #
+#    Updated: 2025/06/17 17:25:22 by tmidik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ READLINEFLAGS = -lreadline
 SRCS =	src/main.c src/utils/wait_input.c src/env.c \
 	src/parser/parser.c src/parser/parser_utils.c \
 	src/parser/parser_utils_libft.c src/execute/execute.c \
-	src/execute/find_path.c src/execute/ft_split.c src/execute/utils.c
+	src/execute/find_path.c src/execute/ft_split.c src/execute/utils.c \
+	src/built_in/echo.c
 	
 OBJS = $(SRCS:.c=.o)
 

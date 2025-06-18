@@ -6,27 +6,27 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/17 17:18:18 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/18 03:04:22 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	is_built_in(char *function_name)
+static int	is_built_in(t_data *data, char **args)
 {
-	if (ms_ft_strcmp(function_name, "echo") == 0)
+	if (ms_ft_strcmp(data->args[0].s, "echo") == 0)
+		return (ft_echo(data, args), 1);
+	else if (ms_ft_strcmp(data->args[0].s, "cd") == 0)
 		return 1;
-	else if (ms_ft_strcmp(function_name, "cd") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "pwd") == 0)
 		return 1;
-	else if (ms_ft_strcmp(function_name, "pwd") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "export") == 0)
 		return 1;
-	else if (ms_ft_strcmp(function_name, "export") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "unset") == 0)
 		return 1;
-	else if (ms_ft_strcmp(function_name, "unset") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "env") == 0)
 		return 1;
-	else if (ms_ft_strcmp(function_name, "env") == 0)
-		return 1;
-	else if(ms_ft_strcmp(function_name, "exit") == 0)
+	else if(ms_ft_strcmp(data->args[0].s, "exit") == 0)
 		return 1;
 	else
 		return (0);
@@ -59,7 +59,7 @@ int	execute(t_data *data)
 
 	current_env = env_converter(data);
 	args = args_converter(data);
-	if (is_built_in(args[0]))
+	if (is_built_in(data, args))
 		return (1);
 	pid = fork();
 	if (pid == 0)
@@ -67,7 +67,7 @@ int	execute(t_data *data)
 		path = get_command_path(args[0], data);
 		if (!path)
 			(perror("command not found!"), exit(EXIT_FAILURE));
-		execve(path, args,current_env);
+		execve(path, args, current_env);
 		perror("execve failed");
 		exit(EXIT_FAILURE);
 	}

@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/17 16:57:17 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/18 02:24:10 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ char	*ft_itoa(int n);
 int		execute(t_data *data);
 char	*get_command_path(char *str, t_data *data);
 void	wait_input(t_data *data);
+
+//-------- BUILT-IN -------------
+int		ft_echo(t_data *data, char **args);
 
 //-------- UTILS ---------------
 int		is_space(char c);

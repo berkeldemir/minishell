@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/17 17:04:47 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/18 03:00:31 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	parser(t_data *data)
 
 	data->arg_count = count_args(data->input, data);
 	//printf("Arg Count: %d\n", data->arg_count);
-	data->args = malloc(sizeof(char *) * (data->arg_count + 1));
+	data->args = malloc(sizeof(t_data) * (data->arg_count + 1));
 	if (!data->args)
 		return (1);
 	i = 0;
