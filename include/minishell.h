@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/19 13:10:31 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/19 13:32:57 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	wait_input(t_data *data);
 int		ft_echo(t_data *data, char **args);
 int		ft_cd(t_data *data, char **args);
 int		ft_pwd(void);
+int		ft_exit(char **args);
 
 //-------- UTILS ---------------
 int		is_space(char c);
