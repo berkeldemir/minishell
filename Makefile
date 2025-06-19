@@ -6,7 +6,7 @@
 #    By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/06 11:29:21 by beldemir          #+#    #+#              #
-#    Updated: 2025/06/19 13:32:40 by tmidik           ###   ########.fr        #
+#    Updated: 2025/06/19 16:23:20 by tmidik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS =	src/main.c src/utils/wait_input.c src/env.c \
 	src/parser/parser_utils_libft.c src/execute/execute.c \
 	src/execute/find_path.c src/execute/ft_split.c src/execute/utils.c \
 	src/built_in/echo.c src/built_in/cd.c src/built_in/pwd.c src/built_in/exit.c \
-	
+	src/built_in/ft_env.c src/built_in/ft_export.c
 	
 OBJS = $(SRCS:.c=.o)
 
