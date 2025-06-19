@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:22:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/19 16:32:15 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/19 16:41:10 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	*extract_value(char *str)
 	while (str[i] != '\0' && str[i] != '=')
 		i++;
 	if (str[i] == '=')
-		i++; // '=' karakterini atla
+		i++;
 	j = 0;
 	value = (char *)malloc(sizeof(char) * (ft_strlen(str + i) + 1));
 	if (!value)
