@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/20 15:43:51 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/20 15:54:29 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	wait_input(t_data *data)
 			break ;
 		if (data->input[0] != '\0')
 		{
+			add_history(data->input);
 			parser(data);
 			execute(data);
 		}

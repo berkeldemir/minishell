@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/19 16:44:32 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/20 16:16:34 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_built_in(t_data *data, char **args)
 	else if (ms_ft_strcmp(data->args[0].s, "cd") == 0)
 		return (ft_cd(data, args), 1);
 	else if (ms_ft_strcmp(data->args[0].s, "pwd") == 0)
-		return (ft_pwd(), 1);
+		return (ft_pwd(args), 1);
 	else if (ms_ft_strcmp(data->args[0].s, "export") == 0)
 		return (ft_export(data, args), 1);
 	else if (ms_ft_strcmp(data->args[0].s, "unset") == 0)
