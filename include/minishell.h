@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/20 16:16:44 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:05:55 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		ft_pwd(char **args);
 int		ft_exit(char **args);
 int		ft_env(t_data *data);
 int		ft_export(t_data *data, char **args);
-int		ft_unset(t_data *data, char *key);
+int		ft_unset(t_data *data, char *key, char **args);
 
 //-------- UTILS ---------------
 int		is_space(char c);
