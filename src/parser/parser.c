@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/18 03:00:31 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/25 15:18:22 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ static void	assign_arg(t_data *data, char *input)
 		data->tmps.quote = input[i];
 		if (is_quote(data->tmps.quote) && ++i)
 			while (input[i] && input[i] != data->tmps.quote)
-					i += assign_arg_helper(data, &input[i], &j);
+				i += assign_arg_helper(data, &input[i], &j);
 		if (is_quote(input[i]) && is_space(input[++i]))
 			break ;
 		if (input[i] && !is_quote(input[i]))
 			while (input[i] && !is_quote(input[i]) && !is_space(input[i]))
-					i += assign_arg_helper(data, &input[i], &j);
+				i += assign_arg_helper(data, &input[i], &j);
 		if (is_space(input[i]))
 			break ;
 	}
@@ -79,7 +79,7 @@ static int	calc_env_var_len(t_data *data, char *input, int *len)
 	if (data->tmps.quote == '\'')
 		return (++(*len) && 1);
 	if ((input[i] <= '9' && input[i] >= '0') || input[i] == '#' || \
-	input[i] == ' ' || input[i] == '\0' || input[i] == data->tmps.quote) 
+	input[i] == ' ' || input[i] == '\0' || input[i] == data->tmps.quote)
 	{
 		if (input[i] == '0')
 			*len += ft_strlen(data->program_name);
@@ -136,7 +136,7 @@ int	parser(t_data *data)
 	int		j;
 
 	data->arg_count = count_args(data->input, data);
-	//printf("Arg Count: %d\n", data->arg_count);
+	printf("Arg Count: %d\n", data->arg_count);
 	data->args = malloc(sizeof(t_data) * (data->arg_count + 1));
 	if (!data->args)
 		return (1);

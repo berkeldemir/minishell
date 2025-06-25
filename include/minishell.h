@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/20 17:05:55 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/25 16:34:50 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int		put_value_in_place(t_data *data, char *str, int *j);
 char	*get_env_val(t_data *data, char *key);
 int		count_args(char *str, t_data *data);
 int		parser(t_data *data);
+int	is_redir_pipe(char c);
+int	count_handle_redir_pipe(char *input, int *count);
 
 //-------- LIBFT --------------
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:47:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/17 16:29:00 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/25 15:22:40 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	env_add_back(t_env **lst, t_env *new)
 char	*get_env_val(t_data *data, char *key)
 {
 	t_env	*tmp;
-	char	*val;
 
 	tmp = *data->env;
 	while (tmp)
@@ -81,7 +80,7 @@ static char *env_converter_helper(t_env *lst)
 
 char	**env_converter(t_data *data)
 {
-	int		i;
+	size_t		i;
 	t_env	*lst;
 	size_t	size;
 	char	**ret;
