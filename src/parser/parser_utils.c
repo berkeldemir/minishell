@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/25 17:58:59 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/25 21:48:03 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,23 @@ int	put_value_in_place(t_data *data, char *str, int *j)
 	return (i + 1);
 }
 
+int	count_args_helper(char *inp, int *count)
+{
+	int	i;
+
+	i = 0;
+	if (inp[i] && !is_quote(inp[i]) && !is_redir_pipe(inp[i]))
+	{
+		while (inp[i] && !is_quote(inp[i]) && !is_space(inp[i]) && \
+		!is_redir_pipe(inp[i]))
+			i++;
+		if ((!inp[i] || is_space(inp[i]) || is_redir_pipe(inp[i])) && ++(*count))
+			while (is_space(inp[i]))
+				i++;
+	}
+	return (i);
+}
+
 int	count_args(char *inp, t_data *data)
 {
 	int	i;
@@ -47,18 +64,17 @@ int	count_args(char *inp, t_data *data)
 		if (is_quote(data->tmps.quote) && ++i)
 			while (inp[i] && inp[i] != data->tmps.quote)
 				i++;
-		if (is_quote(inp[i]) && is_space(inp[++i]) && count++)
+		printf("a:%i-%s\n", count, &inp[i]);
+		if (is_quote(inp[i]) && (is_space(inp[++i]) || inp[i] == '\0') && \
+		++count)
 			while (is_space(inp[i]))
 				i++;
-		if (inp[i] && !is_quote(inp[i]) && !is_redir_pipe(inp[i]))
-			while (inp[i] && !is_quote(inp[i]) && !is_space(inp[i]) && \
-			!is_redir_pipe(inp[i]))
-				i++;
-		if ((!inp[i] || is_space(inp[i])) && ++count)
-			while (is_space(inp[i]))
-				i++;
+		printf("b:%i-%s\n", count, &inp[i]);
+		i += count_args_helper(&inp[i], &count);
+		printf("d:%i-%s\n", count, &inp[i]);
 		if (is_redir_pipe(inp[i]))
 			i += count_handle_redir_pipe(&inp[i], &count);
+		printf("e:%i-%s\n", count, &inp[i]);
 	}
 	return (count);
 }
