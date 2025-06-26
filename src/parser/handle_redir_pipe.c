@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 12:34:14 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/25 21:30:00 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:16:10 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 int	is_redir_pipe(char c)
 {
 	if (c == '|' || c == '>' || c == '<')
+		return (1);
+	return (0);
+}
+
+int	is_srp(char c)
+{
+	if (c == '\0' || is_space(c) || is_redir_pipe(c))
 		return (1);
 	return (0);
 }
@@ -34,4 +41,11 @@ int	count_handle_redir_pipe(char *input, int *count)
 	while (is_space(input[i]))
 		i++;
 	return (i);
+}
+
+int	calc_handle_redir_pipe(char *input, int *len)
+{
+	int	i;
+
+	i = 0;
 }

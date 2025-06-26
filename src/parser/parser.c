@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/25 15:18:22 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/26 14:15:52 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,14 @@ static int	calc_arg_len(t_data *data, char *input)
 			while (input[++i] && input[i] != data->tmps.quote && ++len)
 				if (input[i] == '$' && input[i + 1] && len-- && ++i)
 					i += calc_env_var_len(data, &input[i], &len);
-		if (is_quote(input[i]) && is_space(input[++i]))
+		if (is_quote(input[i]) && (is_srp(input[++i])))
 			break ;
-		if (input[i] && !is_quote(input[i]))
-			while (input[i] && !is_quote(input[i]) && !is_space(input[i]))
+		i += calc_handle_redir_pipe(&input[i], &len);
+		if (input[i] && !is_quote(input[i]) && !is_redir_pipe(input[i]))
+			while (!is_srp(input[i]) && !is_quote(input[i]))
 				if (++len && ++i && input[i - 1] == '$' && len--)
 					i += calc_env_var_len(data, &input[i], &len) + 1;
-		if (is_space(input[i]))
+		if (is_srp(input[i]))
 			break ;
 	}
 	data->tmps.len = len;
