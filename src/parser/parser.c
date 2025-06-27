@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/26 14:15:52 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:18:57 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@ static void	assign_arg(t_data *data, char *input)
 		if (is_quote(data->tmps.quote) && ++i)
 			while (input[i] && input[i] != data->tmps.quote)
 				i += assign_arg_helper(data, &input[i], &j);
-		if (is_quote(input[i]) && is_space(input[++i]))
+		if (is_quote(input[i]) && is_srp(input[++i]))
 			break ;
-		if (input[i] && !is_quote(input[i]))
-			while (input[i] && !is_quote(input[i]) && !is_space(input[i]))
+		if (assign_handle_redir_pipe(data, &input[i], &i, &j))
+			break ;
+		if (input[i] && !is_quote(input[i]) && !is_redir_pipe(input[i]))
+			while (!is_srp(input[i]) && !is_quote(input[i]))
 				i += assign_arg_helper(data, &input[i], &j);
-		if (is_space(input[i]))
+		if (is_srp(input[i]))
 			break ;
 	}
 	data->args[data->tmps.arg_i].s[j] = '\0';
@@ -118,7 +120,8 @@ static int	calc_arg_len(t_data *data, char *input)
 					i += calc_env_var_len(data, &input[i], &len);
 		if (is_quote(input[i]) && (is_srp(input[++i])))
 			break ;
-		i += calc_handle_redir_pipe(&input[i], &len);
+		if (calc_handle_redir_pipe(&input[i], &len, &i))
+			break ;
 		if (input[i] && !is_quote(input[i]) && !is_redir_pipe(input[i]))
 			while (!is_srp(input[i]) && !is_quote(input[i]))
 				if (++len && ++i && input[i - 1] == '$' && len--)
@@ -137,7 +140,6 @@ int	parser(t_data *data)
 	int		j;
 
 	data->arg_count = count_args(data->input, data);
-	printf("Arg Count: %d\n", data->arg_count);
 	data->args = malloc(sizeof(t_data) * (data->arg_count + 1));
 	if (!data->args)
 		return (1);
@@ -152,6 +154,7 @@ int	parser(t_data *data)
 		if (data->input[i])
 		{
 			j = calc_arg_len(data, &data->input[i]);
+			data->args[data->tmps.arg_i].token = WORD;
 			assign_arg(data, &data->input[i]);
 			data->tmps.arg_i++;
 			i += j;

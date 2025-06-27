@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 12:34:14 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/26 14:16:10 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:02:52 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,47 @@ int	count_handle_redir_pipe(char *input, int *count)
 	return (i);
 }
 
-int	calc_handle_redir_pipe(char *input, int *len)
+int	calc_handle_redir_pipe(char *input, int *len, int *i)
 {
-	int	i;
+	int	j;
 
-	i = 0;
+	j = 0;
+	if (is_redir_pipe(input[j]))
+	{
+		if ((input[j] == '>' && input[j + 1] == '>') || \
+		input[j] == '<' && input[j + 1] == '<')
+			j++;
+		j++;
+		*len += j;
+		*i += j;
+		return (j);
+	}
+	return (0);
+}
+
+int	assign_handle_redir_pipe(t_data *data, char *input, int *i, int *j)
+{
+	if (is_redir_pipe(input[0]))
+	{
+		if (input[0] == '|')
+			data->args[data->tmps.arg_i].token = PIPE;
+		if (input[0] == '>')
+			data->args[data->tmps.arg_i].token = REDIR_OUT;
+		if (input[0] == '<')
+			data->args[data->tmps.arg_i].token = REDIR_IN;
+		data->args[data->tmps.arg_i].s[*j] = input[0];
+		if ((input[0] == '>' || input[0] == '<') && input[1] == input[0])
+		{
+			if (input[1] == '>')
+				data->args[data->tmps.arg_i].token = APPEND;
+			if (input[1] == '<')
+				data->args[data->tmps.arg_i].token = HEREDOC;
+			(*j)++;
+			data->args[data->tmps.arg_i].s[*j] = input[1];
+			(*i)++;
+		}
+		(*j)++;
+		return (1);
+	}
+	return (0);
 }

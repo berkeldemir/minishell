@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/25 16:34:50 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:15:46 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@
 # define ORANGE "\033[38;2;255;202;58m"
 # define DEFAULT "\033[0m"
 
-# define COMMAND 'c'
-# define ARGUMENT 'a'
-# define DQUOTE 'd'
-# define SQUOTE 's'
+# define WORD 'w'
 # define PIPE '|'
 # define REDIR_IN '<'
 # define REDIR_OUT '>'
@@ -80,8 +77,11 @@ int		put_value_in_place(t_data *data, char *str, int *j);
 char	*get_env_val(t_data *data, char *key);
 int		count_args(char *str, t_data *data);
 int		parser(t_data *data);
-int	is_redir_pipe(char c);
-int	count_handle_redir_pipe(char *input, int *count);
+int		is_srp(char c);
+int		is_redir_pipe(char c);
+int		count_handle_redir_pipe(char *input, int *count);
+int		calc_handle_redir_pipe(char *input, int *len, int *i);
+int		assign_handle_redir_pipe(t_data *data, char *input, int *i, int *j);
 
 //-------- LIBFT --------------
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
