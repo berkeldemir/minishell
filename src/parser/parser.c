@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/27 15:18:57 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/27 19:35:55 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ static int	assign_arg_helper(t_data *data, char *input, int *j)
 			if (input[i] == '?')
 				return (put_value_in_place(data, "0", j), i);
 		}
-		while ((input[i] >= 'A' && input[i] <= 'Z') || \
-		(input[i] >= 'a' && input[i] <= 'z') || \
-		(input[i] >= '0' && input[i] <= '9') || input[i] == '_')
+		while (is_alnum(input[i]) || input[i] == '_')
 			i++;
 		val = get_env_val(data, ft_substr(&input[1], 0, i - 1));
 		if (!val)
@@ -93,9 +91,7 @@ static int	calc_env_var_len(t_data *data, char *input, int *len)
 			*len += 1;
 		return (1);
 	}
-	while ((input[i] >= 'A' && input[i] <= 'Z') || \
-	(input[i] >= 'a' && input[i] <= 'z') || \
-	(input[i] >= '0' && input[i] <= '9') || input[i] == '_')
+	while (is_alnum(input[i]) || input[i] == '_')
 		i++;
 	val = get_env_val(data, ft_substr(&input[0], 0, i));
 	if (val)
@@ -110,7 +106,6 @@ static int	calc_arg_len(t_data *data, char *input)
 
 	i = 0;
 	len = 0;
-	//printf("Input: %s\n", input);
 	while (input[i])
 	{
 		data->tmps.quote = input[i];
@@ -130,7 +125,6 @@ static int	calc_arg_len(t_data *data, char *input)
 			break ;
 	}
 	data->tmps.len = len;
-	//printf("Arg Len: %d\n", data->tmps.len);
 	return (i);
 }
 

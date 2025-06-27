@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:41:04 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/16 15:42:16 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/27 19:34:56 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@ int	exit_freely(t_data *data)
 int	is_space(char c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
+}
+
+int	is_alnum(char c)
+{
+	if ((c >= 'a' && c <= 'z') || \
+	(c >= 'A' && c <= 'Z') || \
+	(c >= '0' && c <= '9'))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/27 15:15:46 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/27 19:34:48 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,15 @@ typedef struct s_data
 }	t_data;
 
 //-------- PARSER ------------
-int		put_value_in_place(t_data *data, char *str, int *j);
-char	*get_env_val(t_data *data, char *key);
-int		count_args(char *str, t_data *data);
 int		parser(t_data *data);
-int		is_srp(char c);
-int		is_redir_pipe(char c);
+int		count_args(char *str, t_data *data);
 int		count_handle_redir_pipe(char *input, int *count);
 int		calc_handle_redir_pipe(char *input, int *len, int *i);
 int		assign_handle_redir_pipe(t_data *data, char *input, int *i, int *j);
+char	*get_env_val(t_data *data, char *key);
+int		put_value_in_place(t_data *data, char *str, int *j);
+int		is_redir_pipe(char c);
+int		is_srp(char c);
 
 //-------- LIBFT --------------
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -108,6 +108,7 @@ int		ft_unset(t_data *data, char *key, char **args);
 //-------- UTILS ---------------
 int		is_space(char c);
 int		is_quote(char c);
+int		is_alnum(char c);
 int		exit_freely(t_data *data);
 char	**ft_split(char *s, char c);
 void	free_array(char **array);
@@ -116,9 +117,9 @@ void	free_array(char **array);
 t_env	*env_new(char *key, char *value);
 void	env_add_back(t_env **lst, t_env *new);
 char	**env_converter(t_data *data);
-int	ms_ft_strcmp(char *s1, char *s2);
-int	ms_ft_strncmp(char *s1, char *s2, int n);
-int	ms_ft_strlen(char *str);
+int		ms_ft_strcmp(char *s1, char *s2);
+int		ms_ft_strncmp(char *s1, char *s2, int n);
+int		ms_ft_strlen(char *str);
 char	*ms_ft_strjoin(char *s2, char *s1);
 
 #endif

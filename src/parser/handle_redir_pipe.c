@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 12:34:14 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/27 15:02:52 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/27 19:38:04 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	calc_handle_redir_pipe(char *input, int *len, int *i)
 	if (is_redir_pipe(input[j]))
 	{
 		if ((input[j] == '>' && input[j + 1] == '>') || \
-		input[j] == '<' && input[j + 1] == '<')
+		(input[j] == '<' && input[j + 1] == '<'))
 			j++;
 		j++;
 		*len += j;
