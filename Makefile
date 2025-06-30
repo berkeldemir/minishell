@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+         #
+#    By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/06 11:29:21 by beldemir          #+#    #+#              #
-#    Updated: 2025/06/27 19:37:36 by beldemir         ###   ########.fr        #
+#    Updated: 2025/06/29 20:59:56 by tmidik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 READLINEFLAGS = -lreadline
-SRCS =	src/main.c src/utils/wait_input.c src/env.c \
+SRCS =	src/main.c src/utils/wait_input.c src/utils/alpha_sort.c src/env.c \
 	src/parser/parser.c src/parser/parser_utils.c src/parser/handle_redir_pipe.c \
 	src/parser/parser_utils_libft.c src/execute/execute.c \
 	src/execute/find_path.c src/execute/ft_split.c src/execute/utils.c \

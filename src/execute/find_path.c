@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:46:54 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/19 13:13:22 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:48:52 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_command_path(char *str, t_data *data)
 	full_path = get_env_val(data, "PATH");
 	/*if (!full_path)
 		full_path = "/bin:/usr/bin"; // fallback*/
-	printf("DEBUG: PATH -> %s\n", full_path);
+	//printf("DEBUG: PATH -> %s\n", full_path);
 	path_array = ft_split(full_path, ':');
 	i = -1;
 	while (path_array[++i])

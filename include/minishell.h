@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/27 19:34:48 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/06/29 20:57:14 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int		is_alnum(char c);
 int		exit_freely(t_data *data);
 char	**ft_split(char *s, char c);
 void	free_array(char **array);
+void	alpha_sort(t_env **array, int size);
 
 //--------  ENV  -------------- 
 t_env	*env_new(char *key, char *value);

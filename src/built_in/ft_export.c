@@ -6,11 +6,40 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:22:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/19 16:41:10 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/06/29 20:59:10 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	export_write(t_data *data)
+{
+	t_env	*tmp;
+	t_env	**array;
+	int		size = 0;
+	int		i = 0;
+
+	tmp = *data->env;
+	while (tmp)
+	{
+		size++;
+		tmp = tmp->next;
+	}
+	array = malloc(sizeof(t_env *) * size);
+	if (!array)
+		return ;
+	tmp = *data->env;
+	while (i < size)
+	{
+		array[i++] = tmp;
+		tmp = tmp->next;
+	}
+	alpha_sort(array, size);
+	i = -1;
+	while (++i < size)
+		printf("declare -x %s=\"%s\"\n", array[i]->key, array[i]->value);
+	free(array);
+}
 
 static char	*export_strdup(char *s)
 {
@@ -75,10 +104,11 @@ int	ft_export(t_data *data, char **args)
 	char	*value;
 	t_env	*tmp;
 
+	if (!args[1])
+		return (export_write(data), 0);
 	key = extract_key(args[1]);
 	value = extract_value(args[1]);
 	tmp = *data->env;
-
 	while (tmp)
 	{
 		if (ms_ft_strcmp(tmp->key, key) == 0)
