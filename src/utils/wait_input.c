@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/20 15:54:29 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/03 13:44:58 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,24 @@ static void	print_prompt(char *path)
 	free(display);
 }
 
+static void	handle_sigint(int sig)
+{
+	char	path[1023];
+
+	(void)sig;
+	write(STDOUT_FILENO, "\n", 1);
+	if (getcwd(path, sizeof(path)) != NULL)
+		print_prompt(path);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
 void	wait_input(t_data *data)
 {
 	char	path[1023];
 
+	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		if (getcwd(path, sizeof(path)) == NULL)
@@ -64,7 +78,10 @@ void	wait_input(t_data *data)
 		print_prompt(path);
 		data->input = readline("\033[38;2;8;99;117m>₺ \033[0m");
 		if (!data->input)
+		{
+			write(1, "exit\n", 5);
 			break ;
+		}
 		if (data->input[0] != '\0')
 		{
 			add_history(data->input);
