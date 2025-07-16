@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/20 17:06:02 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/16 13:16:46 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,23 @@ static char **args_converter(t_data *data)
 	return (argv);
 }
 
+void	handle_path_not_found(char **path, char **args)
+{
+	int i;
+
+	i = 0;
+	while (args[0][i])
+	{
+		if (args[0][i] == '/')
+		{
+			*path = ft_strdup(args[0]);
+			return ;
+		}
+		i++;
+	}
+	(perror("command not found!"), exit(EXIT_FAILURE));
+}
+
 int	execute(t_data *data)
 {
 	pid_t	pid;
@@ -66,9 +83,9 @@ int	execute(t_data *data)
 	{
 		path = get_command_path(args[0], data);
 		if (!path)
-			(perror("command not found!"), exit(EXIT_FAILURE));
+			handle_path_not_found(&path, args);
 		execve(path, args, current_env);
-		perror("execve failed");
+		perror("minishell");
 		exit(EXIT_FAILURE);
 	}
 	else
