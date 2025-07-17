@@ -6,13 +6,13 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/17 15:27:07 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:16:20 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*ms_ft_strdup(char *s)
+/*static char	*ms_ft_strdup(char *s)
 {
 	int		i;
 	char	*toreturn;
@@ -41,26 +41,19 @@ static char	*get_display_path(char *path)
 		return (result);
 	}
 	return (ms_ft_strdup(path));
+} */
+
+static void	print_prompt(t_data *data)
+{
+	data->input = readline("\033[38;2;8;99;117mMINISHELL>₺ \033[0m");
+	printf("%s\n", getcwd(NULL, 0));
+	printf("%s\n", data->input);
 }
 
-static void	print_prompt(char *path)
+void handle_sigint(int sig)
 {
-	char	*display;
-
-	display = get_display_path(path);
-	printf("%s%s@:%s %s\n%s",
-		GREEN, getenv("USER"), ORANGE, display, DEFAULT);
-	free(display);
-}
-
-static void	handle_sigint(int sig)
-{
-	char	path[1023];
-
-	(void)sig;
+    (void)sig;
 	write(STDOUT_FILENO, "\n", 1);
-	if (getcwd(path, sizeof(path)) != NULL)
-		print_prompt(path);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
@@ -75,8 +68,12 @@ void	wait_input(t_data *data)
 	{
 		if (getcwd(path, sizeof(path)) == NULL)
 			return ;
-		print_prompt(path);
-		data->input = readline("\033[38;2;8;99;117m>₺ \033[0m");
+		print_prompt(data);
+        //if (g_signal_received)
+        //{
+        //    g_signal_received = 0;  // Flag'i sıfırla
+		//	continue;  // Prompt'u yeniden göster
+        //}
 		if (!data->input)
 		{
 			write(1, "exit\n", 5);

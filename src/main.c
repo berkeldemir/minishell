@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/18 03:03:42 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/17 17:25:43 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	init_program(t_data *data, int ac, char **av, char **envp)
 	if (!data->env)
 		return (1);
 	data->env[0] = NULL;
+	signal(SIGINT, SIG_IGN);
 	i = -1;
 	while (envp[++i])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/03 12:49:09 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/17 17:29:37 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char	*ft_itoa(int n);
 //-------- EXECUTE -------------
 int		execute(t_data *data);
 char	*get_command_path(char *str, t_data *data);
+void	handle_sigint(int sig);
 void	wait_input(t_data *data);
 
 //-------- BUILT-IN -------------
