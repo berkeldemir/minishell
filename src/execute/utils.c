@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:51:56 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/17 16:53:13 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/17 15:29:33 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ char	*ms_ft_strjoin(char *s2, char *s1)
 	j = -1;
 	while (s2[++j])
 		res[i++] = s2[j];
+	res[i] = '\0';
 	return (res);
 }

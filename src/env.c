@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:47:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/25 15:22:40 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:34:06 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static char *env_converter_helper(t_env *lst)
 	*new++ = '=';
 	while (*v)
 		*new++ = *v++;
+	*new = '\0';
 	return ptr;
 }
 

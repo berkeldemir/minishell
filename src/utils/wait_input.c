@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/03 13:44:58 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/17 15:27:07 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static char	*get_display_path(char *path)
 	char	*result;
 
 	home = getenv("HOME");
-	if (home && strncmp(path, home, ms_ft_strlen(home)) == 0)
+	if (home && strncmp(path, home, ms_ft_strlen(home)) == 0) // /home/beldemir
 	{
 		if (path[ms_ft_strlen(home)] == '\0')
 			return (ms_ft_strdup("~"));
 		result = ms_ft_strjoin(path + ms_ft_strlen(home), "~");
 		return (result);
 	}
-	return (strdup(path));
+	return (ms_ft_strdup(path));
 }
 
 static void	print_prompt(char *path)
