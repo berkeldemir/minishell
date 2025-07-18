@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+         #
+#    By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/06 11:29:21 by beldemir          #+#    #+#              #
-#    Updated: 2025/06/29 20:59:56 by tmidik           ###   ########.fr        #
+#    Updated: 2025/07/17 20:06:39 by beldemir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRCS =	src/main.c src/utils/wait_input.c src/utils/alpha_sort.c src/env.c \
 	src/parser/parser_utils_libft.c src/execute/execute.c \
 	src/execute/find_path.c src/execute/ft_split.c src/execute/utils.c \
 	src/built_in/ft_echo.c src/built_in/ft_cd.c src/built_in/ft_pwd.c src/built_in/ft_exit.c \
-	src/built_in/ft_env.c src/built_in/ft_export.c src/built_in/ft_unset.c
+	src/built_in/ft_env.c src/built_in/ft_export.c src/built_in/ft_unset.c \
+	src/redir_pipe/utils.c 
 	
 OBJS = $(SRCS:.c=.o)
 

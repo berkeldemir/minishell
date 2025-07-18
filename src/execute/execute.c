@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/17 18:20:00 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/18 12:43:21 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,22 @@ static int	is_built_in(t_data *data, char **args)
 		return (0);
 }
 
-static char **args_converter(t_data *data)
+static char **args_converter(t_data *data, int i)
 {
-	char **argv;
-	int i;
+	char **ret;
+	int j;
 
-	argv = malloc(sizeof(char *) * (data->arg_count + 1));
-	if (!argv)
+	ret = malloc(sizeof(char *) * (data->arg_count + 1));
+	if (!ret)
 		return NULL;
-	i = 0;
-	while (i < data->arg_count)
+	j = 0;
+	while (j < data->arg_count)
 	{
-		argv[i] = data->args[i].s;
-		i++;
+		ret[j] = data->args_tmp[i][j].s;
+		j++;
 	}
-	argv[i] = NULL;
-	return (argv);
+	ret[j] = NULL;
+	return (ret);
 }
 
 void	handle_path_not_found(char **path, char **args)
@@ -74,9 +74,8 @@ int	execute(t_data *data)
 	char	**current_env;
 	char	**args;
 
-
 	current_env = env_converter(data);
-	args = args_converter(data);
+	args = args_converter(data, 0); // IT SHOULD BE FIXED, NOT 0 ALL TIME
 	if (is_built_in(data, args))
 		return (1);
 	pid = fork();

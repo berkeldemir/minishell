@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/17 17:29:37 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/18 12:01:04 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
@@ -66,8 +67,10 @@ typedef struct s_data
 	char	*program_name;
 	char	*input;
 	int		arg_count;
+	int		cmd_count;
 	int		rec_ret;
 	t_args	*args;
+	t_args	**args_tmp;
 	t_env	**env;
 	t_tmps	tmps;
 }	t_data;
@@ -123,5 +126,8 @@ int		ms_ft_strcmp(char *s1, char *s2);
 int		ms_ft_strncmp(char *s1, char *s2, int n);
 int		ms_ft_strlen(char *str);
 char	*ms_ft_strjoin(char *s2, char *s1);
+
+//------- REDIR & PIPE ------------
+void	arg_converter(t_data *data);
 
 #endif

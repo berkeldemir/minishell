@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/17 18:16:20 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/18 12:40:32 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,18 @@ void	wait_input(t_data *data)
 		{
 			add_history(data->input);
 			parser(data);
+			printf("-----after parser------\n");
+			arg_converter(data);
+			printf("cmd_count: %i\n", data->cmd_count);
+			int	i = -1;
+			while (++i < data->cmd_count)
+			{
+				printf("%i\n", i);
+				int	j = -1;
+				while (data->args_tmp[i][++j].s != NULL)
+					printf("[%i][%i]%s[%c]\n", i, j, data->args_tmp[i][j].s, data->args_tmp[i][j].token);
+			}
+			sleep(1000);
 			execute(data);
 		}
 		free(data->input);
