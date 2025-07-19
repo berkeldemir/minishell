@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/18 12:43:21 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/19 12:39:48 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char **args_converter(t_data *data, int i)
 	j = 0;
 	while (j < data->arg_count)
 	{
-		ret[j] = data->args_tmp[i][j].s;
+		ret[j] = data->arglst[i][j].s;
 		j++;
 	}
 	ret[j] = NULL;
@@ -67,21 +67,19 @@ void	handle_path_not_found(char **path, char **args)
 	(perror("command not found!"), exit(EXIT_FAILURE));
 }
 
-int	execute(t_data *data)
+int	execute(t_data *data, int i, char **current_env)
 {
 	pid_t	pid;
 	char	*path;
-	char	**current_env;
 	char	**args;
 
-	current_env = env_converter(data);
-	args = args_converter(data, 0); // IT SHOULD BE FIXED, NOT 0 ALL TIME
-	if (is_built_in(data, args))
-		return (1);
+	args = args_converter(data, i);
 	pid = fork();
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
+		if (is_built_in(data, args))
+			exit(EXIT_SUCCESS);
 		path = get_command_path(args[0], data);
 		if (!path)
 			handle_path_not_found(&path, args);

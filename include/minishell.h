@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/18 12:01:04 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/19 12:27:00 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_data
 	int		cmd_count;
 	int		rec_ret;
 	t_args	*args;
-	t_args	**args_tmp;
+	t_args	**arglst;
 	t_env	**env;
 	t_tmps	tmps;
 }	t_data;
@@ -95,7 +95,7 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_itoa(int n);
 
 //-------- EXECUTE -------------
-int		execute(t_data *data);
+int		execute(t_data *data, int i, char **current_env);
 char	*get_command_path(char *str, t_data *data);
 void	handle_sigint(int sig);
 void	wait_input(t_data *data);
@@ -128,6 +128,6 @@ int		ms_ft_strlen(char *str);
 char	*ms_ft_strjoin(char *s2, char *s1);
 
 //------- REDIR & PIPE ------------
-void	arg_converter(t_data *data);
+void	arglst_generator(t_data *data);
 
 #endif
