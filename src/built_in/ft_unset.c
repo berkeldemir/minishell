@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:41:23 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/20 17:09:47 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/20 19:01:53 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ int	ft_unset(t_data *data, char *key, char **args)
 	t_env	*prev;
 
 	if (!args[1])
-	{
-		write(2, "unset: no enough arguments\n", 27);
-		return (1);
-	}
+		return (write(2, "unset: no enough arguments\n", 27), 1);
 	tmp = *data->env;
 	prev = NULL;
 	while (tmp)
@@ -32,10 +29,7 @@ int	ft_unset(t_data *data, char *key, char **args)
 				*data->env = tmp->next;
 			else
 				prev->next = tmp->next;
-			free(tmp->key);
-			free(tmp->value);
-			free(tmp);
-			return (0);
+			return (free(tmp->key), free(tmp->value), free(tmp), 0);
 		}
 		prev = tmp;
 		tmp = tmp->next;

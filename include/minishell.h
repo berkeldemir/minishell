@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/19 12:27:00 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:45:37 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct s_data
 	int		rec_ret;
 	t_args	*args;
 	t_args	**arglst;
+	int		*std_in;
+	int		*std_out;
 	t_env	**env;
 	t_tmps	tmps;
 }	t_data;

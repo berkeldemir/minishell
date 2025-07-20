@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:22:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/29 20:59:10 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/20 19:03:52 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,18 @@ static void	export_write(t_data *data)
 {
 	t_env	*tmp;
 	t_env	**array;
-	int		size = 0;
-	int		i = 0;
+	int		size;
+	int		i;
 
+	size = 0;
 	tmp = *data->env;
-	while (tmp)
-	{
-		size++;
+	while (tmp && ++size)
 		tmp = tmp->next;
-	}
 	array = malloc(sizeof(t_env *) * size);
 	if (!array)
 		return ;
 	tmp = *data->env;
+	i = 0;
 	while (i < size)
 	{
 		array[i++] = tmp;
