@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/19 12:39:48 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:11:22 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@ static int	is_built_in(t_data *data, char **args)
 		return (ft_unset(data, args[1], args), 1);
 	else if (ms_ft_strcmp(data->args[0].s, "env") == 0)
 		return (ft_env(data), 1);
-	else if(ms_ft_strcmp(data->args[0].s, "exit") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "exit") == 0)
 		return (ft_exit(args), 1);
 	else
 		return (0);
 }
 
-static char **args_converter(t_data *data, int i)
+static char	**args_converter(t_data *data, int i)
 {
-	char **ret;
-	int j;
+	char	**ret;
+	int		j;
 
 	ret = malloc(sizeof(char *) * (data->arg_count + 1));
 	if (!ret)
-		return NULL;
+		return (NULL);
 	j = 0;
 	while (j < data->arg_count)
 	{
@@ -52,7 +52,7 @@ static char **args_converter(t_data *data, int i)
 
 void	handle_path_not_found(char **path, char **args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (args[0][i])
@@ -85,8 +85,7 @@ int	execute(t_data *data, int i, char **current_env)
 			handle_path_not_found(&path, args);
 		execve(path, args, current_env);
 		printf("path: %s\nargs: %s\nenv[9]:%s\n", path, args[0], current_env[9]);
-		perror("minishell");
-		exit(EXIT_FAILURE);
+		(perror("minishell"), exit(EXIT_FAILURE));
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/19 12:35:55 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:13:30 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	print_prompt(t_data *data)
 
 void handle_sigint(int sig)
 {
-    (void)sig;
+	(void)sig;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -71,11 +71,11 @@ void	wait_input(t_data *data)
 		if (getcwd(path, sizeof(path)) == NULL)
 			return ;
 		print_prompt(data);
-        //if (g_signal_received)
-        //{
-        //    g_signal_received = 0;  // Flag'i sıfırla
+		//if (g_signal_received)
+		//{
+		//    g_signal_received = 0;  // Flag'i sıfırla
 		//	continue;  // Prompt'u yeniden göster
-        //}
+		//}
 		if (!data->input)
 		{
 			write(1, "exit\n", 5);

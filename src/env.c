@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:47:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/17 15:34:06 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:15:24 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_env	*env_new(char *key, char *value)
 {
-	t_env   *new;
+	t_env	*new;
 
 	new = malloc(sizeof(t_env));
 	if (!new)
@@ -27,7 +27,7 @@ t_env	*env_new(char *key, char *value)
 
 void	env_add_back(t_env **lst, t_env *new)
 {
-	t_env   *tmp;
+	t_env	*tmp;
 
 	if (!lst || !new)
 		return ;
@@ -57,18 +57,18 @@ char	*get_env_val(t_data *data, char *key)
 	return (NULL);
 }
 
-static char *env_converter_helper(t_env *lst)
+static char	*env_converter_helper(t_env *lst)
 {
-	char *new;
-	char *ptr;
-	char *k;
-	char *v;
+	char	*new;
+	char	*ptr;
+	char	*k;
+	char	*v;
 
 	k = lst->key;
 	v = lst->value;
 	new = malloc(ft_strlen(k) + ft_strlen(v) + 2);
 	if (!new)
-		return NULL;
+		return (NULL);
 	ptr = new;
 	while (*k)
 		*new++ = *k++;
@@ -76,12 +76,12 @@ static char *env_converter_helper(t_env *lst)
 	while (*v)
 		*new++ = *v++;
 	*new = '\0';
-	return ptr;
+	return (ptr);
 }
 
 char	**env_converter(t_data *data)
 {
-	size_t		i;
+	size_t	i;
 	t_env	*lst;
 	size_t	size;
 	char	**ret;

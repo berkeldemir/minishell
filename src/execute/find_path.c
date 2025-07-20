@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:46:54 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/29 14:48:52 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/20 19:11:40 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char *converter(char *command, char *path)
+static char	*converter(char *command, char *path)
 {
 	char	*temp;
 	char	*res_path;

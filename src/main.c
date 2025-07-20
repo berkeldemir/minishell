@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/17 19:42:26 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:15:49 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	init_program(t_data *data, int ac, char **av, char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	t_data	*data;
-	
+
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);

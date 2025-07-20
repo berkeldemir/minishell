@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:51:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/06/17 16:51:42 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/20 19:08:56 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static size_t	s_word_len(char *s, char c)
 {
-	size_t	len = 0;
+	size_t	len;
+
+	len = 0;
 	while (s[len] && s[len] != c)
 		len++;
 	return (len);
@@ -22,7 +24,9 @@ static size_t	s_word_len(char *s, char c)
 
 static void	free_all(char **words, size_t count)
 {
-	size_t	i = 0;
+	size_t	i;
+
+	i = 0;
 	while (i < count)
 	{
 		free(words[i]);
@@ -33,9 +37,11 @@ static void	free_all(char **words, size_t count)
 
 static size_t	s_count_words(char *s, char c)
 {
-	size_t	count = 0;
-	int		in_word = 0;
+	size_t	count;
+	int		in_word;
 
+	count = 0;
+	in_word = 0;
 	while (*s)
 	{
 		if (*s != c && in_word == 0)
@@ -72,9 +78,8 @@ char	**ft_split(char *s, char c)
 			return (free_all(words, i), NULL);
 		words[i][len] = '\0';
 		while (len--)
-			words[i][len] = s[len];
+			words[i++][len] = s[len];
 		s += s_word_len(s, c);
-		i++;
 	}
 	words[i] = NULL;
 	return (words);
@@ -82,7 +87,9 @@ char	**ft_split(char *s, char c)
 
 void	free_array(char **array)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	if (!array)
 		return ;
 	while (array[i])

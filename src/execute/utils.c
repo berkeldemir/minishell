@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:51:56 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/17 15:29:33 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:10:02 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ms_ft_strcmp(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] && s2[i] && s1[i] == s2[i])
@@ -45,16 +45,17 @@ int	ms_ft_strlen(char *str)
 		i++;
 	return (i);
 }
+
 char	*ms_ft_strjoin(char *s2, char *s1)
 {
 	char	*res;
 	int		i;
 	int		j;
-	
+
 	if (!s1 || !s2)
 		return (NULL);
-	res = (char *)malloc(sizeof(char) * 
-		(ms_ft_strlen(s1) + ms_ft_strlen(s2) + 1));
+	res = (char *)malloc(sizeof(char) * \
+	(ms_ft_strlen(s1) + ms_ft_strlen(s2) + 1));
 	i = -1;
 	while (s1[++i])
 		res[i] = s1[i];
