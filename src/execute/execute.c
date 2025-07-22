@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/20 19:11:22 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:26:17 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,16 @@ int	execute(t_data *data, int i, char **current_env)
 	char	**args;
 
 	args = args_converter(data, i);
+	if (is_built_in(data, args))
+		return (0);
 	pid = fork();
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		if (is_built_in(data, args))
-			exit(EXIT_SUCCESS);
 		path = get_command_path(args[0], data);
 		if (!path)
 			handle_path_not_found(&path, args);
 		execve(path, args, current_env);
-		printf("path: %s\nargs: %s\nenv[9]:%s\n", path, args[0], current_env[9]);
 		(perror("minishell"), exit(EXIT_FAILURE));
 	}
 	else

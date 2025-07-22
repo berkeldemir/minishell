@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:46:54 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/20 19:11:40 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:25:23 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ char	*get_command_path(char *str, t_data *data)
 	int		i;
 
 	full_path = get_env_val(data, "PATH");
-	/*if (!full_path)
-		full_path = "/bin:/usr/bin"; // fallback*/
-	//printf("DEBUG: PATH -> %s\n", full_path);
 	path_array = ft_split(full_path, ':');
 	i = -1;
 	while (path_array[++i])

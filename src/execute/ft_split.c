@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:51:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/20 19:08:56 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:22:37 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ char	**ft_split(char *s, char c)
 	words = malloc(sizeof(char *) * (s_count_words(s, c) + 1));
 	if (!words)
 		return (NULL);
-	i = 0;
-	while (*s && i < s_count_words(s, c))
+	i = -1;
+	while (++i >= 0 && *s && i < s_count_words(s, c))
 	{
 		while (*s == c)
 			s++;
@@ -78,7 +78,7 @@ char	**ft_split(char *s, char c)
 			return (free_all(words, i), NULL);
 		words[i][len] = '\0';
 		while (len--)
-			words[i++][len] = s[len];
+			words[i][len] = s[len];
 		s += s_word_len(s, c);
 	}
 	words[i] = NULL;
