@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/24 14:50:47 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:54:27 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ static void	link_pipe_ends(t_data *data, int i)
 		dup2(data->fds[(i - 1) * 2], STDIN_FILENO);
 	if (i < data->cmd_count - 1)
 		dup2(data->fds[(i * 2) + 1], STDOUT_FILENO);
-	j = 0;
-	while (j < 2 * (data->cmd_count - 1))
+	j = -1;
+	while (++j < 2 * (data->cmd_count - 1))
 	{
-		close(data->fds[j]);
-		j++;
+		if (j != (i - 1) * 2 && j != (i * 2) + 1) // işine yaramayan uçları kapat
+			close(data->fds[j]);
 	}
 	free(data->fds);
 }
@@ -108,9 +108,13 @@ int	execute(t_data *data, int i, char **current_env)
 	}
 	else if (pid > 0)
 	{
-		//int j = -1;
-		//while (++j < 2 * (data->cmd_count - 1))
-		//	close(data->fds[j]);
+		if (i == data->cmd_count - 1)
+		{
+			int j = -1;
+			while (++j < 2 * (data->cmd_count - 1))
+				close(data->fds[j]);
+			free(data->fds);
+		}
 		(signal(SIGINT, SIG_IGN), waitpid(pid, NULL, 0));
 		signal(SIGINT, handle_sigint);
 	}
