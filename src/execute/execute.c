@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/24 14:54:27 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:16:19 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,23 @@ static int	is_built_in(t_data *data, char **args)
 		return (0);
 }
 
-static char	**args_converter(t_data *data, int i)
+/*static char	**args_converter(t_data *data, int i)
 {
-	char	**ret;
-	int		j;
-
-	ret = malloc(sizeof(char *) * (data->arg_count + 1));
-	if (!ret)
-		return (NULL);
+	int j;
+	
 	j = 0;
-	while (j < data->arg_count)
+	while (data->arglst[i].args[j] != NULL)
+		j++;
+	char **ret = malloc(sizeof(char *) * (j + 1));
+	j = 0;
+	while (data->arglst[i].args[j] != NULL)
 	{
-		ret[j] = data->arglst[i][j].s;
+		ret[j] = data->arglst[i].args[j];
 		j++;
 	}
 	ret[j] = NULL;
-	return (ret);
-}
+	return ret;
+}*/
 
 void	handle_path_not_found(char **path, char **args)
 {
@@ -75,13 +75,19 @@ static void	link_pipe_ends(t_data *data, int i)
 		dup2(data->fds[(i - 1) * 2], STDIN_FILENO);
 	if (i < data->cmd_count - 1)
 		dup2(data->fds[(i * 2) + 1], STDOUT_FILENO);
+	j = 0;
+	while (j < 2 * (data->cmd_count - 1))
+		close(data->fds[j++]);
+	//free(data->fds);
+}
+
+static void	close_all(t_data *data)
+{
+	int	j;
+
 	j = -1;
 	while (++j < 2 * (data->cmd_count - 1))
-	{
-		if (j != (i - 1) * 2 && j != (i * 2) + 1) // işine yaramayan uçları kapat
-			close(data->fds[j]);
-	}
-	free(data->fds);
+		close(data->fds[j]);
 }
 
 int	execute(t_data *data, int i, char **current_env)
@@ -90,32 +96,33 @@ int	execute(t_data *data, int i, char **current_env)
 	char	*path;
 	char	**args;
 
-	args = args_converter(data, i);
+	args = data->arglst[i].args; //args_converter(data, i);
 	if (data->cmd_count == 1 && is_built_in(data, args))
 		return (0);
 	pid = fork();
 	if (pid == 0)
 	{
-		link_pipe_ends(data, i);
 		signal(SIGINT, SIG_DFL);
+		link_pipe_ends(data, i);
 		if (is_built_in(data, args))
-			exit(EXIT_SUCCESS);
+			(close_all(data), exit(EXIT_SUCCESS));
 		path = get_command_path(args[0], data);
 		if (!path)
 			handle_path_not_found(&path, args);
 		execve(path, args, current_env);
-		(perror("minishell"), exit(EXIT_FAILURE));
+		(perror("minishell"), close_all(data), exit(EXIT_FAILURE));
 	}
 	else if (pid > 0)
 	{
+		signal(SIGINT, SIG_IGN);
 		if (i == data->cmd_count - 1)
 		{
-			int j = -1;
-			while (++j < 2 * (data->cmd_count - 1))
-				close(data->fds[j]);
+			i = -1;
+			while (++i < 2 * (data->cmd_count - 1))
+				close(data->fds[i]);
 			free(data->fds);
 		}
-		(signal(SIGINT, SIG_IGN), waitpid(pid, NULL, 0));
+		waitpid(pid, NULL, 0);
 		signal(SIGINT, handle_sigint);
 	}
 	else

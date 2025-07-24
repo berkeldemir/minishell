@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/24 13:32:53 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 20:59:28 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,13 @@ typedef struct s_args
 	int		index;
 }	t_args;
 
-typedef struct s_redirs
-{
-	char	type;
-	char	*file;
-}	t_redirs;
-
 typedef	struct s_arglst
 {
-	t_args		*args;
-	t_redirs	*redirs;
+	char	**args;
+	char	*in;
+	char	*out;
+	char	*lmt;
+	t_bool	append;
 }	t_arglst;
 
 typedef struct s_tmps
@@ -76,18 +73,16 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	char	*program_name;
-	int		*fds;
-	char	*input;
-	int		arg_count;
-	int		cmd_count;
-	int		rec_ret;
-	t_args	*args;
-	t_args	**arglst;
-	int		*std_in;
-	int		*std_out;
-	t_env	**env;
-	t_tmps	tmps;
+	char		*program_name;
+	int			*fds;
+	char		*input;
+	int			arg_count;
+	int			cmd_count;
+	int			rec_ret;
+	t_args		*args;
+	t_arglst	*arglst;
+	t_env		**env;
+	t_tmps		tmps;
 }	t_data;
 
 //-------- PARSER ------------
