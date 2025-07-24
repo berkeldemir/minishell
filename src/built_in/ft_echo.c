@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 17:24:22 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/20 16:36:34 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:56:31 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int	ft_echo(t_data *data, char **args)
 		new_line = 0;
 		i++;
 	}
-	while (i < data->arg_count)
+	while (args[i] != NULL)
 	{
 		j = -1;
 		while (args[i][++j])
 			write(STDOUT_FILENO, &args[i][j], 1);
-		if (i + 1 < data->arg_count)
+		if (args[i + 1] != NULL)
 			write(STDOUT_FILENO, " ", 1);
 		i++;
 	}

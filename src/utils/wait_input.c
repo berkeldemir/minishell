@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/20 19:13:30 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:03:16 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,19 @@ void handle_sigint(int sig)
 	rl_redisplay();
 }
 
+/*static void	assign_pipes(t_data *data)
+{
+	int	i;
+
+	data->fds = malloc((2 * (data->cmd_count - 1)) * sizeof(int));
+	if (!data->fds)
+		return ;
+	i = -1;
+	while (++i < data->cmd_count -1)
+		if (pipe(&data->fds[i * 2]) == -1)
+			(perror("pipe"), exit(EXIT_FAILURE));
+}*/
+
 void	wait_input(t_data *data)
 {
 	char	path[1023];
@@ -85,7 +98,7 @@ void	wait_input(t_data *data)
 		{
 			add_history(data->input);
 			parser(data);
-			//printf("-----after parser------\n");
+			printf("-----after parser------\n");
 			arglst_generator(data); // data->args free yok.
 			//printf("cmd_count: %i\n", data->cmd_count);
 			/*int	i = -1;
@@ -98,6 +111,8 @@ void	wait_input(t_data *data)
 			}
 			sleep(1000);*/
 			curr_env = env_converter(data);
+			//printf("cmdcnt: %i\n", data->cmd_count);
+			//assign_pipes(data);
 			i = -1;
 			while (++i < data->cmd_count)
 				execute(data, i, curr_env);

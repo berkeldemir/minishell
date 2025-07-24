@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/19 12:14:55 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:58:15 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static int	find_size_arglst(t_args *args, int start, int total)
 	count = 0;
 	i = start - 1;
 	while (++i < total && args[i].token != PIPE)
-		count++;
+		if (args[i].token == WORD)
+			count++;
 	return (count);
 }
 
