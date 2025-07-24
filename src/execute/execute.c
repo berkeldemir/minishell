@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/24 13:55:40 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:50:47 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 static int	is_built_in(t_data *data, char **args)
 {
-	if (ms_ft_strcmp(data->args[0].s, "echo") == 0)
+	if (ms_ft_strcmp(data->args[0].s, "echo")  == 0)
 		return (ft_echo(data, args), 1);
-	else if (ms_ft_strcmp(data->args[0].s, "cd") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "cd")  == 0)
 		return (ft_cd(data, args), 1);
-	else if (ms_ft_strcmp(data->args[0].s, "pwd") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "pwd")  == 0)
 		return (ft_pwd(args), 1);
-	else if (ms_ft_strcmp(data->args[0].s, "export") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "export")  == 0)
 		return (ft_export(data, args), 1);
-	else if (ms_ft_strcmp(data->args[0].s, "unset") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "unset")  == 0)
 		return (ft_unset(data, args[1], args), 1);
-	else if (ms_ft_strcmp(data->args[0].s, "env") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "env")  == 0)
 		return (ft_env(data), 1);
-	else if (ms_ft_strcmp(data->args[0].s, "exit") == 0)
+	else if (ms_ft_strcmp(data->args[0].s, "exit")  == 0)
 		return (ft_exit(args), 1);
 	else
 		return (0);
@@ -67,7 +67,7 @@ void	handle_path_not_found(char **path, char **args)
 	(perror("command not found!"), exit(EXIT_FAILURE));
 }
 
-/*static void	link_pipe_ends(t_data *data, int i)
+static void	link_pipe_ends(t_data *data, int i)
 {
 	int	j;
 
@@ -75,11 +75,14 @@ void	handle_path_not_found(char **path, char **args)
 		dup2(data->fds[(i - 1) * 2], STDIN_FILENO);
 	if (i < data->cmd_count - 1)
 		dup2(data->fds[(i * 2) + 1], STDOUT_FILENO);
-	j = -1;
-	while (++j < 2 * (data->cmd_count - 1))	
+	j = 0;
+	while (j < 2 * (data->cmd_count - 1))
+	{
 		close(data->fds[j]);
-	//free(data->fds);
-}*/
+		j++;
+	}
+	free(data->fds);
+}
 
 int	execute(t_data *data, int i, char **current_env)
 {
@@ -88,12 +91,12 @@ int	execute(t_data *data, int i, char **current_env)
 	char	**args;
 
 	args = args_converter(data, i);
-	if (is_built_in(data, args) && data->cmd_count == 1)
+	if (data->cmd_count == 1 && is_built_in(data, args))
 		return (0);
 	pid = fork();
 	if (pid == 0)
 	{
-		//link_pipe_ends(data, i);
+		link_pipe_ends(data, i);
 		signal(SIGINT, SIG_DFL);
 		if (is_built_in(data, args))
 			exit(EXIT_SUCCESS);
@@ -105,6 +108,9 @@ int	execute(t_data *data, int i, char **current_env)
 	}
 	else if (pid > 0)
 	{
+		//int j = -1;
+		//while (++j < 2 * (data->cmd_count - 1))
+		//	close(data->fds[j]);
 		(signal(SIGINT, SIG_IGN), waitpid(pid, NULL, 0));
 		signal(SIGINT, handle_sigint);
 	}
