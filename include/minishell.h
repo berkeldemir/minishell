@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/24 20:59:28 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:47:44 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_data
 
 //-------- PARSER ------------
 int		parser(t_data *data);
+int		parser_syntax_checker(t_data *data);
 int		count_args(char *str, t_data *data);
 int		count_handle_redir_pipe(char *input, int *count);
 int		calc_handle_redir_pipe(char *input, int *len, int *i);
@@ -105,6 +106,7 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_itoa(int n);
 
 //-------- EXECUTE -------------
+int		syntax_checker(char *input); // BURADA!!!!!!!!! ARAMA BOŞUNA
 int		execute(t_data *data, int i, char **current_env);
 char	*get_command_path(char *str, t_data *data);
 void	handle_sigint(int sig);

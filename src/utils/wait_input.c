@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/24 14:31:51 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:44:53 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ void	wait_input(t_data *data)
 		if (data->input[0] != '\0')
 		{
 			add_history(data->input);
-			parser(data);
+			if (syntax_checker(data->input) != 0 || parser(data) != 0)
+				continue ;
 			printf("-----after parser------\n");
 			arglst_generator(data); // data->args free yok.
 			//printf("cmd_count: %i\n", data->cmd_count);

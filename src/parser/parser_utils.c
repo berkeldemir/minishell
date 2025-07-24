@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/24 14:09:19 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:50:43 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,52 @@ int	count_args(char *inp, t_data *data)
 			i += count_handle_redir_pipe(&inp[i], &count);
 	}
 	return (count);
+}
+
+int	parser_syntax_checker(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->arg_count)
+	{
+		if (data->args[i].token != WORD)
+		{
+			//printf("\ni:%i\tnext-token:%c\n", i, data->args[i + 1].token);
+			// Son argümansa ve WORD bekleniyorsa → syntax error
+			if (i + 1 == data->arg_count || data->args[i + 1].token != WORD)
+			{
+				printf("minishell: syntax error near %s\n", data->args[i].s);
+				return (1);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	syntax_checker(char *input)
+{
+	int	i;
+	int	squote_count;
+	int	dquote_count;
+
+	squote_count = 0;
+	dquote_count = 0;
+	i = -1;
+	while (input[++i])
+	{
+		if (input[i] == '\'')
+			squote_count++;
+		if (input[i] == '\"')
+			dquote_count++;
+	}
+	if (squote_count % 2 == 1 || dquote_count % 2 == 1)
+	{
+		printf("minishell: syntax error: unclosed quote\n");
+		return (1);
+	}
+	return (0);
 }
 
 /*

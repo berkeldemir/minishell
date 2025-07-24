@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/24 14:09:36 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/24 21:20:54 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,5 @@ int	parser(t_data *data)
 			i += j;
 		}
 	}
-	return (0);
+	return (parser_syntax_checker(data));
 }
