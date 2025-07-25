@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/24 21:13:57 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/25 13:24:40 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ static void	assignment_arglst(t_data *data)
 	while (++k >= 0 && ++i < data->arg_count && k < data->cmd_count)
 	{
 		limit = find_size_arglst(data, i, data->arg_count, k);
-		if (data->arglst[k].in)
+		/*if (data->arglst[k].in)
 			printf("k:%i\tin:%s\n", k, data->arglst[k].in);
 		if (data->arglst[k].out)
 			printf("k:%i\tout:%s\n", k, data->arglst[k].out);
 		if (data->arglst[k].lmt)
 			printf("k:%i\tlmt:%s\n", k, data->arglst[k].lmt);
-		printf("k:%i\tappend:%i\n", k, data->arglst[k].append);
+		if (data->arglst[k].append == TRUE)
+			printf("k:%i\tappend:%i\n", k, data->arglst[k].append);*/
 		data->arglst[k].args = (char **)malloc(sizeof(char *) * (limit + 1));
 		j = -1;
 		while (++j < limit)
@@ -69,10 +70,11 @@ static void	assignment_arglst(t_data *data)
 			while (data->args[i].token != WORD)
 				i += 2;
 			data->arglst[k].args[j] = ft_strdup(data->args[i].s);
-			printf("k:%i\targs[%i]:%s\n", k, j, data->arglst[k].args[j]);
+			//printf("k:%i\targs[%i]:%s\n", k, j, data->arglst[k].args[j]);
 			free(data->args[i].s);
 			i++;
 		}
+		data->arglst[k].args[j] = NULL;
 	}
 	//free(data->args);
 }
@@ -90,7 +92,7 @@ void	arglst_generator(t_data *data)
 	if (!data)
 		return ;
 	i = -1;
-	while (++i < data->cmd_count)
+	while (++i <= data->cmd_count)
 	{
 		data->arglst[i].args = NULL;
 		data->arglst[i].in = NULL;

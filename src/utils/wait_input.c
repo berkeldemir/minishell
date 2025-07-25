@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/24 21:44:53 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/25 13:18:25 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static char	*get_display_path(char *path)
 static void	print_prompt(t_data *data)
 {
 	data->input = readline("\033[38;2;8;99;117mMINISHELL>₺ \033[0m");
-	printf("%s\n", getcwd(NULL, 0));
-	printf("%s\n", data->input);
+	//printf("%s\n", getcwd(NULL, 0));
+	//printf("%s\n", data->input);
 }
 
 void handle_sigint(int sig)
@@ -99,7 +99,7 @@ void	wait_input(t_data *data)
 			add_history(data->input);
 			if (syntax_checker(data->input) != 0 || parser(data) != 0)
 				continue ;
-			printf("-----after parser------\n");
+			//printf("-----after parser------\n");
 			arglst_generator(data); // data->args free yok.
 			//printf("cmd_count: %i\n", data->cmd_count);
 			/*int	i = -1;

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/24 21:16:19 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:09:56 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,36 @@ void	handle_path_not_found(char **path, char **args)
 		}
 		i++;
 	}
-	(perror("command not found!"), exit(EXIT_FAILURE));
+	(perror("command not found"), exit(EXIT_FAILURE));
 }
 
-static void	link_pipe_ends(t_data *data, int i)
+static void	link_pipe_ends_and_redirs(t_data *data, int i)
 {
 	int	j;
+	int	fd;
 
-	if (i > 0)
-		dup2(data->fds[(i - 1) * 2], STDIN_FILENO);
-	if (i < data->cmd_count - 1)
+	if (data->arglst[i].in)
+	{
+		fd = open(data->arglst[i].in, O_RDONLY);
+		if (fd < 0)
+			(perror("open infile"), exit(1));
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+	else if (i > 0)
+    	dup2(data->fds[(i - 1) * 2], STDIN_FILENO);
+	if (data->arglst[i].out)
+	{
+		if (data->arglst[i].append == 1)
+			fd = open(data->arglst[i].out, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		else
+			fd = open(data->arglst[i].out, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (fd < 0)
+			(perror("open outfile"), exit(1));
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	else if (i < data->cmd_count - 1)
 		dup2(data->fds[(i * 2) + 1], STDOUT_FILENO);
 	j = 0;
 	while (j < 2 * (data->cmd_count - 1))
@@ -103,7 +123,7 @@ int	execute(t_data *data, int i, char **current_env)
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		link_pipe_ends(data, i);
+		link_pipe_ends_and_redirs(data, i);
 		if (is_built_in(data, args))
 			(close_all(data), exit(EXIT_SUCCESS));
 		path = get_command_path(args[0], data);
@@ -117,12 +137,13 @@ int	execute(t_data *data, int i, char **current_env)
 		signal(SIGINT, SIG_IGN);
 		if (i == data->cmd_count - 1)
 		{
-			i = -1;
-			while (++i < 2 * (data->cmd_count - 1))
-				close(data->fds[i]);
+			i = 0;
+			while (i < 2 * (data->cmd_count - 1))
+				close(data->fds[i++]);
 			free(data->fds);
 		}
-		waitpid(pid, NULL, 0);
+		while (wait(NULL) > 0);
+		//waitpid(pid, NULL, 0);
 		signal(SIGINT, handle_sigint);
 	}
 	else
