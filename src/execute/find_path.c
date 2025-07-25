@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:46:54 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/24 14:08:28 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:48:04 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*get_command_path(char *str, t_data *data)
 	full_path = get_env_val(data, "PATH");
 	path_array = ft_split(full_path, ':');
 	i = -1;
+	printf("---%s---\n", str);
 	while (path_array[++i])
 	{
 		command_path = converter(str, path_array[i]);
