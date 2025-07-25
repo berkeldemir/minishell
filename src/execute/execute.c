@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/25 14:09:56 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:00:43 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ static void	link_pipe_ends_and_redirs(t_data *data, int i)
     	dup2(data->fds[(i - 1) * 2], STDIN_FILENO);
 	if (data->arglst[i].out)
 	{
-		if (data->arglst[i].append == 1)
-			fd = open(data->arglst[i].out, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		else
-			fd = open(data->arglst[i].out, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		fd = open(data->arglst[i].out, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (fd < 0)
 			(perror("open outfile"), exit(1));
 		dup2(fd, STDOUT_FILENO);

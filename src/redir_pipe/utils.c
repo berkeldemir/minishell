@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/25 13:24:40 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:03:11 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,21 @@
 
 static int	handle_redirs_arglst(t_data *data, int i, int k)
 {
+	char	*str;
+	int		fd;
+
 	if (data->args[i].token == APPEND || data->args[i].token == REDIR_OUT)
-		data->arglst[k].out = ft_strdup(data->args[i + 1].s);
+	{
+		str = ft_strdup(data->args[i + 1].s);
+		if (data->args[i].token == REDIR_OUT)
+		{
+			fd = open(str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			if (fd < 0)
+				(perror("open outfile"), exit(1));
+			close(fd);
+		}
+		data->arglst[k].out = str;
+	}
 	else if (data->args[i].token == REDIR_IN)
 		data->arglst[k].in = ft_strdup(data->args[i + 1].s);
 	else if (data->args[i].token == HEREDOC)
