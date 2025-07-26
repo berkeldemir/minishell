@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/25 18:41:06 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:41:55 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ static void	assignment_arglst(t_data *data)
 	while (++k >= 0 && ++i < data->arg_count && k < data->cmd_count)
 	{
 		limit = find_size_arglst(data, &i, data->arg_count, k);
-		if (data->arglst[k].in)
+		/*if (data->arglst[k].in)
 			printf("k:%i\tin:%s\n", k, data->arglst[k].in);
 		if (data->arglst[k].out)
 			printf("k:%i\tout:%s\n", k, data->arglst[k].out);
 		if (data->arglst[k].lmt)
 			printf("k:%i\tlmt:%s\n", k, data->arglst[k].lmt);
 		if (data->arglst[k].append == TRUE)
-			printf("k:%i\tappend:%i\n", k, data->arglst[k].append);
+			printf("k:%i\tappend:%i\n", k, data->arglst[k].append);*/
 		data->arglst[k].args = (char **)malloc(sizeof(char *) * (limit + 1));
 		j = -1;
 		while (++j < limit)
@@ -92,7 +92,7 @@ static void	assignment_arglst(t_data *data)
 			while (data->args[i].token != WORD)
 				i += 2;
 			data->arglst[k].args[j] = ft_strdup(data->args[i].s);
-			printf("k:%i\targs[%i]:%s\n", k, j, data->arglst[k].args[j]);
+			//printf("k:%i\targs[%i]:%s\n", k, j, data->arglst[k].args[j]);
 			//free(data->args[i].s);
 			i++;
 		}

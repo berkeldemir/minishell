@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/25 13:18:25 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:09:05 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	wait_input(t_data *data)
 	char	path[1023];
 	char	**curr_env;
 	int		i;
-
+	
 	signal(SIGINT, handle_sigint);
 	while (1)
 	{
@@ -111,12 +111,15 @@ void	wait_input(t_data *data)
 					printf("[%i][%i]%s[%c]\n", i, j, data->arglst[i][j].s, data->arglst[i][j].token);
 			}
 			sleep(1000);*/
+			if (!data->arglst || !data->arglst[0].args || !data->arglst[0].args[0])
+			{
+				write(2, "minishell: empty command\n", 26);
+				continue;
+			}
 			curr_env = env_converter(data);
 			//printf("cmdcnt: %i\n", data->cmd_count);
 			assign_pipes(data);
-			i = -1;
-			while (++i < data->cmd_count)
-				execute(data, i, curr_env);
+			executor(data, curr_env);
 			//free(curr_env);
 		}
 		free(data->input);

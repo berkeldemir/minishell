@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/25 16:00:43 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:38:28 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,43 +107,34 @@ static void	close_all(t_data *data)
 		close(data->fds[j]);
 }
 
-int	execute(t_data *data, int i, char **current_env)
+int	executor(t_data *data, char **env)
 {
 	pid_t	pid;
-	char	*path;
-	char	**args;
+	int		i;
+	int		status;
 
-	args = data->arglst[i].args; //args_converter(data, i);
-	if (data->cmd_count == 1 && is_built_in(data, args))
-		return (0);
-	pid = fork();
-	if (pid == 0)
+	i = -1;
+	while (++i < data->cmd_count)
 	{
-		signal(SIGINT, SIG_DFL);
-		link_pipe_ends_and_redirs(data, i);
-		if (is_built_in(data, args))
-			(close_all(data), exit(EXIT_SUCCESS));
-		path = get_command_path(args[0], data);
-		if (!path)
-			handle_path_not_found(&path, args);
-		execve(path, args, current_env);
-		(perror("minishell"), close_all(data), exit(EXIT_FAILURE));
-	}
-	else if (pid > 0)
-	{
-		signal(SIGINT, SIG_IGN);
-		if (i == data->cmd_count - 1)
+		pid = fork();
+		if (pid == 0)
 		{
-			i = 0;
-			while (i < 2 * (data->cmd_count - 1))
-				close(data->fds[i++]);
-			free(data->fds);
+			signal(SIGINT, SIG_DFL);
+			link_pipe_ends_and_redirs(data, i);
+			char **args = data->arglst[i].args;
+			if (is_built_in(data, args))
+				exit(EXIT_SUCCESS);
+			char *path = get_command_path(args[0], data);
+			if (!path)
+				handle_path_not_found(&path, args);
+			execve(path, args, env);
+			perror("execve");
+			exit(EXIT_FAILURE);
 		}
-		while (wait(NULL) > 0);
-		//waitpid(pid, NULL, 0);
-		signal(SIGINT, handle_sigint);
+		else if (pid < 0)
+			perror("fork");
 	}
-	else
-		perror("fork");
-	return (0);
+	close_all(data);
+	while (wait(&status) > 0)
+	return (WIFEXITED(status) ? WEXITSTATUS(status) : 1);
 }
