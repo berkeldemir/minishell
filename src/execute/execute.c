@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/26 19:38:28 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:27:58 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ int	executor(t_data *data, char **env)
 	int		i;
 	int		status;
 
+	int stdin_copy = dup(STDIN_FILENO);
+	int stdout_copy = dup(STDOUT_FILENO);
+
 	i = -1;
 	while (++i < data->cmd_count)
 	{
@@ -136,5 +139,9 @@ int	executor(t_data *data, char **env)
 	}
 	close_all(data);
 	while (wait(&status) > 0)
+	dup2(stdin_copy, STDIN_FILENO);
+	dup2(stdout_copy, STDOUT_FILENO);
+	close(stdin_copy);
+	close(stdout_copy);
 	return (WIFEXITED(status) ? WEXITSTATUS(status) : 1);
 }
