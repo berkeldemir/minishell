@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/28 17:27:58 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/29 09:50:25 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	handle_path_not_found(char **path, char **args)
 		}
 		i++;
 	}
-	(perror("command not found"), exit(EXIT_FAILURE));
+	(free(*path), perror("command not found"), exit(EXIT_FAILURE));
 }
 
 static void	link_pipe_ends_and_redirs(t_data *data, int i)
@@ -107,41 +107,51 @@ static void	close_all(t_data *data)
 		close(data->fds[j]);
 }
 
+static void	child_process(t_data *data, int i)
+{
+	char	*path;
+	char	**env;
+
+	signal(SIGINT, SIG_DFL);
+	link_pipe_ends_and_redirs(data, i);
+	if (is_built_in(data, data->arglst[i].args))
+		exit(EXIT_SUCCESS);
+	path = get_command_path(data->arglst[i].args[0], data);
+	if (!path)
+		handle_path_not_found(&path, data->arglst[i].args);
+	env = env_converter(data);
+	execve(path, data->arglst[i].args, env);
+	i = -1;
+	while (env[++i])
+		free(env[i]);
+	free(env);
+	(free(path), perror("execve"), exit(EXIT_FAILURE));
+}
+
 int	executor(t_data *data, char **env)
 {
 	pid_t	pid;
 	int		i;
 	int		status;
 
-	int stdin_copy = dup(STDIN_FILENO);
-	int stdout_copy = dup(STDOUT_FILENO);
-
+	data->stdin_dup = dup(STDIN_FILENO);
+	data->stdout_dup = dup(STDOUT_FILENO);
+	if (data->cmd_count == 1 && is_built_in(data, data->arglst[0].args))
+		return (1);
 	i = -1;
 	while (++i < data->cmd_count)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			signal(SIGINT, SIG_DFL);
-			link_pipe_ends_and_redirs(data, i);
-			char **args = data->arglst[i].args;
-			if (is_built_in(data, args))
-				exit(EXIT_SUCCESS);
-			char *path = get_command_path(args[0], data);
-			if (!path)
-				handle_path_not_found(&path, args);
-			execve(path, args, env);
-			perror("execve");
-			exit(EXIT_FAILURE);
-		}
+			child_process(data, i);
 		else if (pid < 0)
 			perror("fork");
 	}
-	close_all(data);
+	i = -1;
+	while (++i < 2 * (data->cmd_count - 1))
+		close(data->fds[i]);
 	while (wait(&status) > 0)
-	dup2(stdin_copy, STDIN_FILENO);
-	dup2(stdout_copy, STDOUT_FILENO);
-	close(stdin_copy);
-	close(stdout_copy);
+	(dup2(data->stdin_dup, STDIN_FILENO), close(data->stdin_dup));
+	(dup2(data->stdout_dup, STDOUT_FILENO), close(data->stdout_dup));
 	return (WIFEXITED(status) ? WEXITSTATUS(status) : 1);
 }

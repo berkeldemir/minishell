@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/25 13:18:09 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/29 09:59:09 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,8 @@ int	parser(t_data *data)
 			i += j;
 		}
 	}
+	i = -1;
+	while (data->args[++i].s)
+		printf("%i:%s[%c]\n", i, data->args[i].s, data->args[i].token);
 	return (parser_syntax_checker(data));
 }

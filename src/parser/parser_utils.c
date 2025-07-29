@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/24 21:50:43 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/29 10:03:05 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,18 @@ int	parser_syntax_checker(t_data *data)
 {
 	int	i;
 
-	i = 0;
-	while (i < data->arg_count)
+	i = -1;
+	while (++i < data->arg_count)
 	{
-		if (data->args[i].token != WORD)
+		if (data->args[i].s && data->args[i].token != WORD)
 		{
 			//printf("\ni:%i\tnext-token:%c\n", i, data->args[i + 1].token);
-			// Son argümansa ve WORD bekleniyorsa → syntax error
 			if (i + 1 == data->arg_count || data->args[i + 1].token != WORD)
 			{
 				printf("minishell: syntax error near %s\n", data->args[i].s);
 				return (1);
 			}
 		}
-		i++;
 	}
 	return (0);
 }
