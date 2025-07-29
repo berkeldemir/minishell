@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:47:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/20 19:15:24 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/29 10:30:02 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	**env_converter(t_data *data)
 		size++;
 		lst = lst->next;
 	}
-	ret = (char **)malloc((sizeof(char *) * size) + 1);
+	ret = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!ret)
 		return (NULL);
 	lst = *data->env;
@@ -104,5 +104,6 @@ char	**env_converter(t_data *data)
 		lst = lst->next;
 		i++;
 	}
+	ret[i] = NULL;
 	return (ret);
 }

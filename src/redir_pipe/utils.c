@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/26 19:41:55 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/29 10:20:40 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,30 @@ static void	assignment_arglst(t_data *data)
 	{
 		limit = find_size_arglst(data, &i, data->arg_count, k);
 		/*if (data->arglst[k].in)
-			printf("k:%i\tin:%s\n", k, data->arglst[k].in);
+		printf("k:%i\tin:%s\n", k, data->arglst[k].in);
 		if (data->arglst[k].out)
-			printf("k:%i\tout:%s\n", k, data->arglst[k].out);
+		printf("k:%i\tout:%s\n", k, data->arglst[k].out);
 		if (data->arglst[k].lmt)
-			printf("k:%i\tlmt:%s\n", k, data->arglst[k].lmt);
+		printf("k:%i\tlmt:%s\n", k, data->arglst[k].lmt);
 		if (data->arglst[k].append == TRUE)
-			printf("k:%i\tappend:%i\n", k, data->arglst[k].append);*/
+		printf("k:%i\tappend:%i\n", k, data->arglst[k].append);*/
 		data->arglst[k].args = (char **)malloc(sizeof(char *) * (limit + 1));
 		j = -1;
 		while (++j < limit)
 		{
 			/*while (data->args[i].token != WORD)
-				if  (data->args[i++].token != PIPE)
-					i++;*/
+			if  (data->args[i++].token != PIPE)
+			i++;*/
 			if (data->args[i].token == PIPE)
-				i++;
+			i++;
 			while (data->args[i].token != WORD)
-				i += 2;
+			i += 2;
 			data->arglst[k].args[j] = ft_strdup(data->args[i].s);
 			//printf("k:%i\targs[%i]:%s\n", k, j, data->arglst[k].args[j]);
 			//free(data->args[i].s);
 			i++;
 		}
-		if (data->args[i].token != PIPE)
+		if (i < data->arg_count && data->args[i].token != PIPE)
 			i += 2;
 		data->arglst[k].args[j] = NULL;
 	}
