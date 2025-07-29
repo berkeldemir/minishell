@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/29 09:50:25 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/29 12:42:44 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ static void	link_pipe_ends_and_redirs(t_data *data, int i)
 	int	j;
 	int	fd;
 
+	if (data->arglst[i].lmt)
+	{
+		launch_heredoc(data, i);
+		data->arglst[i].in = TMPFILE;
+	}
 	if (data->arglst[i].in)
 	{
 		fd = open(data->arglst[i].in, O_RDONLY);
@@ -153,5 +158,6 @@ int	executor(t_data *data, char **env)
 	while (wait(&status) > 0)
 	(dup2(data->stdin_dup, STDIN_FILENO), close(data->stdin_dup));
 	(dup2(data->stdout_dup, STDOUT_FILENO), close(data->stdout_dup));
+	unlink(TMPFILE);
 	return (WIFEXITED(status) ? WEXITSTATUS(status) : 1);
 }

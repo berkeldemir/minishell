@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/29 09:31:18 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/29 12:42:46 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include "./get_next_line/get_next_line.h"
 
 # define GREEN "\033[38;2;175;252;65m"
 # define BLUE "\033[38;2;8;99;117m"
@@ -35,6 +36,7 @@
 # define REDIR_OUT '>'
 # define APPEND 'A'
 # define HEREDOC 'H'
+# define TMPFILE "kdzuzbreusvcuvdzi"
 
 typedef enum e_bool
 {
@@ -145,5 +147,6 @@ char	*ms_ft_strjoin(char *s2, char *s1);
 
 //------- REDIR & PIPE ------------
 void	arglst_generator(t_data *data);
+int		launch_heredoc(t_data *data, int i);
 
 #endif
