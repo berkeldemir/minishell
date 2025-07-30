@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/29 12:42:46 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/30 14:49:40 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_data
 	int			rec_ret;
 	t_args		*args;
 	t_arglst	*arglst;
-	t_env		**env;
+	t_env		*env;
 	t_tmps		tmps;
 }	t_data;
 
@@ -148,5 +148,7 @@ char	*ms_ft_strjoin(char *s2, char *s1);
 //------- REDIR & PIPE ------------
 void	arglst_generator(t_data *data);
 int		launch_heredoc(t_data *data, int i);
+
+void	safe_quit(t_data *data, char **extra);
 
 #endif

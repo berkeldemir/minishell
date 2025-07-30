@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   safe_quit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/19 16:41:23 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/30 14:51:27 by beldemir         ###   ########.fr       */
+/*   Created: 2025/07/30 11:19:41 by beldemir          #+#    #+#             */
+/*   Updated: 2025/07/30 14:51:48 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_unset(t_data *data, char *key, char **args)
+void	safe_quit(t_data *data, char **extra)
 {
-	t_env	*tmp;
-	t_env	*prev;
+	int	i;
 
-	if (!args[1])
-		return (write(2, "unset: no enough arguments\n", 27), 1);
-	tmp = data->env;
-	prev = NULL;
-	while (tmp)
+	i = -1;
+	if (extra)
+		while (extra[++i])
+			free(extra[i]);
+	if (data->fds)
+		free(data->fds);
+	if (data->program_name)
+		free(data->program_name);
+	i = -1;
+	while (data->env)
 	{
-		if (ms_ft_strcmp(tmp->key, key) == 0)
-		{
-			if (prev == NULL)
-				data->env = tmp->next;
-			else
-				prev->next = tmp->next;
-			return (free(tmp->key), free(tmp->value), free(tmp), 0);
-		}
-		prev = tmp;
-		tmp = tmp->next;
+		free(data->env->key);
+		free(data->env->value);
+		data->env = data->env->next;
 	}
-	return (0);
+	
+	free(data->env);
+	free(data);
 }

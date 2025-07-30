@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:47:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/29 10:30:02 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/30 14:50:27 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_env_val(t_data *data, char *key)
 {
 	t_env	*tmp;
 
-	tmp = *data->env;
+	tmp = data->env;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0 && \
@@ -87,7 +87,7 @@ char	**env_converter(t_data *data)
 	char	**ret;
 
 	size = 0;
-	lst = *data->env;
+	lst = data->env;
 	while (lst)
 	{
 		size++;
@@ -96,7 +96,7 @@ char	**env_converter(t_data *data)
 	ret = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!ret)
 		return (NULL);
-	lst = *data->env;
+	lst = data->env;
 	i = 0;
 	while (i < size)
 	{

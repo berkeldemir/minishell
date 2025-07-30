@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/29 12:42:44 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/30 14:52:59 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	is_built_in(t_data *data, char **args)
 	return ret;
 }*/
 
-void	handle_path_not_found(char **path, char **args)
+static void	handle_path_not_found(t_data *data ,char **path, char **args)
 {
 	int	i;
 
@@ -64,7 +64,7 @@ void	handle_path_not_found(char **path, char **args)
 		}
 		i++;
 	}
-	(free(*path), perror("command not found"), exit(EXIT_FAILURE));
+	(free(*path), perror("command not found"), safe_quit(data, NULL), exit(EXIT_FAILURE));
 }
 
 static void	link_pipe_ends_and_redirs(t_data *data, int i)
@@ -123,14 +123,14 @@ static void	child_process(t_data *data, int i)
 		exit(EXIT_SUCCESS);
 	path = get_command_path(data->arglst[i].args[0], data);
 	if (!path)
-		handle_path_not_found(&path, data->arglst[i].args);
+		handle_path_not_found(data, &path, data->arglst[i].args);
 	env = env_converter(data);
 	execve(path, data->arglst[i].args, env);
 	i = -1;
 	while (env[++i])
 		free(env[i]);
 	free(env);
-	(free(path), perror("execve"), exit(EXIT_FAILURE));
+	(free(path), perror("execve"), safe_quit(data, NULL), exit(EXIT_FAILURE));
 }
 
 int	executor(t_data *data, char **env)

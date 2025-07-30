@@ -6,7 +6,7 @@
 #    By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/06 11:29:21 by beldemir          #+#    #+#              #
-#    Updated: 2025/07/29 12:19:02 by beldemir         ###   ########.fr        #
+#    Updated: 2025/07/30 14:49:09 by beldemir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS =	src/main.c src/utils/wait_input.c src/utils/alpha_sort.c src/env.c \
 	src/execute/find_path.c src/execute/ft_split.c src/execute/utils.c \
 	src/built_in/ft_echo.c src/built_in/ft_cd.c src/built_in/ft_pwd.c src/built_in/ft_exit.c \
 	src/built_in/ft_env.c src/built_in/ft_export.c src/built_in/ft_unset.c \
-	src/redir_pipe/utils.c src/redir_pipe/heredoc.c
+	src/redir_pipe/utils.c src/redir_pipe/heredoc.c src/utils/safe_quit.c
 OBJS = $(SRCS:.c=.o)
 GNLPATH = include/get_next_line
 GNLFILES = $(GNLPATH)/get_next_line.c $(GNLPATH)/get_next_line_utils.c

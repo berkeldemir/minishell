@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:22:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/20 19:03:52 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/30 14:51:15 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static void	export_write(t_data *data)
 	int		i;
 
 	size = 0;
-	tmp = *data->env;
+	tmp = data->env;
 	while (tmp && ++size)
 		tmp = tmp->next;
 	array = malloc(sizeof(t_env *) * size);
 	if (!array)
 		return ;
-	tmp = *data->env;
+	tmp = data->env;
 	i = 0;
 	while (i < size)
 	{
@@ -107,7 +107,7 @@ int	ft_export(t_data *data, char **args)
 		return (export_write(data), 0);
 	key = extract_key(args[1]);
 	value = extract_value(args[1]);
-	tmp = *data->env;
+	tmp = data->env;
 	while (tmp)
 	{
 		if (ms_ft_strcmp(tmp->key, key) == 0)
@@ -121,6 +121,6 @@ int	ft_export(t_data *data, char **args)
 		tmp = tmp->next;
 	}
 	tmp = env_new(key, value);
-	env_add_back(data->env, tmp);
+	env_add_back(&data->env, tmp);
 	return (0);
 }

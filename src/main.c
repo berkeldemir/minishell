@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/29 12:42:50 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/30 14:50:48 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int	init_program(t_data *data, int ac, char **av, char **envp)
 	if (ac != 1)
 		return (1);
 	data->program_name = ft_strdup(av[0]);
-	data->env = (t_env **)malloc(sizeof(t_env *));
+	data->env = (t_env *)malloc(sizeof(t_env));
 	if (!data->env)
 		return (1);
-	data->env[0] = NULL;
+	data->env = NULL;
 	signal(SIGINT, SIG_IGN);
 	i = -1;
 	while (envp[++i])
@@ -34,7 +34,7 @@ static int	init_program(t_data *data, int ac, char **av, char **envp)
 		val = ft_substr(envp[i], ft_strchr(envp[i], '=') - envp[i] + 1, \
 		ft_strlen(envp[i]));
 		node = env_new(key, val);
-		env_add_back(data->env, node);
+		env_add_back(&data->env, node);
 	}
 	return (0);
 }

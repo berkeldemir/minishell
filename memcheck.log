@@ -1,0 +1,252 @@
+==1106620== Memcheck, a memory error detector
+==1106620== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1106620== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1106620== Command: ./minishell
+==1106620== Parent PID: 1106589
+==1106620== 
+==1106651== Conditional jump or move depends on uninitialised value(s)
+==1106651==    at 0x404427: link_pipe_ends_and_redirs (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x4042D8: child_process (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x403FE4: executor (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401DEC: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==  Uninitialised value was created by a heap allocation
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x40599A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401D6F: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== 
+==1106651== HEAP SUMMARY:
+==1106651==     in use at exit: 216,096 bytes in 413 blocks
+==1106651==   total heap usage: 824 allocs, 411 frees, 243,571 bytes allocated
+==1106651== 
+==1106651== 15 bytes in 1 blocks are still reachable in loss record 9 of 77
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x403B5B: ft_strdup (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x405BA0: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x405A4A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401D6F: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== 15 bytes in 1 blocks are indirectly lost in loss record 10 of 77
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x402821: assign_arg (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x4024CC: parser (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401D58: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== 16 bytes in 1 blocks are still reachable in loss record 13 of 77
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x405AF7: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x405A4A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401D6F: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== 24 bytes in 1 blocks are definitely lost in loss record 17 of 77
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x401B0C: init_program (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AA8: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== 80 bytes in 1 blocks are definitely lost in loss record 25 of 77
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x40599A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401D6F: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== 191 (176 direct, 15 indirect) bytes in 1 blocks are definitely lost in loss record 31 of 77
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x4023AA: parser (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401D58: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== 728 bytes in 1 blocks are still reachable in loss record 35 of 77
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x4021D8: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401DCC: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== 2,136 bytes in 89 blocks are indirectly lost in loss record 49 of 77
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x401FE9: env_new (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401C23: init_program (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AA8: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== 2,160 (24 direct, 2,136 indirect) bytes in 1 blocks are definitely lost in loss record 50 of 77
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x401FE9: env_new (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401C23: init_program (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AA8: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== 4,589 bytes in 90 blocks are still reachable in loss record 63 of 77
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x4022B8: env_converter_helper (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x40221F: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401DCC: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+==1106651== LEAK SUMMARY:
+==1106651==    definitely lost: 304 bytes in 4 blocks
+==1106651==    indirectly lost: 2,151 bytes in 90 blocks
+==1106651==      possibly lost: 0 bytes in 0 blocks
+==1106651==    still reachable: 5,348 bytes in 93 blocks
+==1106651==         suppressed: 208,293 bytes in 226 blocks
+==1106651== 
+==1106651== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 1 from 1)
+==1106651== 
+==1106651== 1 errors in context 1 of 5:
+==1106651== Conditional jump or move depends on uninitialised value(s)
+==1106651==    at 0x404427: link_pipe_ends_and_redirs (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x4042D8: child_process (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x403FE4: executor (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401DEC: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==  Uninitialised value was created by a heap allocation
+==1106651==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106651==    by 0x40599A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401D6F: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106651==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106651== 
+--1106651-- 
+--1106651-- used_suppression:     67 ignore_readline_leaks readline.supp:2 suppressed: 208,293 bytes in 226 blocks
+==1106651== 
+==1106651== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 1 from 1)
+==1106754== Conditional jump or move depends on uninitialised value(s)
+==1106754==    at 0x404427: link_pipe_ends_and_redirs (in /home/beldemir/Desktop/minishell/minishell)
+==1106754==    by 0x4042D8: child_process (in /home/beldemir/Desktop/minishell/minishell)
+==1106754==    by 0x403FE4: executor (in /home/beldemir/Desktop/minishell/minishell)
+==1106754==    by 0x401DEC: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106754==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106754==  Uninitialised value was created by a heap allocation
+==1106754==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106754==    by 0x40599A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==1106754==    by 0x401D6F: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106754==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106754== 
+==1106620== 
+==1106620== HEAP SUMMARY:
+==1106620==     in use at exit: 226,413 bytes in 695 blocks
+==1106620==   total heap usage: 911 allocs, 216 frees, 247,444 bytes allocated
+==1106620== 
+==1106620== 0 bytes in 1 blocks are indirectly lost in loss record 1 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x401E64: assign_pipes (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401DDC: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 0 bytes in 1 blocks are definitely lost in loss record 2 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x401E64: assign_pipes (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401DDC: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 2 bytes in 2 blocks are indirectly lost in loss record 3 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x403CBE: ft_substr (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401C12: init_program (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AA8: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 12 bytes in 1 blocks are indirectly lost in loss record 6 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x403B5B: ft_strdup (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AF8: init_program (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AA8: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 21 bytes in 2 blocks are indirectly lost in loss record 14 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x402821: assign_arg (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x4024CC: parser (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401D58: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 21 bytes in 2 blocks are indirectly lost in loss record 15 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x403B5B: ft_strdup (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x405BA0: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x405A4A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401D6F: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 24 bytes in 1 blocks are definitely lost in loss record 18 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x401B0C: init_program (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AA8: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 32 bytes in 2 blocks are indirectly lost in loss record 20 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x405AF7: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x405A4A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401D6F: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 80 bytes in 1 blocks are indirectly lost in loss record 28 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x40599A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401D6F: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 111 (80 direct, 31 indirect) bytes in 1 blocks are definitely lost in loss record 32 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x40599A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401D6F: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 176 bytes in 1 blocks are indirectly lost in loss record 35 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x4023AA: parser (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401D58: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 191 (176 direct, 15 indirect) bytes in 1 blocks are definitely lost in loss record 36 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x4023AA: parser (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401D58: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 1,222 bytes in 90 blocks are indirectly lost in loss record 50 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x403D24: ft_substr (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401BB2: init_program (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AA8: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 2,160 bytes in 90 blocks are indirectly lost in loss record 54 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x401FE9: env_new (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401C23: init_program (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AA8: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 3,365 bytes in 88 blocks are indirectly lost in loss record 56 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x403D24: ft_substr (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401C12: init_program (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AA8: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 7,133 (88 direct, 7,045 indirect) bytes in 1 blocks are definitely lost in loss record 68 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x401A63: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 9,178 bytes in 180 blocks are indirectly lost in loss record 80 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x4022B8: env_converter_helper (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x40221F: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401DCC: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== 10,634 (1,456 direct, 9,178 indirect) bytes in 2 blocks are definitely lost in loss record 81 of 84
+==1106620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106620==    by 0x4021D8: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401DCC: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1106620==    by 0x401AB1: main (in /home/beldemir/Desktop/minishell/minishell)
+==1106620== 
+==1106620== LEAK SUMMARY:
+==1106620==    definitely lost: 1,824 bytes in 7 blocks
+==1106620==    indirectly lost: 16,269 bytes in 460 blocks
+==1106620==      possibly lost: 0 bytes in 0 blocks
+==1106620==    still reachable: 0 bytes in 0 blocks
+==1106620==         suppressed: 208,320 bytes in 228 blocks
+==1106620== 
+==1106620== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 0 from 0)
+--1106620-- 
+--1106620-- used_suppression:     66 ignore_readline_leaks readline.supp:2 suppressed: 208,320 bytes in 228 blocks
+==1106620== 
+==1106620== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 0 from 0)
