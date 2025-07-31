@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 11:55:47 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 13:07:08 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ static void	assign_pipes(t_data *data)
 void	wait_input(t_data *data)
 {
 	char	path[1023];
-	char	**curr_env;
-	int		i;
 	
 	signal(SIGINT, handle_sigint);
 	while (1)
@@ -121,7 +119,7 @@ void	wait_input(t_data *data)
 			data->curr_env = env_converter(data);
 			//printf("cmdcnt: %i\n", data->cmd_count);
 			assign_pipes(data);
-			executor(data, data->curr_env);
+			executor(data);
 			//free(curr_env);
 		}
 		free(data->input);

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 12:40:14 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 13:07:22 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char	*ft_itoa(int n);
 //-------- EXECUTE -------------
 int		syntax_checker(char *input); // BURADA!!!!!!!!! ARAMA BOŞUNA
 int		execute(t_data *data, int i, char **current_env);
-int	executor(t_data *data, char **env);
+int		executor(t_data *data);
 char	*get_command_path(char *str, t_data *data);
 void	handle_sigint(int sig);
 void	wait_input(t_data *data);

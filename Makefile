@@ -6,13 +6,13 @@
 #    By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/06 11:29:21 by beldemir          #+#    #+#              #
-#    Updated: 2025/07/30 14:49:09 by beldemir         ###   ########.fr        #
+#    Updated: 2025/07/31 13:05:04 by beldemir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS =
+CFLAGS = -Wall -Wextra -Werror
 READLINEFLAGS = -lreadline
 SRCS =	src/main.c src/utils/wait_input.c src/utils/alpha_sort.c src/env.c \
 	src/parser/parser.c src/parser/parser_utils.c src/parser/handle_redir_pipe.c \

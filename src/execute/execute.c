@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/31 11:46:40 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 13:07:34 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,19 +103,9 @@ static void	link_pipe_ends_and_redirs(t_data *data, int i)
 	//free(data->fds);
 }
 
-static void	close_all(t_data *data)
-{
-	int	j;
-
-	j = -1;
-	while (++j < 2 * (data->cmd_count - 1))
-		close(data->fds[j]);
-}
-
 static void	child_process(t_data *data, int i)
 {
 	char	*path;
-	char	**env;
 
 	signal(SIGINT, SIG_DFL);
 	link_pipe_ends_and_redirs(data, i);
@@ -124,16 +114,11 @@ static void	child_process(t_data *data, int i)
 	path = get_command_path(data->arglst[i].args[0], data);
 	if (!path)
 		handle_path_not_found(data, &path, data->arglst[i].args);
-	env = env_converter(data);
-	execve(path, data->arglst[i].args, env);
-	i = -1;
-	while (env[++i])
-		free(env[i]);
-	free(env);
+	execve(path, data->arglst[i].args, data->curr_env);
 	(free(path), perror("execve"), safe_quit(data, NULL, 0), exit(0));
 }
 
-int	executor(t_data *data, char **env)
+int	executor(t_data *data)
 {
 	pid_t	pid;
 	int		i;
