@@ -1,0 +1,748 @@
+==2425592== Memcheck, a memory error detector
+==2425592== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2425592== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2425592== Command: ./minishell
+==2425592== Parent PID: 2425555
+==2425592== 
+==2425679== 
+==2425679== HEAP SUMMARY:
+==2425679==     in use at exit: 208,363 bytes in 226 blocks
+==2425679==   total heap usage: 953 allocs, 727 frees, 475,340 bytes allocated
+==2425679== 
+==2425679== LEAK SUMMARY:
+==2425679==    definitely lost: 0 bytes in 0 blocks
+==2425679==    indirectly lost: 0 bytes in 0 blocks
+==2425679==      possibly lost: 0 bytes in 0 blocks
+==2425679==    still reachable: 0 bytes in 0 blocks
+==2425679==         suppressed: 208,363 bytes in 226 blocks
+==2425679== 
+==2425679== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--2425679-- 
+--2425679-- used_suppression:     67 ignore_readline_leaks readline.supp:2 suppressed: 208,363 bytes in 226 blocks
+==2425679== 
+==2425679== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x401ECF: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba3880 is 0 bytes inside a block of size 50 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x401EC2: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x48ACBAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2425592==    by 0x488A694: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2425592==    by 0x4894D2A: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2425592==    by 0x401EFA: print_prompt (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401D6A: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406A22: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba7ad0 is 0 bytes after a block of size 0 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x401EB5: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x401F34: assign_pipes (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E6E: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x4067F1: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A4A: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4d00 is 0 bytes inside a block of size 720 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406841: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401EA8: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4022B8: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E5A: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x406818: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A4A: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4d00 is 0 bytes inside a block of size 720 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406841: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401EA8: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4022B8: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E5A: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406820: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A4A: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba5010 is 0 bytes inside a block of size 16 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406820: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401EA8: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x402398: env_converter_helper (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x4022FF: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E5A: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406841: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A4A: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4d00 is 0 bytes inside a block of size 720 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406841: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401EA8: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4022B8: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E5A: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x406893: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4ba0 is 0 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x4068A2: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4c30 is 0 bytes inside a block of size 16 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406943: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4060F7: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406055: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x4068C0: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4ba8 is 8 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x4068DC: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4bb0 is 16 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x4068F8: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4bb8 is 24 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x406914: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4ba0 is 0 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x40691B: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4c30 is 0 bytes inside a block of size 16 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406943: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4060F7: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406055: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406923: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4c80 is 0 bytes inside a block of size 49 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406923: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x403CAB: ft_strdup (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x4061A0: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406055: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x40693C: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4ba0 is 0 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406943: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4c30 is 0 bytes inside a block of size 16 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406943: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4060F7: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406055: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4ba0 is 0 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid read of size 8
+==2425592==    at 0x406986: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4a20 is 0 bytes inside a block of size 192 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40699F: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40248A: parser (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DE6: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40698D: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4b20 is 0 bytes inside a block of size 49 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40698D: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x402901: assign_arg (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x4025AC: parser (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DE6: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40699F: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4a20 is 0 bytes inside a block of size 192 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40699F: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40248A: parser (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DE6: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== HEAP SUMMARY:
+==2425592==     in use at exit: 208,313 bytes in 225 blocks
+==2425592==   total heap usage: 935 allocs, 807 frees, 474,692 bytes allocated
+==2425592== 
+==2425592== LEAK SUMMARY:
+==2425592==    definitely lost: 0 bytes in 0 blocks
+==2425592==    indirectly lost: 0 bytes in 0 blocks
+==2425592==      possibly lost: 0 bytes in 0 blocks
+==2425592==    still reachable: 0 bytes in 0 blocks
+==2425592==         suppressed: 208,313 bytes in 225 blocks
+==2425592== 
+==2425592== ERROR SUMMARY: 287 errors from 20 contexts (suppressed: 0 from 0)
+==2425592== 
+==2425592== 1 errors in context 1 of 20:
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40699F: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4a20 is 0 bytes inside a block of size 192 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40699F: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40248A: parser (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DE6: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 2 of 20:
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40698D: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4b20 is 0 bytes inside a block of size 49 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40698D: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x402901: assign_arg (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x4025AC: parser (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DE6: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 3 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x406986: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4a20 is 0 bytes inside a block of size 192 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40699F: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x40248A: parser (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DE6: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 4 of 20:
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4ba0 is 0 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 5 of 20:
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406943: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4c30 is 0 bytes inside a block of size 16 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406943: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4060F7: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406055: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 6 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x40693C: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4ba0 is 0 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 7 of 20:
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406923: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4c80 is 0 bytes inside a block of size 49 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406923: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x403CAB: ft_strdup (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x4061A0: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406055: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 8 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x40691B: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4c30 is 0 bytes inside a block of size 16 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406943: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4060F7: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406055: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 9 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x406914: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4ba0 is 0 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 10 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x4068F8: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4bb8 is 24 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 11 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x4068DC: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4bb0 is 16 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 12 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x4068C0: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4ba8 is 8 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 13 of 20:
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406841: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A4A: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4d00 is 0 bytes inside a block of size 720 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406841: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401EA8: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4022B8: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E5A: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 14 of 20:
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406A22: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba7ad0 is 0 bytes after a block of size 0 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x401EB5: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x401F34: assign_pipes (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E6E: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 1 errors in context 15 of 20:
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x401ECF: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba3880 is 0 bytes inside a block of size 50 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x401EC2: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x48ACBAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2425592==    by 0x488A694: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2425592==    by 0x4894D2A: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2425592==    by 0x401EFA: print_prompt (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401D6A: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 2 errors in context 16 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x4068A2: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4c30 is 0 bytes inside a block of size 16 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406943: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4060F7: assignment_arglst (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406055: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 2 errors in context 17 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x406893: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A53: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4ba0 is 0 bytes inside a block of size 80 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406955: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E9D: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x405F8A: arglst_generator (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DFD: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 89 errors in context 18 of 20:
+==2425592== Invalid free() / delete / delete[] / realloc()
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406820: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A4A: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba5010 is 0 bytes inside a block of size 16 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406820: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401EA8: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x402398: env_converter_helper (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x4022FF: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E5A: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 89 errors in context 19 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x406818: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A4A: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4d00 is 0 bytes inside a block of size 720 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406841: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401EA8: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4022B8: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E5A: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+==2425592== 
+==2425592== 90 errors in context 20 of 20:
+==2425592== Invalid read of size 8
+==2425592==    at 0x4067F1: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x406A4A: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401DA1: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Address 0x4ba4d00 is 0 bytes inside a block of size 720 free'd
+==2425592==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x406841: free_env (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401EA8: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==  Block was alloc'd at
+==2425592==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2425592==    by 0x4022B8: env_converter (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401E5A: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2425592==    by 0x401AD1: main (in /home/beldemir/Desktop/minishell/minishell)
+==2425592== 
+--2425592-- 
+--2425592-- used_suppression:     66 ignore_readline_leaks readline.supp:2 suppressed: 208,313 bytes in 225 blocks
+==2425592== 
+==2425592== ERROR SUMMARY: 287 errors from 20 contexts (suppressed: 0 from 0)

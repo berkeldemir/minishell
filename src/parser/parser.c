@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 13:31:08 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:49:09 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ static int	assign_arg_helper(t_data *data, char *input, int *j)
 	int		i;
 	char	*val;
 
-	if (input[0] == '$')
+	if (input[0] == '$' && data->tmps.quote != '\'')
 	{
-		if (data->tmps.quote == '\'')
-			return (1);
 		i = 1;
+		if (!is_alnum(input[i]) && input[i] != '_' && input[i] != '?' && \
+		(input[i] > '9' || input[i] < '0'))
+			return (put_value_in_place(data, "$", j), 1);
 		if ((input[i] <= '9' && input[i] >= '0') || input[i] == '?')
 		{
 			if (input[i] == '0')
@@ -77,14 +78,14 @@ static int	calc_env_var_len(t_data *data, char *input, int *len)
 
 	i = 0;
 	if (data->tmps.quote == '\'')
-		return (++(*len) && 1);
-	if ((input[i] <= '9' && input[i] >= '0') || input[i] == '#' || \
-	input[i] == ' ' || input[i] == '\0' || input[i] == data->tmps.quote)
+		return (++(*len), 0);
+	if ((input[i] <= '9' && input[i] >= '0') || input[i] == ' ' \
+	|| input[i] == '\0' || input[i] == data->tmps.quote)
 	{
 		if (input[i] == '0')
 			*len += ft_strlen(data->program_name);
 		else if (input[i] == '?')
-			*len += ft_strlen(ft_itoa(data->rec_ret));
+			*len += ft_strlen(ft_itoa(data->exit_code));
 		else if (input[i] == ' ')
 			*len += 2;
 		else if (input[i] == '\0' || input[i] == data->tmps.quote)
@@ -106,7 +107,7 @@ static int	calc_arg_len(t_data *data, char *input)
 
 	i = 0;
 	len = 0;
-	while (input[i])
+	while (i < (int)ft_strlen(input))
 	{
 		data->tmps.quote = input[i];
 		if (is_quote(data->tmps.quote))
@@ -154,8 +155,5 @@ int	parser(t_data *data)
 			i += j;
 		}
 	}
-	//i = -1;
-	//while (data->args[++i].s)
-	//	printf("%i:%s[%c]\n", i, data->args[i].s, data->args[i].token);
 	return (parser_syntax_checker(data));
 }

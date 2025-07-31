@@ -9,6 +9,6 @@ valgrind \
   --show-leak-kinds=all \
   --track-origins=yes \
   -s \
-  --log-file=memcheck.log \
+  --log-file=memcheck1.log \
   --suppressions=readline.supp \
   ./minishell

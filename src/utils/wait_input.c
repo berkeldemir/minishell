@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 14:37:06 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:09:55 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	wait_input(t_data *data)
 		if (!data->input)
 		{
 			write(1, "exit\n", 5);
+			safe_quit(data, NULL, 0);
 			break ;
 		}
 		if (data->input[0] != '\0')
@@ -130,13 +131,14 @@ void	wait_input(t_data *data)
 				write(2, "minishell: empty command\n", 26);
 				continue;
 			}
-			if (data->curr_env)
-				free(data->curr_env);
 			data->curr_env = env_converter(data);
 			//printf("cmdcnt: %i\n", data->cmd_count);
 			assign_pipes(data);
 			signal(SIGINT, handle_sigint_child);
 			data->exit_code = executor(data);
+			free_args(data);
+			free_env(data, FALSE);
+			free(data->fds);
 			//free(curr_env);
 		}
 		free(data->input);

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:25:07 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/31 13:31:33 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 15:02:41 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ int	ft_exit(t_data *data, char **args)
 		if (data->cmd_count != 1)
 			safe_quit(data, NULL, 0);
 		write(STDOUT_FILENO, "exit\n", 5);
+		safe_quit(data, NULL, 0);
 		exit(retval % 256);
 	}
+	safe_quit(data, NULL, 0);
 	write(STDOUT_FILENO, "exit\n", 5);
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:47:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 12:16:48 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:11:43 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ char	*get_env_val(t_data *data, char *key)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0 && \
 		ft_strlen(key) == ft_strlen(tmp->key))
-			return (tmp->value);
+			return (free(key), tmp->value);
 		tmp = tmp->next;
 	}
-	return (NULL);
+	return (free(key), NULL);
 }
 
 static char	*env_converter_helper(t_env *lst)

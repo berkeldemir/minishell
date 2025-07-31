@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 14:26:05 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 19:09:44 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	wait_input(t_data *data);
 //-------- BUILT-IN -------------
 int		ft_echo(t_data *data, char **args);
 int		ft_cd(t_data *data, char **args);
-int		ft_pwd(char **args);
+int		ft_pwd(void);
 int		ft_exit(t_data *data, char **args);
 int		ft_env(t_data *data);
 int		ft_export(t_data *data, char **args);
@@ -156,7 +156,10 @@ int		launch_heredoc(t_data *data, int i);
 
 
 int		ft_atoi(const char *str, unsigned long *tab_num);
+void	link_pipe_ends_and_redirs(t_data *data, int i);
 void	*ft_calloc(int size);
 void	safe_quit(t_data *data, char **extra, int max);
+void	free_env(t_data *data, t_bool free_all);
+void	free_args(t_data *data);
 
 #endif
