@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/29 12:23:05 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:41:19 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	arglst_generator(t_data *data)
 		data->arglst[i].args = NULL;
 		data->arglst[i].in = NULL;
 		data->arglst[i].out = NULL;
+		data->arglst[i].lmt = NULL;
 		data->arglst[i].append = FALSE;
 	}
 	assignment_arglst(data);

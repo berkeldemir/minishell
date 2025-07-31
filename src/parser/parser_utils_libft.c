@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:41:04 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/27 19:34:56 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:39:41 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,4 +169,45 @@ char	*ft_itoa(int n)
 		return (NULL);
 	new = ft_writenum(new, n, size);
 	return (new);
+}
+
+void	*ft_calloc(int size)
+{
+	int		i;
+	void	*ret;
+
+	ret = malloc(size);
+	if (!ret)
+		return (NULL);
+	i = -1;
+	while (++i < size)
+		((char *)ret)[i] = 0;
+	return (ret);
+}
+
+int	ft_atoi(const char *str, unsigned long *tab_num)
+{
+	int				i;
+	unsigned long	num;
+
+	if (!str)
+		return (-1);
+	i = 0;
+	num = 0;
+	while (str[i] != '\0' && (str[i] == 32 || (str[i] <= 13 && str[i] >= 9)))
+		i++;
+	if (str[i] != '\0' && (str[i] == '-' || str[i] == '+'))
+		if (str[i++] == '-')
+			return (-1);
+	while (str[i] != '\0' && str[i] <= '9' && str[i] >= '0')
+	{
+		num = (num * 10) + (str[i++] - 48);
+		if (num > INT_MAX)
+			return (-1);
+	}
+	if (str[i] != '\0' && !(str[i] == 32 || (str[i] <= 13 && str[i] >= 9)))
+		return (-1);
+	if (tab_num)
+		*tab_num = num;
+	return (0);
 }

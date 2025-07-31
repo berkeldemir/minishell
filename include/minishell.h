@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/30 14:49:40 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:40:14 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include "./get_next_line/get_next_line.h"
+# include <limits.h>
 
 # define GREEN "\033[38;2;175;252;65m"
 # define BLUE "\033[38;2;8;99;117m"
@@ -84,6 +85,7 @@ typedef struct s_data
 	int			arg_count;
 	int			cmd_count;
 	int			rec_ret;
+	char		**curr_env;
 	t_args		*args;
 	t_arglst	*arglst;
 	t_env		*env;
@@ -149,6 +151,9 @@ char	*ms_ft_strjoin(char *s2, char *s1);
 void	arglst_generator(t_data *data);
 int		launch_heredoc(t_data *data, int i);
 
-void	safe_quit(t_data *data, char **extra);
+
+int		ft_atoi(const char *str, unsigned long *tab_num);
+void	*ft_calloc(int size);
+void	safe_quit(t_data *data, char **extra, int max);
 
 #endif

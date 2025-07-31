@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/26 19:09:05 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/07/31 11:55:47 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,12 @@ void	wait_input(t_data *data)
 				write(2, "minishell: empty command\n", 26);
 				continue;
 			}
-			curr_env = env_converter(data);
+			if (data->curr_env)
+				free(data->curr_env);
+			data->curr_env = env_converter(data);
 			//printf("cmdcnt: %i\n", data->cmd_count);
 			assign_pipes(data);
-			executor(data, curr_env);
+			executor(data, data->curr_env);
 			//free(curr_env);
 		}
 		free(data->input);

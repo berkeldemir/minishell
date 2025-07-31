@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/30 14:52:59 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:46:40 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	handle_path_not_found(t_data *data ,char **path, char **args)
 		}
 		i++;
 	}
-	(free(*path), perror("command not found"), safe_quit(data, NULL), exit(EXIT_FAILURE));
+	(free(*path), perror("command not found"), safe_quit(data, NULL, 0), exit(EXIT_FAILURE));
 }
 
 static void	link_pipe_ends_and_redirs(t_data *data, int i)
@@ -130,7 +130,7 @@ static void	child_process(t_data *data, int i)
 	while (env[++i])
 		free(env[i]);
 	free(env);
-	(free(path), perror("execve"), safe_quit(data, NULL), exit(EXIT_FAILURE));
+	(free(path), perror("execve"), safe_quit(data, NULL, 0), exit(0));
 }
 
 int	executor(t_data *data, char **env)

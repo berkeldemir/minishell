@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/30 14:50:48 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:58:49 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,8 @@ static int	init_program(t_data *data, int ac, char **av, char **envp)
 	if (ac != 1)
 		return (1);
 	data->program_name = ft_strdup(av[0]);
-	data->env = (t_env *)malloc(sizeof(t_env));
-	if (!data->env)
-		return (1);
-	data->env = NULL;
 	signal(SIGINT, SIG_IGN);
-	i = -1;
+	i = 0;
 	while (envp[++i])
 	{
 		key = ft_substr(envp[i], 0, ft_strchr(envp[i], '=') - envp[i]);
@@ -71,10 +67,10 @@ int	main(int ac, char **av, char **envp)
 {
 	t_data	*data;
 
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
-		return (1);
 	if (ac != 1)
+		return (1);
+	data = (t_data *)ft_calloc(sizeof(t_data));
+	if (!data)
 		return (1);
 	init_program(data, ac, av, envp);
 	wait_input(data);
