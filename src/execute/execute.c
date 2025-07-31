@@ -6,30 +6,35 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/31 13:07:34 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 14:33:42 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	is_built_in(t_data *data, char **args)
+static int	is_built_in(t_data *data, char **args, int *retval)
 {
+	*retval = 0;
 	if (ms_ft_strcmp(data->args[0].s, "echo")  == 0)
-		return (ft_echo(data, args), 1);
+		*retval = ft_echo(data, args);
 	else if (ms_ft_strcmp(data->args[0].s, "cd")  == 0)
-		return (ft_cd(data, args), 1);
+		*retval = ft_cd(data, args);
 	else if (ms_ft_strcmp(data->args[0].s, "pwd")  == 0)
-		return (ft_pwd(args), 1);
+		*retval = ft_pwd(args);
 	else if (ms_ft_strcmp(data->args[0].s, "export")  == 0)
-		return (ft_export(data, args), 1);
+		*retval = ft_export(data, args);
 	else if (ms_ft_strcmp(data->args[0].s, "unset")  == 0)
-		return (ft_unset(data, args[1], args), 1);
+		*retval = ft_unset(data, args[1], args);
 	else if (ms_ft_strcmp(data->args[0].s, "env")  == 0)
-		return (ft_env(data), 1);
+		*retval = ft_env(data);
 	else if (ms_ft_strcmp(data->args[0].s, "exit")  == 0)
-		return (ft_exit(args), 1);
+		*retval = ft_exit(data, args);
 	else
+	{
+		*retval = 0;
 		return (0);
+	}
+	return (1);
 }
 
 /*static char	**args_converter(t_data *data, int i)
@@ -64,7 +69,7 @@ static void	handle_path_not_found(t_data *data ,char **path, char **args)
 		}
 		i++;
 	}
-	(free(*path), perror("command not found"), safe_quit(data, NULL, 0), exit(EXIT_FAILURE));
+	(free(*path), safe_quit(data, NULL, 0), perror("command not found"), exit(127));
 }
 
 static void	link_pipe_ends_and_redirs(t_data *data, int i)
@@ -106,11 +111,13 @@ static void	link_pipe_ends_and_redirs(t_data *data, int i)
 static void	child_process(t_data *data, int i)
 {
 	char	*path;
+	int		retval;
 
 	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	link_pipe_ends_and_redirs(data, i);
-	if (is_built_in(data, data->arglst[i].args))
-		exit(EXIT_SUCCESS);
+	if (is_built_in(data, data->arglst[i].args, &retval))
+		(safe_quit(data, NULL, 0), exit(retval));
 	path = get_command_path(data->arglst[i].args[0], data);
 	if (!path)
 		handle_path_not_found(data, &path, data->arglst[i].args);
@@ -123,11 +130,13 @@ int	executor(t_data *data)
 	pid_t	pid;
 	int		i;
 	int		status;
+	int		rv;
 
 	data->stdin_dup = dup(STDIN_FILENO);
 	data->stdout_dup = dup(STDOUT_FILENO);
-	if (data->cmd_count == 1 && is_built_in(data, data->arglst[0].args))
-		return (1);
+	if (data->cmd_count == 1 && is_built_in(data, data->arglst[0].args, &rv))
+		return (rv);
+	signal(SIGQUIT, handle_sigquit);
 	i = -1;
 	while (++i < data->cmd_count)
 	{

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 11:41:19 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 13:11:55 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static int	handle_redirs_arglst(t_data *data, int i, int k)
 		data->arglst[k].append = TRUE;
 	else
 		data->arglst[k].append = FALSE;
-	//free(data->args[i + 1].s);
 	return (1);
 }
 
@@ -48,8 +47,6 @@ static int	find_size_arglst(t_data *data, int *start, int total, int k)
 
 	count = 0;
 	i = *start - 1;
-	//if (i >= 0 && data->args[i].token !=)
-	//printf("i: %i->%s\n", i + 1, data->args[i + 1].s);
 	while (++i < total && data->args[i].token != PIPE)
 	{
 		if (data->args[i].token == WORD)
@@ -72,35 +69,21 @@ static void	assignment_arglst(t_data *data)
 	while (++k >= 0 && ++i < data->arg_count && k < data->cmd_count)
 	{
 		limit = find_size_arglst(data, &i, data->arg_count, k);
-		/*if (data->arglst[k].in)
-		printf("k:%i\tin:%s\n", k, data->arglst[k].in);
-		if (data->arglst[k].out)
-		printf("k:%i\tout:%s\n", k, data->arglst[k].out);
-		if (data->arglst[k].lmt)
-		printf("k:%i\tlmt:%s\n", k, data->arglst[k].lmt);
-		if (data->arglst[k].append == TRUE)
-		printf("k:%i\tappend:%i\n", k, data->arglst[k].append);*/
 		data->arglst[k].args = (char **)malloc(sizeof(char *) * (limit + 1));
 		j = -1;
 		while (++j < limit)
 		{
-			/*while (data->args[i].token != WORD)
-			if  (data->args[i++].token != PIPE)
-			i++;*/
 			if (data->args[i].token == PIPE)
-			i++;
+				i++;
 			while (data->args[i].token != WORD)
-			i += 2;
+				i += 2;
 			data->arglst[k].args[j] = ft_strdup(data->args[i].s);
-			//printf("k:%i\targs[%i]:%s\n", k, j, data->arglst[k].args[j]);
-			//free(data->args[i].s);
 			i++;
 		}
 		if (i < data->arg_count && data->args[i].token != PIPE)
 			i += 2;
 		data->arglst[k].args[j] = NULL;
 	}
-	//free(data->args);
 }
 
 void	arglst_generator(t_data *data)

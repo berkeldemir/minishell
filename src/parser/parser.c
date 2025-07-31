@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 12:56:55 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 13:31:08 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	assign_arg_helper(t_data *data, char *input, int *j)
 			if (input[i] == '0')
 				return (put_value_in_place(data, data->program_name, j), ++i);
 			if (input[i] == '?')
-				return (put_value_in_place(data, "0", j), ++i);
+				return (put_value_in_place(data, ft_itoa(data->exit_code), j), ++i);
 		}
 		while (is_alnum(input[i]) || input[i] == '_')
 			i++;

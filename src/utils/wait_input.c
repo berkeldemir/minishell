@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 13:07:08 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 14:37:06 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,28 @@ static void	print_prompt(t_data *data)
 	//printf("%s\n", data->input);
 }
 
-void handle_sigint(int sig)
+void	handle_sigint_parent(int sig)
 {
 	(void)sig;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+}
+
+void	handle_sigint_child(int sig)
+{
+	(void)sig;
+	write(STDOUT_FILENO, "\n", 1);
+}
+
+void handle_sigquit(int sig)
+{
+    (void)sig;
+	//char	*a = get_next_line(0);
+    write(1, "Quit (core dumped)\n", 19);
+    signal(SIGQUIT, SIG_IGN);  // Varsayılan davranışı tekrar etkinleştir
+    kill(getpid(), SIGQUIT);  // Gerçekten programı sonlandır
 }
 
 static void	assign_pipes(t_data *data)
@@ -76,9 +91,10 @@ void	wait_input(t_data *data)
 {
 	char	path[1023];
 	
-	signal(SIGINT, handle_sigint);
 	while (1)
 	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, handle_sigint_parent);
 		if (getcwd(path, sizeof(path)) == NULL)
 			return ;
 		print_prompt(data);
@@ -119,7 +135,8 @@ void	wait_input(t_data *data)
 			data->curr_env = env_converter(data);
 			//printf("cmdcnt: %i\n", data->cmd_count);
 			assign_pipes(data);
-			executor(data);
+			signal(SIGINT, handle_sigint_child);
+			data->exit_code = executor(data);
 			//free(curr_env);
 		}
 		free(data->input);

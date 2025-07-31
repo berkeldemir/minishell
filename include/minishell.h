@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 13:07:22 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/07/31 14:26:05 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_data
 	char		*input;
 	int			arg_count;
 	int			cmd_count;
+	int			exit_code;
 	int			rec_ret;
 	char		**curr_env;
 	t_args		*args;
@@ -117,14 +118,16 @@ int		syntax_checker(char *input); // BURADA!!!!!!!!! ARAMA BOŞUNA
 int		execute(t_data *data, int i, char **current_env);
 int		executor(t_data *data);
 char	*get_command_path(char *str, t_data *data);
-void	handle_sigint(int sig);
+void	handle_sigint_child(int sig);
+void	handle_sigint_parent(int sig);
+void	handle_sigquit(int sig);
 void	wait_input(t_data *data);
 
 //-------- BUILT-IN -------------
 int		ft_echo(t_data *data, char **args);
 int		ft_cd(t_data *data, char **args);
 int		ft_pwd(char **args);
-int		ft_exit(char **args);
+int		ft_exit(t_data *data, char **args);
 int		ft_env(t_data *data);
 int		ft_export(t_data *data, char **args);
 int		ft_unset(t_data *data, char *key, char **args);
