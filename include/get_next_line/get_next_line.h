@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:41:27 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/29 12:03:19 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/04 17:58:58 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2000
+#  define BUFFER_SIZE 42
 # endif
 
 int		gnl_strlen(char *str);

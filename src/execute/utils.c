@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:51:56 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/20 19:10:02 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/04 17:33:53 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ms_ft_strcmp(char *s1, char *s2)
 	int	i;
 
 	i = 0;
+	if (!s1 || !s2 || !s1[i] || !s2[i])
+		return (1);
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
@@ -27,6 +29,8 @@ int	ms_ft_strncmp(char *s1, char *s2, int n)
 	int	i;
 
 	i = 0;
+	if (!s1 || !s2 || !s1[i] || !s2[i])
+		return (1);
 	while (i < n && (s1[i] || s2[i]))
 	{
 		if ((unsigned char)s1[i] != (unsigned char)s2[i])

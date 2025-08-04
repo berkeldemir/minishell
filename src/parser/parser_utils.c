@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/31 20:14:13 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/04 14:43:05 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,11 @@ int	parser_syntax_checker(t_data *data)
 			//printf("\ni:%i\tnext-token:%c\n", i, data->args[i + 1].token);
 			if (i + 1 == data->arg_count || data->args[i + 1].token != WORD)
 			{
-				printf("minishell: syntax error near %s\n", data->args[i].s);
-				return (1);
+				if (data->args[i + 1].token != HEREDOC)
+				{
+					printf("minishell: syntax error near %s\n", data->args[i].s);
+					return (1);
+				}
 			}
 		}
 	}

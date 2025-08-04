@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 12:43:58 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 19:01:15 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/04 18:12:33 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	launch_heredoc(t_data *data, int i)
 		while (line[++j])
 			if (line[j] != data->arglst[i].lmt[j])
 				break ;
-		if (line[j] == '\n')
+		if (line[j] == '\n' && data->arglst[i].lmt[j] == '\0')
 			return (free(line), close(fd), 0);
 		write(fd, line, ft_strlen(line));
+		free(line);
 		write(1, "> ", 2);
 		line = get_next_line(0);
 	}
-	data->arglst[i].in = TMPFILE;
 	return (0);
 }

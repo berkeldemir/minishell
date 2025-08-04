@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:41:48 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/29 12:04:58 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/04 18:02:28 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static char	*ft_next(char *reco)
 	i = 0;
 	while (reco[i] != '\0' && reco[i] != '\n')
 		i++;
-	if (!reco[i])
+	if (!reco[i] || gnl_strlen(reco) - i == 1)
 		return (NULL);
 	ret = (char *)malloc(sizeof(char) * (gnl_strlen(reco) - i));
 	if (!ret)

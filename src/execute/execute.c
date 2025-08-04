@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/31 21:02:20 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/04 17:43:11 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ void	link_pipe_ends_and_redirs(t_data *data, int i)
 	int	fd;
 
 	if (data->arglst[i].lmt)
+	{
 		launch_heredoc(data, i);
+		data->arglst[i].in = TMPFILE;
+	}
 	if (data->arglst[i].in)
 	{
 		fd = open(data->arglst[i].in, O_RDONLY);
@@ -113,6 +116,8 @@ static void	child_process(t_data *data, int i)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	link_pipe_ends_and_redirs(data, i);
+	if (data->arglst[i].lmt && data->arglst[i].args[0] == NULL)
+		(safe_quit(data, NULL, 0), exit(0));
 	if (is_built_in(data, data->arglst[i].args, &retval))
 		(safe_quit(data, NULL, 0), exit(retval));
 	path = get_command_path(data->arglst[i].args[0], data);
@@ -142,6 +147,8 @@ int	executor(t_data *data)
 			child_process(data, i);
 		else if (pid < 0)
 			perror("fork");
+		if (data->arglst[i].lmt)
+			waitpid(pid, &status, 0);
 	}
 	i = -1;
 	while (++i < 2 * (data->cmd_count - 1))

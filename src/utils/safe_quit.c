@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 11:19:41 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 20:30:40 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/04 18:08:41 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	free_args(t_data *data)
 			free(data->arglst[i].args[j]);
 		}
 		free(data->arglst[i].args);
-		/*if (data->arglst->in)
-			free(data->arglst->in);
-		if (data->arglst->out)
-
-		if (data->arglst->lmt)
-		*/
+		/*if (data->arglst[i].in)
+			free(data->arglst[i].in);
+		if (data->arglst[i].out)
+			free(data->arglst[i].out);
+		if (data->arglst[i].lmt)
+			free(data->arglst[i].lmt);*/
 	}
 	free(data->arglst);
 	i = -1;
@@ -64,7 +64,6 @@ void	free_args(t_data *data)
 		free(data->args[i].s);
 	free(data->args);
 }
-
 
 void	safe_quit(t_data *data, char **extra, int max)
 {
