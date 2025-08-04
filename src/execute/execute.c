@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/04 17:43:11 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/04 18:21:38 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ static void	child_process(t_data *data, int i)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	link_pipe_ends_and_redirs(data, i);
-	if (data->arglst[i].lmt && data->arglst[i].args[0] == NULL)
+	if ((data->arglst[i].lmt || data->arglst[i].in || data->arglst[i].out) \
+	&& data->arglst[i].args[0] == NULL)
 		(safe_quit(data, NULL, 0), exit(0));
 	if (is_built_in(data, data->arglst[i].args, &retval))
 		(safe_quit(data, NULL, 0), exit(retval));

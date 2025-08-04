@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/04 18:11:32 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/04 18:23:12 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ void	wait_input(t_data *data)
 			}
 			sleep(1000);*/
 			if (!data->arglst || !data->arglst[0].args || \
-			(!data->arglst[0].args[0] && !data->arglst[0].lmt))
+			(!data->arglst[0].args[0] && (!data->arglst[0].lmt && \
+			!data->arglst[0].in && !data->arglst[0].out)))
 			{
 				write(2, "minishell: empty command\n", 25);
 				continue;
