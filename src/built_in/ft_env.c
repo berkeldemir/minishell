@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:40:55 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/20 19:02:20 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:23:00 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,9 @@ int	ft_env(t_data *data)
 	while (current_env[++i])
 		if (ft_strlen(ft_strchr(current_env[i], '=')) > 1)
 			printf("%s\n", current_env[i]);
+	i = -1;
+	while (current_env[++i])
+		free(current_env[i]);
+	free(current_env);
 	return (0);
 }
