@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:41:23 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/30 14:51:27 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:57:01 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_unset(t_data *data, char *key, char **args)
 	t_env	*prev;
 
 	if (!args[1])
-		return (write(2, "unset: no enough arguments\n", 27), 1);
+		return (0);
 	tmp = data->env;
 	prev = NULL;
 	while (tmp)

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:41:04 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 18:20:32 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 18:10:59 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,20 +185,22 @@ void	*ft_calloc(int size)
 	return (ret);
 }
 
-int	ft_atoi(const char *str, unsigned long *tab_num)
+int	ft_atoi(const char *str, long *tab_num)
 {
-	int				i;
-	unsigned long	num;
+	int			i;
+	int			sign;
+	long		num;
 
 	if (!str)
 		return (-1);
 	i = 0;
 	num = 0;
+	sign = 1;
 	while (str[i] != '\0' && (str[i] == 32 || (str[i] <= 13 && str[i] >= 9)))
 		i++;
 	if (str[i] != '\0' && (str[i] == '-' || str[i] == '+'))
 		if (str[i++] == '-')
-			return (-1);
+			sign = -1;
 	while (str[i] != '\0' && str[i] <= '9' && str[i] >= '0')
 	{
 		num = (num * 10) + (str[i++] - 48);
@@ -206,8 +208,8 @@ int	ft_atoi(const char *str, unsigned long *tab_num)
 			return (-1);
 	}
 	if (str[i] != '\0' && !(str[i] == 32 || (str[i] <= 13 && str[i] >= 9)))
-		return (-1);
+		return (-2);
 	if (tab_num)
-		*tab_num = num;
+		*tab_num = num * sign;
 	return (0);
 }
