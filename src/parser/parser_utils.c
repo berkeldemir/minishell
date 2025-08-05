@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/05 12:52:39 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:09:10 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,9 @@ int	parser_syntax_checker(t_data *data)
 			{
 				if (data->args[i + 1].token != HEREDOC)
 				{
-					printf("minishell: syntax error near %s\n", data->args[i].s);
-					return (1);
+					write(2, "minishell: syntax error\n", 24);
+					data->exit_code = 2;
+					return (2);
 				}
 			}
 		}
@@ -98,24 +99,22 @@ int	parser_syntax_checker(t_data *data)
 
 int	syntax_checker(char *input)
 {
-	int	i;
-	int	squote_count;
-	int	dquote_count;
+	int		i;
+	char	quote;
 
-	squote_count = 0;
-	dquote_count = 0;
-	i = -1;
-	while (input[++i])
+	i = 0;
+	while (input[i])
 	{
-		if (input[i] == '\'')
-			squote_count++;
-		if (input[i] == '\"')
-			dquote_count++;
-	}
-	if (squote_count % 2 == 1 || dquote_count % 2 == 1)
-	{
-		printf("minishell: syntax error: unclosed quote\n");
-		return (1);
+		if (is_quote(input[i]))
+		{
+			quote = input[i];
+			i++;
+			while (input[i] && input[i] != quote)
+				i++;
+			if (!input[i])
+				return (printf("minishell: unclosed quote\n"), 1);
+		}
+		i++;
 	}
 	return (0);
 }

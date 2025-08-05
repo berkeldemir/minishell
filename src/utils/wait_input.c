@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 17:20:54 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:11:44 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,9 @@ void	wait_input(t_data *data)
 			(!data->arglst[0].args[0] && (!data->arglst[0].lmt && \
 			!data->arglst[0].in && !data->arglst[0].out)))
 			{
-				write(2, "minishell: empty command\n", 25);
-				(free_args(data));
+				write(2, "minishell: syntax error\n", 24);
+				data->exit_code = 2;
+				free_args(data);
 				continue;
 			}
 			data->curr_env = env_converter(data);
