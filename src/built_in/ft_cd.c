@@ -6,16 +6,36 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:20:44 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/31 18:19:53 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:43:35 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+static void	env_update(t_env *env, char *key, char *value)
+{
+	t_env	*node;
 
+	node = env;
+	while (node)
+	{
+		if (ft_strncmp(node->key, key, ft_strlen(key)) == 0)
+		{
+			free(node->value);
+			node->value = ft_strdup(value);
+			return ;
+		}
+		node = node->next;
+	}
+}
 int	ft_cd(t_data *data, char **args)
 {
 	char	*path;
+	char	*oldpwd;
+	char	*newpwd;
 
+	if (!getcwd(data->cwd, sizeof(data->cwd)))
+		return (perror("getcwd1"), 1);
+	oldpwd = ft_strdup(data->cwd);
 	if (!args[1])
 	{
 		path = get_env_val(data, ft_strdup("HOME"));
@@ -26,5 +46,12 @@ int	ft_cd(t_data *data, char **args)
 		path = args[1];
 	if (chdir(path) != 0)
 		return (perror("cd"), 1);
+	if (!getcwd(data->cwd, sizeof(data->cwd)))
+		return (perror("getcwd2"), free(oldpwd), 1);
+	newpwd = ft_strdup(data->cwd);
+	env_update(data->env, "OLDPWD", oldpwd);
+	env_update(data->env, "PWD", newpwd);
+	free(oldpwd);
+	free(newpwd);
 	return (0);
 }

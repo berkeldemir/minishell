@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/07/31 19:09:44 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:40:22 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
-# include "./get_next_line/get_next_line.h"
 # include <limits.h>
 
 # define GREEN "\033[38;2;175;252;65m"
@@ -83,6 +82,7 @@ typedef struct s_data
 	int			stdout_dup;
 	char		*input;
 	int			arg_count;
+	char		cwd[4096];
 	int			cmd_count;
 	int			exit_code;
 	int			rec_ret;
@@ -126,7 +126,7 @@ void	wait_input(t_data *data);
 //-------- BUILT-IN -------------
 int		ft_echo(t_data *data, char **args);
 int		ft_cd(t_data *data, char **args);
-int		ft_pwd(void);
+int		ft_pwd(t_data *data);
 int		ft_exit(t_data *data, char **args);
 int		ft_env(t_data *data);
 int		ft_export(t_data *data, char **args);
@@ -154,7 +154,7 @@ char	*ms_ft_strjoin(char *s2, char *s1);
 void	arglst_generator(t_data *data);
 int		launch_heredoc(t_data *data, int i);
 
-
+void	safe_free(void **ptr);
 int		ft_atoi(const char *str, unsigned long *tab_num);
 void	link_pipe_ends_and_redirs(t_data *data, int i);
 void	*ft_calloc(int size);

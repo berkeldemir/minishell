@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/04 18:23:12 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:20:54 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*get_display_path(char *path)
 
 static void	print_prompt(t_data *data)
 {
-	data->input = readline("\033[38;2;8;99;117mMINISHELL>₺ \033[0m");
+	data->input = readline("\033[38;2;175;252;65mMINISHELL>₺ \033[0m");
 	//printf("%s\n", getcwd(NULL, 0));
 	//printf("%s\n", data->input);
 }
@@ -130,6 +130,7 @@ void	wait_input(t_data *data)
 			!data->arglst[0].in && !data->arglst[0].out)))
 			{
 				write(2, "minishell: empty command\n", 25);
+				(free_args(data));
 				continue;
 			}
 			data->curr_env = env_converter(data);
@@ -139,8 +140,7 @@ void	wait_input(t_data *data)
 			data->exit_code = executor(data);
 			free_args(data);
 			free_env(data, FALSE);
-			free(data->fds);
-			//free(curr_env);
+			safe_free((void *)&data->fds);
 		}
 		free(data->input);
 	}

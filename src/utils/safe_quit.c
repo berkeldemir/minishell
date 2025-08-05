@@ -6,11 +6,20 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 11:19:41 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/04 18:08:41 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:57:41 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	safe_free(void **ptr)
+{
+	if (!ptr || *ptr)
+		free(*ptr);
+	else
+		return ;
+	*ptr = NULL;
+}
 
 void	free_env(t_data *data, t_bool free_all)
 {
@@ -19,19 +28,18 @@ void	free_env(t_data *data, t_bool free_all)
 
 	while (free_all == TRUE && data->env)
 	{
-		free(data->env->key);
-		free(data->env->value);
+		safe_free((void *)&data->env->key);
+		safe_free((void *)&data->env->value);
 		tmp = data->env;
 		data->env = data->env->next;
-		free(tmp);
+		safe_free((void *)&tmp);
 	}
 	if (free_all == TRUE && data->env)
-		free(data->env);
+		safe_free((void *)&data->env);
 	i = -1;
 	while (data->curr_env && data->curr_env[++i] != NULL)
-		free(data->curr_env[i]);
-	if (data->curr_env)
-		free(data->curr_env);
+		safe_free((void *)&data->curr_env[i]);
+	safe_free((void *)&data->curr_env);
 }
 
 void	free_args(t_data *data)
@@ -43,26 +51,16 @@ void	free_args(t_data *data)
 	while (++i < data->cmd_count)
 	{
 		j = -1;
-		while (data->arglst[i].args[++j])
-		{
-			free(data->arglst[i].in);
-			free(data->arglst[i].out);
-			free(data->arglst[i].lmt);
-			free(data->arglst[i].args[j]);
-		}
-		free(data->arglst[i].args);
-		/*if (data->arglst[i].in)
-			free(data->arglst[i].in);
-		if (data->arglst[i].out)
-			free(data->arglst[i].out);
-		if (data->arglst[i].lmt)
-			free(data->arglst[i].lmt);*/
+		safe_free((void *)&data->arglst[i].args);
+		safe_free((void *)&data->arglst[i].in);
+		safe_free((void *)&data->arglst[i].out);
+		safe_free((void *)&data->arglst[i].lmt);
 	}
-	free(data->arglst);
+	safe_free((void *)&data->arglst);
 	i = -1;
 	while (++i < data->arg_count)
-		free(data->args[i].s);
-	free(data->args);
+		safe_free((void *)&data->args[i].s);
+	safe_free((void *)&data->args);
 }
 
 void	safe_quit(t_data *data, char **extra, int max)
@@ -72,12 +70,10 @@ void	safe_quit(t_data *data, char **extra, int max)
 	i = -1;
 	if (extra)
 		while (++i < max)
-			free(extra[i]);
-	if (data->fds)
-		free(data->fds);
-	if (data->program_name)
-		free(data->program_name);
+			safe_free((void *)&extra[i]);
+	safe_free((void *)&data->fds);
+	safe_free((void *)&data->program_name);
 	free_env(data, TRUE);
 	free_args(data);
-	free(data);
+	safe_free((void *)&data);
 }

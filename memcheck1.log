@@ -1,0 +1,32 @@
+==1841807== Memcheck, a memory error detector
+==1841807== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1841807== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1841807== Command: ./minishell
+==1841807== Parent PID: 1841779
+==1841807== 
+==1841807== 
+==1841807== HEAP SUMMARY:
+==1841807==     in use at exit: 208,589 bytes in 245 blocks
+==1841807==   total heap usage: 1,510 allocs, 1,265 frees, 379,498 bytes allocated
+==1841807== 
+==1841807== 33 bytes in 1 blocks are definitely lost in loss record 12 of 68
+==1841807==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1841807==    by 0x4036AB: ft_strdup (in /home/beldemir/Desktop/minishell/minishell)
+==1841807==    by 0x4051D3: ft_cd (in /home/beldemir/Desktop/minishell/minishell)
+==1841807==    by 0x404317: is_built_in (in /home/beldemir/Desktop/minishell/minishell)
+==1841807==    by 0x403FFA: executor (in /home/beldemir/Desktop/minishell/minishell)
+==1841807==    by 0x401752: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==1841807==    by 0x401341: main (in /home/beldemir/Desktop/minishell/minishell)
+==1841807== 
+==1841807== LEAK SUMMARY:
+==1841807==    definitely lost: 33 bytes in 1 blocks
+==1841807==    indirectly lost: 0 bytes in 0 blocks
+==1841807==      possibly lost: 0 bytes in 0 blocks
+==1841807==    still reachable: 0 bytes in 0 blocks
+==1841807==         suppressed: 208,556 bytes in 244 blocks
+==1841807== 
+==1841807== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)
+--1841807-- 
+--1841807-- used_suppression:     67 ignore_readline_leaks readline.supp:2 suppressed: 208,556 bytes in 244 blocks
+==1841807== 
+==1841807== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)

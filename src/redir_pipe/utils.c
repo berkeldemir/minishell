@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/04 18:10:37 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:01:23 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,28 @@
 
 static int	handle_redirs_arglst(t_data *data, int i, int k)
 {
-	char	*str;
-	int		fd;
-
 	if (data->args[i].token == APPEND || data->args[i].token == REDIR_OUT)
 	{
-		str = data->args[i + 1].s;
-		if (data->args[i].token == REDIR_OUT)
-		{
-			fd = open(str, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			if (fd < 0)
-				(perror("open outfile"), exit(1));
-			close(fd);
-		}
-		data->arglst[k].out = str;
+		if (data->arglst[k].out)
+			free(data->arglst[k].out);
+		data->arglst[k].out = ft_strdup(data->args[i + 1].s);
 	}
 	else if (data->args[i].token == REDIR_IN)
-		data->arglst[k].in = data->args[i + 1].s;
+	{
+		if (data->arglst[k].in)
+			free(data->arglst[k].in);
+		data->arglst[k].in = ft_strdup(data->args[i + 1].s);
+	}
 	else if (data->args[i].token == HEREDOC)
-		data->arglst[k].lmt = data->args[i + 1].s;
+	{
+		if (data->arglst[k].lmt)
+			free(data->arglst[k].lmt);
+		data->arglst[k].lmt = ft_strdup(data->args[i + 1].s);
+		launch_heredoc(data, k);
+		if (data->arglst[k].in)
+			free(data->arglst[k].in);
+		data->arglst[k].in = ft_strdup(TMPFILE);
+	}
 	if (data->args[i].token == APPEND)
 		data->arglst[k].append = TRUE;
 	else
@@ -85,11 +88,11 @@ static void	assignment_arglst(t_data *data)
 				i++;
 			while (data->args[i].token != WORD)
 				i += 2;
-			data->arglst[k].args[j] = ft_strdup(data->args[i].s);
-			// printf("k:%i\targs[%i]:%s\n", k, j, data->arglst[k].args[j]);
+			data->arglst[k].args[j] = data->args[i].s;
+			//printf("k:%i\targs[%i]:%s\n", k, j, data->arglst[k].args[j]);
 			i++;
 		}
-		if (i < data->arg_count && data->args[i].token != PIPE)
+		while (i < data->arg_count && data->args[i].token != PIPE)
 			i += 2;
 		data->arglst[k].args[j] = NULL;
 	}

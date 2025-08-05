@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/04 18:21:38 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:31:50 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	is_built_in(t_data *data, char **args, int *retval)
 	else if (ms_ft_strcmp(args[0], "cd")  == 0)
 		*retval = ft_cd(data, args);
 	else if (ms_ft_strcmp(args[0], "pwd")  == 0)
-		*retval = ft_pwd();
+		*retval = ft_pwd(data);
 	else if (ms_ft_strcmp(args[0], "export")  == 0)
 		*retval = ft_export(data, args);
 	else if (ms_ft_strcmp(args[0], "unset")  == 0)
@@ -79,24 +79,29 @@ static void	handle_path_not_found(t_data *data ,char **path, char **args)
 void	link_pipe_ends_and_redirs(t_data *data, int i)
 {
 	int	fd;
+	int	flags;
 
-	if (data->arglst[i].lmt)
+	/*if (data->arglst[i].lmt)
 	{
 		launch_heredoc(data, i);
 		data->arglst[i].in = TMPFILE;
-	}
+	}*/
 	if (data->arglst[i].in)
 	{
 		fd = open(data->arglst[i].in, O_RDONLY);
 		if (fd < 0)
 			(perror("open infile"), safe_quit(data, NULL, 0), exit(1));
+		free(data->arglst[i].in);
 		(dup2(fd, STDIN_FILENO), close(fd));
 	}
 	else if (i > 0)
     	dup2(data->fds[(i - 1) * 2], STDIN_FILENO);
 	if (data->arglst[i].out)
 	{
-		fd = open(data->arglst[i].out, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		flags = O_CREAT | O_WRONLY | O_TRUNC;
+		if (data->arglst[i].append == TRUE)
+			flags = O_CREAT | O_WRONLY | O_APPEND;
+		fd = open(data->arglst[i].out, flags, 0644);
 		if (fd < 0)
 			(perror("open outfile"), safe_quit(data, NULL, 0), exit(1));
 		(dup2(fd, STDOUT_FILENO), close(fd));
