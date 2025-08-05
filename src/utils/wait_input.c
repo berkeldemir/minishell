@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 19:11:44 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 20:30:12 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,28 @@ void handle_sigquit(int sig)
     kill(getpid(), SIGQUIT);  // Gerçekten programı sonlandır
 }
 
-static void	assign_pipes(t_data *data)
+static int	assign_pipes(t_data *data)
 {
 	int	i;
 
 	data->fds = malloc((2 * (data->cmd_count - 1)) * sizeof(int));
 	if (!data->fds)
-		return ;
+		return (1);
 	i = -1;
-	while (++i < data->cmd_count -1)
+	while (++i < data->cmd_count - 1)
 		if (pipe(&data->fds[i * 2]) == -1)
 			(perror("pipe"), exit(EXIT_FAILURE));
+	i = -1;
+	while (++i < data->cmd_count)
+	{
+		if (data->arglst[i].in)
+			if (access(data->arglst[i].in, X_OK))
+				return (perror("open infile"), 1);
+		if (data->arglst[i].out)
+			if (access(data->arglst[i].out, X_OK))
+				return (perror("open outfile"), 1);
+	}
+	return (0);
 }
 
 void	wait_input(t_data *data)
@@ -127,16 +138,18 @@ void	wait_input(t_data *data)
 			sleep(1000);*/
 			if (!data->arglst || !data->arglst[0].args || \
 			(!data->arglst[0].args[0] && (!data->arglst[0].lmt && \
-			!data->arglst[0].in && !data->arglst[0].out)))
+			!data->arglst[0].in && !data->arglst[0].out)) || \
+			assign_pipes(data) != 0)
 			{
 				write(2, "minishell: syntax error\n", 24);
 				data->exit_code = 2;
 				free_args(data);
-				continue;
+				continue ;
 			}
 			data->curr_env = env_converter(data);
 			//printf("cmdcnt: %i\n", data->cmd_count);
-			assign_pipes(data);
+			//if (assign_pipes(data) != 0)
+			//	;
 			signal(SIGINT, handle_sigint_child);
 			data->exit_code = executor(data);
 			free_args(data);

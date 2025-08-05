@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/05 17:31:50 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:53:07 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static int	is_built_in(t_data *data, char **args, int *retval)
 	!ms_ft_strcmp(args[0], "cd") || !ms_ft_strcmp(args[0], "pwd") || \
 	!ms_ft_strcmp(args[0], "export") || !ms_ft_strcmp(args[0], "unset") || \
 	!ms_ft_strcmp(args[0], "env") || !ms_ft_strcmp(args[0], "exit")))
-		link_pipe_ends_and_redirs(data, 0);
+		if (link_pipe_ends_and_redirs(data, 0) != 0)
+			return (1);
 	if (ms_ft_strcmp(args[0], "echo")  == 0)
 		*retval = ft_echo(data, args);
 	else if (ms_ft_strcmp(args[0], "cd")  == 0)
@@ -76,7 +77,7 @@ static void	handle_path_not_found(t_data *data ,char **path, char **args)
 	(free(*path), safe_quit(data, NULL, 0), write(2, "minishell: command not found\n", 29), exit(127));
 }
 
-void	link_pipe_ends_and_redirs(t_data *data, int i)
+int	link_pipe_ends_and_redirs(t_data *data, int i)
 {
 	int	fd;
 	int	flags;
@@ -90,7 +91,7 @@ void	link_pipe_ends_and_redirs(t_data *data, int i)
 	{
 		fd = open(data->arglst[i].in, O_RDONLY);
 		if (fd < 0)
-			(perror("open infile"), safe_quit(data, NULL, 0), exit(1));
+			return (perror("open infile"), 1);
 		free(data->arglst[i].in);
 		(dup2(fd, STDIN_FILENO), close(fd));
 	}
@@ -103,7 +104,7 @@ void	link_pipe_ends_and_redirs(t_data *data, int i)
 			flags = O_CREAT | O_WRONLY | O_APPEND;
 		fd = open(data->arglst[i].out, flags, 0644);
 		if (fd < 0)
-			(perror("open outfile"), safe_quit(data, NULL, 0), exit(1));
+			return (perror("open outfile"), 1);
 		(dup2(fd, STDOUT_FILENO), close(fd));
 	}
 	else if (i < data->cmd_count - 1)
@@ -111,6 +112,7 @@ void	link_pipe_ends_and_redirs(t_data *data, int i)
 	i = 0;
 	while (i < 2 * (data->cmd_count - 1))
 		close(data->fds[i++]);
+	return (0);
 }
 
 static void	child_process(t_data *data, int i)
@@ -120,7 +122,8 @@ static void	child_process(t_data *data, int i)
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	link_pipe_ends_and_redirs(data, i);
+	if (link_pipe_ends_and_redirs(data, i) != 0)
+		(safe_quit(data, NULL, 0), exit(1));
 	if ((data->arglst[i].lmt || data->arglst[i].in || data->arglst[i].out) \
 	&& data->arglst[i].args[0] == NULL)
 		(safe_quit(data, NULL, 0), exit(0));

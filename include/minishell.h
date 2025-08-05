@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 18:10:37 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:20:59 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int		launch_heredoc(t_data *data, int i);
 
 void	safe_free(void **ptr);
 int		ft_atoi(const char *str, long *tab_num);
-void	link_pipe_ends_and_redirs(t_data *data, int i);
+int		link_pipe_ends_and_redirs(t_data *data, int i);
 void	*ft_calloc(int size);
 void	safe_quit(t_data *data, char **extra, int max);
 void	free_env(t_data *data, t_bool free_all);

@@ -1,23 +1,65 @@
-==1868559== Memcheck, a memory error detector
-==1868559== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1868559== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1868559== Command: ./minishell
-==1868559== Parent PID: 1868531
-==1868559== 
-==1868559== 
-==1868559== HEAP SUMMARY:
-==1868559==     in use at exit: 208,291 bytes in 226 blocks
-==1868559==   total heap usage: 803 allocs, 577 frees, 245,554 bytes allocated
-==1868559== 
-==1868559== LEAK SUMMARY:
-==1868559==    definitely lost: 0 bytes in 0 blocks
-==1868559==    indirectly lost: 0 bytes in 0 blocks
-==1868559==      possibly lost: 0 bytes in 0 blocks
-==1868559==    still reachable: 0 bytes in 0 blocks
-==1868559==         suppressed: 208,291 bytes in 226 blocks
-==1868559== 
-==1868559== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
---1868559-- 
---1868559-- used_suppression:     67 ignore_readline_leaks readline.supp:2 suppressed: 208,291 bytes in 226 blocks
-==1868559== 
-==1868559== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==2004892== Memcheck, a memory error detector
+==2004892== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2004892== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2004892== Command: ./minishell
+==2004892== Parent PID: 2004864
+==2004892== 
+==2004892== Invalid read of size 8
+==2004892==    at 0x406789: safe_free (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x40694D: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x406AA6: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x401611: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x401341: main (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==2004892== 
+==2004892== 
+==2004892== Process terminating with default action of signal 11 (SIGSEGV)
+==2004892==  Access not within mapped region at address 0x0
+==2004892==    at 0x406789: safe_free (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x40694D: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x406AA6: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x401611: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x401341: main (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==  If you believe this happened as a result of a stack
+==2004892==  overflow in your program's main thread (unlikely but
+==2004892==  possible), you can try to increase the size of the
+==2004892==  main thread stack using the --main-stacksize= flag.
+==2004892==  The main thread stack size used in this run was 8388608.
+==2004892== 
+==2004892== HEAP SUMMARY:
+==2004892==     in use at exit: 218,951 bytes in 259 blocks
+==2004892==   total heap usage: 962 allocs, 703 frees, 252,363 bytes allocated
+==2004892== 
+==2004892== 0 bytes in 1 blocks are definitely lost in loss record 1 of 83
+==2004892==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2004892==    by 0x401817: assign_pipes (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x4016F7: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x401341: main (in /home/beldemir/Desktop/minishell/minishell)
+==2004892== 
+==2004892== 4,192 bytes in 1 blocks are still reachable in loss record 69 of 83
+==2004892==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2004892==    by 0x403BF3: ft_calloc (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x401309: main (in /home/beldemir/Desktop/minishell/minishell)
+==2004892== 
+==2004892== LEAK SUMMARY:
+==2004892==    definitely lost: 0 bytes in 1 blocks
+==2004892==    indirectly lost: 0 bytes in 0 blocks
+==2004892==      possibly lost: 0 bytes in 0 blocks
+==2004892==    still reachable: 4,192 bytes in 1 blocks
+==2004892==         suppressed: 214,759 bytes in 257 blocks
+==2004892== 
+==2004892== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 1 from 1)
+==2004892== 
+==2004892== 1 errors in context 1 of 2:
+==2004892== Invalid read of size 8
+==2004892==    at 0x406789: safe_free (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x40694D: free_args (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x406AA6: safe_quit (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x401611: wait_input (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==    by 0x401341: main (in /home/beldemir/Desktop/minishell/minishell)
+==2004892==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==2004892== 
+--2004892-- 
+--2004892-- used_suppression:     81 ignore_readline_leaks readline.supp:2 suppressed: 214,759 bytes in 257 blocks
+==2004892== 
+==2004892== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 1 from 1)
