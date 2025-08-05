@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:47:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/04 13:20:48 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/05 23:22:42 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,20 @@ char	**env_converter(t_data *data)
 	lst = data->env;
 	while (lst)
 	{
-		size++;
+		if (lst->value != NULL)
+			size++;
 		lst = lst->next;
 	}
-	ret = (char **)malloc(sizeof(char *) * (size + 1));
+	ret = malloc(sizeof(char *) * (size + 1));
 	if (!ret)
 		return (NULL);
 	lst = data->env;
 	i = 0;
-	while (i < size)
+	while (lst)
 	{
-		ret[i] = env_converter_helper(lst);
+		if (lst->value != NULL)
+			ret[i++] = env_converter_helper(lst);
 		lst = lst->next;
-		i++;
 	}
 	ret[i] = NULL;
 	return (ret);
