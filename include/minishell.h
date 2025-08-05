@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 19:20:59 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 22:45:09 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,9 @@ int		exit_freely(t_data *data);
 char	**ft_split(char *s, char c);
 void	free_array(char **array);
 void	alpha_sort(t_env **array, int size);
+int		ft_strcmp(char *s1, char *s2);
+int		ft_isalpha(int i);
+int		is_valid_identifier(char *str);
 
 //--------  ENV  -------------- 
 t_env	*env_new(char *key, char *value);

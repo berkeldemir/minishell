@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_quit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 11:19:41 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 16:57:41 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 22:49:29 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,10 @@ void	free_env(t_data *data, t_bool free_all)
 void	free_args(t_data *data)
 {
 	int	i;
-	int j;
 
 	i = -1;
 	while (++i < data->cmd_count)
 	{
-		j = -1;
 		safe_free((void *)&data->arglst[i].args);
 		safe_free((void *)&data->arglst[i].in);
 		safe_free((void *)&data->arglst[i].out);

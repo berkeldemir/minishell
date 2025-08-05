@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:22:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/30 14:51:15 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 23:01:25 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,16 @@ static void	export_write(t_data *data)
 	alpha_sort(array, size);
 	i = -1;
 	while (++i < size)
-		printf("declare -x %s=\"%s\"\n", array[i]->key, array[i]->value);
+	{
+		if (array[i]->value)
+			printf("declare -x %s=\"%s\"\n", array[i]->key, array[i]->value);
+		else
+			printf("declare -x %s\n", array[i]->key);
+	}
 	free(array);
 }
 
-static char	*export_strdup(char *s)
+/*static char	*export_strdup(char *s)
 {
 	int		i;
 	char	*toreturn;
@@ -53,7 +58,7 @@ static char	*export_strdup(char *s)
 		toreturn[i] = s[i];
 	toreturn[i] = '\0';
 	return (toreturn);
-}
+}*/
 
 static char	*extract_key(char *str)
 {
@@ -99,28 +104,44 @@ static char	*extract_value(char *str)
 
 int	ft_export(t_data *data, char **args)
 {
+	int	i;
+	int	status;
 	char	*key;
 	char	*value;
 	t_env	*tmp;
 
+	i = 0;
+	status = 0;
+	while (args[++i])
+	{
+		if (!is_valid_identifier(args[i]))
+		{
+			write(2, " not a valid identifier\n", 24);
+			status = 1;
+			continue;
+		}
+	}
 	if (!args[1])
 		return (export_write(data), 0);
-	key = extract_key(args[1]);
-	value = extract_value(args[1]);
-	tmp = data->env;
-	while (tmp)
+	i = 0;
+	while (args[++i])
 	{
-		if (ms_ft_strcmp(tmp->key, key) == 0)
+		key = extract_key(args[i]);
+		if (ft_strchr(args[i], '='))
+			value = extract_value(args[i]);
+		else
+			value = NULL;
+		tmp = data->env;
+		while (tmp && ft_strcmp(tmp->key, key))
+			tmp = tmp->next;
+		if (tmp)
 		{
-			free(tmp->value);
-			tmp->value = export_strdup(value);
-			free(key);
-			free(value);
-			return (0);
+			if (value)
+				free(tmp->value);
+			tmp->value = ft_strdup(value);
 		}
-		tmp = tmp->next;
+		else
+			env_add_back(&data->env, env_new(key, value));
 	}
-	tmp = env_new(key, value);
-	env_add_back(&data->env, tmp);
-	return (0);
+	return (status);
 }

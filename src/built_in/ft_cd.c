@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:20:44 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/05 17:43:35 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/05 22:48:29 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_cd(t_data *data, char **args)
 	char	*newpwd;
 
 	if (!getcwd(data->cwd, sizeof(data->cwd)))
-		return (perror("getcwd1"), 1);
+		return (perror("getcwd"), 1);
 	oldpwd = ft_strdup(data->cwd);
 	if (!args[1])
 	{
@@ -43,11 +43,18 @@ int	ft_cd(t_data *data, char **args)
 			return (write(2, "cd: HOME not set\n", 17), 1);
 	}
 	else
-		path = args[1];
+	{
+		if (args[2])
+		{
+			write(2, " too many arguments\n", 20);
+			return (1);
+		}
+		path = args[1];	
+	}
 	if (chdir(path) != 0)
 		return (perror("cd"), 1);
 	if (!getcwd(data->cwd, sizeof(data->cwd)))
-		return (perror("getcwd2"), free(oldpwd), 1);
+		return (perror("getcwd"), free(oldpwd), 1);
 	newpwd = ft_strdup(data->cwd);
 	env_update(data->env, "OLDPWD", oldpwd);
 	env_update(data->env, "PWD", newpwd);
