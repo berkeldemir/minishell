@@ -6,16 +6,14 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/06 13:58:01 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 15:04:55 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	is_built_in(t_data *data, char **args, int *retval)
+static int	is_built_in(t_data *data, char **args)
 {
-	*retval = 0;
-	
 	if (data->cmd_count == 1 && (!ms_ft_strcmp(args[0], "echo") || \
 	!ms_ft_strcmp(args[0], "cd") || !ms_ft_strcmp(args[0], "pwd") || \
 	!ms_ft_strcmp(args[0], "export") || !ms_ft_strcmp(args[0], "unset") || \
@@ -23,21 +21,21 @@ static int	is_built_in(t_data *data, char **args, int *retval)
 		if (link_pipe_ends_and_redirs(data, 0) != 0)
 			return (1);
 	if (ms_ft_strcmp(args[0], "echo")  == 0)
-		*retval = ft_echo(data, args);
+		data->exit_code = ft_echo(data, args);
 	else if (ms_ft_strcmp(args[0], "cd")  == 0)
-		*retval = ft_cd(data, args);
+		data->exit_code = ft_cd(data, args);
 	else if (ms_ft_strcmp(args[0], "pwd")  == 0)
-		*retval = ft_pwd(data);
+		data->exit_code = ft_pwd(data);
 	else if (ms_ft_strcmp(args[0], "export")  == 0)
-		*retval = ft_export(data, args);
+		data->exit_code = ft_export(data, args);
 	else if (ms_ft_strcmp(args[0], "unset")  == 0)
-		*retval = ft_unset(data, args[1], args);
+		data->exit_code = ft_unset(data, args[1], args);
 	else if (ms_ft_strcmp(args[0], "env")  == 0)
-		*retval = ft_env(data);
+		data->exit_code = ft_env(data);
 	else if (ms_ft_strcmp(args[0], "exit")  == 0)
-		*retval = ft_exit(data, args);
+		data->exit_code = ft_exit(data, args);
 	else
-		return ((*retval) = 0 & 0);
+		return ((data->exit_code) = 0 & 0);
 	(dup2(data->stdin_dup, STDIN_FILENO), close(data->stdin_dup));
 	return (dup2(data->stdout_dup, STDOUT_FILENO), close(data->stdout_dup), 1);
 }
@@ -88,9 +86,11 @@ int	link_pipe_ends_and_redirs(t_data *data, int i)
 	}*/
 	if (data->arglst[i].in)
 	{
+		//printf("%s dosya aciliyor.\n", data->arglst[i].in);
 		fd = open(data->arglst[i].in, O_RDONLY);
 		if (fd < 0)
-			return (perror("open infile"), 1);
+			return (perror("open infile"), 1);//printf("%s dosya acilamadi.\n", data->arglst[i].in), 1);
+		//printf("%s dosya acildi.\n", data->arglst[i].in);
 		(dup2(fd, STDIN_FILENO), close(fd));
 	}
 	else if (i > 0)
@@ -113,7 +113,6 @@ int	link_pipe_ends_and_redirs(t_data *data, int i)
 static void	child_process(t_data *data, int i)
 {
 	char	*path;
-	int		retval;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -122,8 +121,8 @@ static void	child_process(t_data *data, int i)
 	if ((data->arglst[i].lmt || data->arglst[i].in || data->arglst[i].out) \
 	&& data->arglst[i].args[0] == NULL)
 		(safe_quit(data, NULL, 0), exit(0));
-	if (is_built_in(data, data->arglst[i].args, &retval))
-		(safe_quit(data, NULL, 0), exit(retval));
+	if (is_built_in(data, data->arglst[i].args))
+		(safe_quit(data, NULL, 0), exit(data->exit_code));
 	path = get_command_path(data->arglst[i].args[0], data);
 	if (!path)
 		handle_path_not_found(data, &path, data->arglst[i].args);
@@ -136,12 +135,11 @@ int	executor(t_data *data)
 	pid_t	pid;
 	int		i;
 	int		status;
-	int		rv;
 
 	data->stdin_dup = dup(STDIN_FILENO);
 	data->stdout_dup = dup(STDOUT_FILENO);
-	if (data->cmd_count == 1 && is_built_in(data, data->arglst[0].args, &rv))
-		return (rv);
+	if (data->cmd_count == 1 && is_built_in(data, data->arglst[0].args))
+		return (data->exit_code);
 	signal(SIGQUIT, handle_sigquit);
 	i = -1;
 	while (++i < data->cmd_count)
