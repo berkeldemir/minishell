@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/06 12:43:05 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 14:09:16 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void	assignment_arglst(t_data *data)
 				i++;
 			while (data->args[i].token != WORD)
 				i += 2;
-			data->arglst[k].args[j] = data->args[i].s;
+			data->arglst[k].args[j] = ft_strdup(data->args[i].s);
 			//printf("k:%i\targs[%i]:%s\n", k, j, data->arglst[k].args[j]);
 			i++;
 		}

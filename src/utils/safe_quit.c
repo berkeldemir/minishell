@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_quit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 11:19:41 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 22:49:29 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/06 13:20:50 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	safe_free(void **ptr)
 {
-	if (!ptr || *ptr)
-		free(*ptr);
-	else
+	if (!ptr || !*ptr)
 		return ;
+	else
+		free(*ptr);
 	*ptr = NULL;
 }
 
@@ -45,20 +45,29 @@ void	free_env(t_data *data, t_bool free_all)
 void	free_args(t_data *data)
 {
 	int	i;
+	int	j;
 
-	i = -1;
-	while (++i < data->cmd_count)
+	if (data->arglst)
 	{
-		safe_free((void *)&data->arglst[i].args);
-		safe_free((void *)&data->arglst[i].in);
-		safe_free((void *)&data->arglst[i].out);
-		safe_free((void *)&data->arglst[i].lmt);
+		i = -1;
+		while (++i < data->cmd_count)
+		{
+			j = -1;
+			while (data->arglst[i].args[++j])
+				safe_free((void *)&data->arglst[i].args[j]);
+			safe_free((void *)&data->arglst[i].in);
+			safe_free((void *)&data->arglst[i].out);
+			safe_free((void *)&data->arglst[i].lmt);
+		}
+		safe_free((void *)&data->arglst);
 	}
-	safe_free((void *)&data->arglst);
-	i = -1;
-	while (++i < data->arg_count)
-		safe_free((void *)&data->args[i].s);
-	safe_free((void *)&data->args);
+	if (data->args)
+	{
+		i = -1;
+		while (++i < data->arg_count - 1)
+			safe_free((void *)&data->args[i].s);
+		safe_free((void *)&data->args);
+	}
 }
 
 void	safe_quit(t_data *data, char **extra, int max)

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/06 12:50:38 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:58:01 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	link_pipe_ends_and_redirs(t_data *data, int i)
 		fd = open(data->arglst[i].in, O_RDONLY);
 		if (fd < 0)
 			return (perror("open infile"), 1);
-		free(data->arglst[i].in);
 		(dup2(fd, STDIN_FILENO), close(fd));
 	}
 	else if (i > 0)
