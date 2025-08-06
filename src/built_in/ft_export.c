@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:22:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/05 23:01:25 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/06 11:58:15 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	ft_export(t_data *data, char **args)
 		if (tmp)
 		{
 			if (value)
-				free(tmp->value);
+				safe_free((void **)&tmp->value);
 			tmp->value = ft_strdup(value);
 		}
 		else

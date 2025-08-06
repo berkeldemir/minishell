@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/05 19:53:07 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 12:50:38 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static void	handle_path_not_found(t_data *data ,char **path, char **args)
 int	link_pipe_ends_and_redirs(t_data *data, int i)
 {
 	int	fd;
-	int	flags;
 
 	/*if (data->arglst[i].lmt)
 	{
@@ -99,10 +98,7 @@ int	link_pipe_ends_and_redirs(t_data *data, int i)
     	dup2(data->fds[(i - 1) * 2], STDIN_FILENO);
 	if (data->arglst[i].out)
 	{
-		flags = O_CREAT | O_WRONLY | O_TRUNC;
-		if (data->arglst[i].append == TRUE)
-			flags = O_CREAT | O_WRONLY | O_APPEND;
-		fd = open(data->arglst[i].out, flags, 0644);
+		fd = open(data->arglst[i].out, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (fd < 0)
 			return (perror("open outfile"), 1);
 		(dup2(fd, STDOUT_FILENO), close(fd));

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 20:30:12 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 12:41:44 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void handle_sigquit(int sig)
     kill(getpid(), SIGQUIT);  // Gerçekten programı sonlandır
 }
 
-static int	assign_pipes(t_data *data)
+/*static int	assign_pipes(t_data *data)
 {
 	int	i;
 
@@ -83,7 +83,7 @@ static int	assign_pipes(t_data *data)
 	i = -1;
 	while (++i < data->cmd_count - 1)
 		if (pipe(&data->fds[i * 2]) == -1)
-			(perror("pipe"), exit(EXIT_FAILURE));
+			return (perror("pipe"), 1);
 	i = -1;
 	while (++i < data->cmd_count)
 	{
@@ -95,7 +95,7 @@ static int	assign_pipes(t_data *data)
 				return (perror("open outfile"), 1);
 	}
 	return (0);
-}
+}*/
 
 void	wait_input(t_data *data)
 {
@@ -138,8 +138,8 @@ void	wait_input(t_data *data)
 			sleep(1000);*/
 			if (!data->arglst || !data->arglst[0].args || \
 			(!data->arglst[0].args[0] && (!data->arglst[0].lmt && \
-			!data->arglst[0].in && !data->arglst[0].out)) || \
-			assign_pipes(data) != 0)
+			!data->arglst[0].in && !data->arglst[0].out)))// || 
+			//assign_pipes(data) != 0)
 			{
 				write(2, "minishell: syntax error\n", 24);
 				data->exit_code = 2;

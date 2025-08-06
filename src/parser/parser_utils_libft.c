@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:41:04 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 18:10:59 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 11:59:02 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char	*ft_strdup(const char *s)
 	int		i;
 	char	*toreturn;
 
+	if (!s)
+		return (NULL);
 	i = -1;
 	toreturn = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (!toreturn)

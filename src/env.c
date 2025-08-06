@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:47:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 23:22:42 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/06 11:56:06 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ static char	*env_converter_helper(t_env *lst)
 
 	k = lst->key;
 	v = lst->value;
-	new = malloc(ft_strlen(k) + ft_strlen(v) + 2);
+	new = (char *)malloc(ft_strlen(k) + ft_strlen(v) + 2);
 	if (!new)
 		return (NULL);
 	ptr = new;
-	while (*k)
+	while (k && *k)
 		*new++ = *k++;
 	*new++ = '=';
-	while (*v)
+	while (v && *v)
 		*new++ = *v++;
 	*new = '\0';
 	return (ptr);
@@ -90,20 +90,19 @@ char	**env_converter(t_data *data)
 	lst = data->env;
 	while (lst)
 	{
-		if (lst->value != NULL)
-			size++;
+		size++;
 		lst = lst->next;
 	}
-	ret = malloc(sizeof(char *) * (size + 1));
+	ret = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!ret)
 		return (NULL);
 	lst = data->env;
 	i = 0;
-	while (lst)
+	while (i < size)
 	{
-		if (lst->value != NULL)
-			ret[i++] = env_converter_helper(lst);
+		ret[i] = env_converter_helper(lst);
 		lst = lst->next;
+		i++;
 	}
 	ret[i] = NULL;
 	return (ret);
