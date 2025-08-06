@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils.c                                     :+:      :+:    :+:   */
+/*   char_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 22:40:37 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/05 22:44:26 by tmidik           ###   ########.fr       */
+/*   Created: 2025/08/06 19:42:11 by beldemir          #+#    #+#             */
+/*   Updated: 2025/08/06 20:07:22 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
-
-int ft_strcmp(char *s1, char *s2)
+int	is_space(char c)
 {
-    int i;
-
-    i = 0;
-    while (s1[i] && s2[i] && s1[i] == s2[i])
-        i++;
-    return (s1[i] - s2[i]);
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
 }
 
-int	ft_isalpha(int i)
+int	is_alnum(char c)
+{
+	if ((c >= 'a' && c <= 'z') || \
+	(c >= 'A' && c <= 'Z') || \
+	(c >= '0' && c <= '9'))
+		return (1);
+	return (0);
+}
+
+int	is_alpha(int i)
 {
 	if (('a' <= i && i <= 'z') || ('A' <= i && i <= 'Z'))
 		return (1);
@@ -31,9 +35,10 @@ int	ft_isalpha(int i)
 
 int	is_valid_identifier(char *str)
 {
-	int	i = 0;
+	int	i;
 
-	if (!str || (!ft_isalpha(str[0]) && str[0] != '_'))
+	i = 0;
+	if (!str || (!is_alpha(str[0]) && str[0] != '_'))
 		return (0);
 	while (str[i] && str[i] != '=')
 	{

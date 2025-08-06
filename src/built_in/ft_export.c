@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:22:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/06 11:58:15 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:34:11 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,46 +102,52 @@ static char	*extract_value(char *str)
 	return (value);
 }
 
-int	ft_export(t_data *data, char **args)
+static void export_setter(t_data *data, char **args, int i)
 {
-	int	i;
-	int	status;
 	char	*key;
 	char	*value;
 	t_env	*tmp;
 
+	key = extract_key(args[i]);
+	if (ft_strchr(args[i], '='))
+		value = extract_value(args[i]);
+	else
+		value = NULL;
+	tmp = data->env;
+	while (tmp && ft_strcmp(tmp->key, key))
+		tmp = tmp->next;
+	if (tmp)
+	{
+		if (value)
+			safe_free((void **)&tmp->value);
+		tmp->value = ft_strdup(value);
+	}
+	else
+		env_add_back(&data->env, env_new(key, value));
+}
+
+int	ft_export(t_data *data, char **args)
+{
+	int	i;
+
 	i = 0;
-	status = 0;
+	if (!args[1])
+		return (export_write(data), 0);
 	while (args[++i])
 	{
 		if (!is_valid_identifier(args[i]))
 		{
-			write(2, " not a valid identifier\n", 24);
-			status = 1;
-			continue;
+			write(2, "export: not a valid identifier\n", 31);
+			data->exit_code = 1;
+			continue ;
 		}
 	}
-	if (!args[1])
-		return (export_write(data), 0);
 	i = 0;
 	while (args[++i])
 	{
-		key = extract_key(args[i]);
-		if (ft_strchr(args[i], '='))
-			value = extract_value(args[i]);
-		else
-			value = NULL;
-		tmp = data->env;
-		while (tmp && ft_strcmp(tmp->key, key))
-			tmp = tmp->next;
-		if (tmp)
-		{
-			if (value)
-				safe_free((void **)&tmp->value);
-			tmp->value = ft_strdup(value);
-		}
-		else
-			env_add_back(&data->env, env_new(key, value));
+		if (!is_valid_identifier(args[i]))
+			continue ;
+		export_setter(data, args, i);
 	}
-	return (status);
+	return (data->exit_code);
 }

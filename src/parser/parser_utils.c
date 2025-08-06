@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/05 19:09:10 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 16:27:37 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,14 @@ int	parser_syntax_checker(t_data *data)
 			//printf("\ni:%i\tnext-token:%c\n", i, data->args[i + 1].token);
 			if (i + 1 == data->arg_count || data->args[i + 1].token != WORD)
 			{
+				if (data->args[i].token == PIPE && \
+				(data->args[i + 1].token == REDIR_IN || \
+				data->args[i + 1].token == REDIR_OUT || \
+				data->args[i + 1].token == HEREDOC))
+					continue ;
 				if (data->args[i + 1].token != HEREDOC)
 				{
+					//printf("->%s\n", data->args[i].s);
 					write(2, "minishell: syntax error\n", 24);
 					data->exit_code = 2;
 					return (2);

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/06 15:04:55 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:51:46 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 static int	is_built_in(t_data *data, char **args)
 {
-	if (data->cmd_count == 1 && (!ms_ft_strcmp(args[0], "echo") || \
-	!ms_ft_strcmp(args[0], "cd") || !ms_ft_strcmp(args[0], "pwd") || \
-	!ms_ft_strcmp(args[0], "export") || !ms_ft_strcmp(args[0], "unset") || \
-	!ms_ft_strcmp(args[0], "env") || !ms_ft_strcmp(args[0], "exit")))
+	if (data->cmd_count == 1 && (!ft_strcmp(args[0], "echo") || \
+	!ft_strcmp(args[0], "cd") || !ft_strcmp(args[0], "pwd") || \
+	!ft_strcmp(args[0], "export") || !ft_strcmp(args[0], "unset") || \
+	!ft_strcmp(args[0], "env") || !ft_strcmp(args[0], "exit")))
 		if (link_pipe_ends_and_redirs(data, 0) != 0)
 			return (1);
-	if (ms_ft_strcmp(args[0], "echo")  == 0)
+	if (ft_strcmp(args[0], "echo")  == 0)
 		data->exit_code = ft_echo(data, args);
-	else if (ms_ft_strcmp(args[0], "cd")  == 0)
+	else if (ft_strcmp(args[0], "cd")  == 0)
 		data->exit_code = ft_cd(data, args);
-	else if (ms_ft_strcmp(args[0], "pwd")  == 0)
+	else if (ft_strcmp(args[0], "pwd")  == 0)
 		data->exit_code = ft_pwd(data);
-	else if (ms_ft_strcmp(args[0], "export")  == 0)
+	else if (ft_strcmp(args[0], "export")  == 0)
 		data->exit_code = ft_export(data, args);
-	else if (ms_ft_strcmp(args[0], "unset")  == 0)
-		data->exit_code = ft_unset(data, args[1], args);
-	else if (ms_ft_strcmp(args[0], "env")  == 0)
+	else if (ft_strcmp(args[0], "unset")  == 0)
+		data->exit_code = ft_unset(data, args);
+	else if (ft_strcmp(args[0], "env")  == 0)
 		data->exit_code = ft_env(data);
-	else if (ms_ft_strcmp(args[0], "exit")  == 0)
+	else if (ft_strcmp(args[0], "exit")  == 0)
 		data->exit_code = ft_exit(data, args);
 	else
-		return ((data->exit_code) = 0 & 0);
+		return (0);
 	(dup2(data->stdin_dup, STDIN_FILENO), close(data->stdin_dup));
 	return (dup2(data->stdout_dup, STDOUT_FILENO), close(data->stdout_dup), 1);
 }
@@ -127,7 +127,15 @@ static void	child_process(t_data *data, int i)
 	if (!path)
 		handle_path_not_found(data, &path, data->arglst[i].args);
 	execve(path, data->arglst[i].args, data->curr_env);
-	(free(path), perror("execve"), safe_quit(data, NULL, 0), exit(0));
+	(free(path), safe_quit(data, NULL, 0));
+	if (errno == ENOENT)
+		(write(2, "minishell: No such file or directory\n", 37), exit(127));
+	else if (errno == EISDIR)
+		(write(2, "minishell: Is a directory\n", 26), exit(126));
+	else if (errno == EACCES)
+		(write(2, "minishell: Permission denied\n", 29), exit(126));
+	else
+		(perror("minishell"), exit(1));
 }
 
 int	executor(t_data *data)
@@ -138,7 +146,8 @@ int	executor(t_data *data)
 
 	data->stdin_dup = dup(STDIN_FILENO);
 	data->stdout_dup = dup(STDOUT_FILENO);
-	if (data->cmd_count == 1 && is_built_in(data, data->arglst[0].args))
+	if (data->arglst[0].run == TRUE && data->cmd_count == 1 && \
+	is_built_in(data, data->arglst[0].args))
 		return (data->exit_code);
 	signal(SIGQUIT, handle_sigquit);
 	i = -1;
@@ -146,7 +155,12 @@ int	executor(t_data *data)
 	{
 		pid = fork();
 		if (pid == 0)
-			child_process(data, i);
+		{
+			if (data->arglst[i].run == TRUE)
+				child_process(data, i);
+			else
+				(safe_quit(data, NULL, 0), exit(1));
+		}	
 		else if (pid < 0)
 			perror("fork");
 		if (data->arglst[i].lmt)
@@ -155,9 +169,11 @@ int	executor(t_data *data)
 	i = -1;
 	while (++i < 2 * (data->cmd_count - 1))
 		close(data->fds[i]);
-	while (wait(&status) > 0)
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+    	data->exit_code = WEXITSTATUS(status);	
 	(dup2(data->stdin_dup, STDIN_FILENO), close(data->stdin_dup));
 	(dup2(data->stdout_dup, STDOUT_FILENO), close(data->stdout_dup));
 	unlink(TMPFILE);
-	return (WIFEXITED(status) ? WEXITSTATUS(status) : 1);
+	return (data->exit_code);
 }

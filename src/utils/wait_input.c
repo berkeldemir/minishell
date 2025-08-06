@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/06 14:04:48 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:46:46 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ static char	*get_display_path(char *path)
 	char	*result;
 
 	home = getenv("HOME");
-	if (home && strncmp(path, home, ms_ft_strlen(home)) == 0) // /home/beldemir
+	if (home && strncmp(path, home, ft_strlen(home)) == 0) // /home/beldemir
 	{
-		if (path[ms_ft_strlen(home)] == '\0')
+		if (path[ft_strlen(home)] == '\0')
 			return (ms_ft_strdup("~"));
-		result = ms_ft_strjoin(path + ms_ft_strlen(home), "~");
+		result = ms_ft_strjoin(path + ft_strlen(home), "~");
 		return (result);
 	}
 	return (ms_ft_strdup(path));
@@ -116,7 +116,8 @@ void	wait_input(t_data *data)
 		if (!data->input)
 		{
 			write(1, "exit\n", 5);
-			safe_quit(data, NULL, 0);
+			free_env(data, TRUE);
+			safe_free((void *)&data->program_name);
 			break ;
 		}
 		if (data->input[0] != '\0')
@@ -125,7 +126,7 @@ void	wait_input(t_data *data)
 			if (syntax_checker(data->input) != 0 || parser(data) != 0)
 				continue ;
 			//printf("-----after parser------\n");
-			arglst_generator(data); // data->args free yok.
+			//arglst_generator(data); // data->args free yok.
 			//printf("cmd_count: %i\n", data->cmd_count);
 			/*int	i = -1;
 			while (++i < data->cmd_count)
@@ -136,6 +137,7 @@ void	wait_input(t_data *data)
 					printf("[%i][%i]%s[%c]\n", i, j, data->arglst[i][j].s, data->arglst[i][j].token);
 			}
 			sleep(1000);*/
+			arglst_generator(data);
 			if (!data->arglst || !data->arglst[0].args || \
 			(!data->arglst[0].args[0] && (!data->arglst[0].lmt && \
 			!data->arglst[0].in && !data->arglst[0].out)) || \

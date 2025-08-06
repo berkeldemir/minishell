@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 11:19:41 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/06 14:39:18 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 17:29:42 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ void	safe_quit(t_data *data, char **extra, int max)
 	safe_free((void *)&data->program_name);
 	free_env(data, TRUE);
 	free_args(data);
-	safe_free((void *)&data);
+	//safe_free((void *)&data);
 }

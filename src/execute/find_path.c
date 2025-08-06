@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:46:54 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/31 18:23:43 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:56:56 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static char	*converter(char *command, char *path)
 	char	*temp;
 	char	*res_path;
 
-	temp = ms_ft_strjoin("/", path);
-	res_path = ms_ft_strjoin(command, temp);
+	temp = ft_strjoin("/", path);
+	res_path = ft_strjoin(command, temp);
 	free(temp);
 	return (res_path);
 }

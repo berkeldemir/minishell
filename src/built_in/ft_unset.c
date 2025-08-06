@@ -6,33 +6,43 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:41:23 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/05 17:57:01 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:51:38 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_unset(t_data *data, char *key, char **args)
+static void	explore_and_unset(t_data *data, char **args, int i)
 {
 	t_env	*tmp;
 	t_env	*prev;
 
-	if (!args[1])
-		return (0);
 	tmp = data->env;
 	prev = NULL;
 	while (tmp)
 	{
-		if (ms_ft_strcmp(tmp->key, key) == 0)
+		if (ft_strcmp(tmp->key, args[i]) == 0)
 		{
 			if (prev == NULL)
 				data->env = tmp->next;
 			else
 				prev->next = tmp->next;
-			return (free(tmp->key), free(tmp->value), free(tmp), 0);
+			(free(tmp->key), free(tmp->value), free(tmp));
+			break ;
 		}
 		prev = tmp;
 		tmp = tmp->next;
 	}
+}
+
+int	ft_unset(t_data *data, char **args)
+{
+	int		i;
+
+	if (!args[1])
+		return (0);
+	i = 0;
+	while (args[++i])
+		explore_and_unset(data, args, i);
 	return (0);
 }

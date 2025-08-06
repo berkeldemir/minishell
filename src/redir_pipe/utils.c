@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/06 14:27:44 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:00:17 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ static int	handle_redirs_arglst(t_data *data, int i, int k)
 		else
 			fd = open(data->arglst[k].out, O_CREAT | O_APPEND, 0644);
 		if (fd < 0)
-			return (perror("open outfile"), 1);
+		{
+			data->arglst[k].run = FALSE;
+			data->exit_code = 1;
+			return (perror("open outfile"), -1);
+		}
 		close(fd);
 	}
 	else if (data->args[i].token == REDIR_IN)
@@ -34,6 +38,13 @@ static int	handle_redirs_arglst(t_data *data, int i, int k)
 		if (data->arglst[k].in)
 			free(data->arglst[k].in);
 		data->arglst[k].in = ft_strdup(data->args[i + 1].s);
+		fd = open(data->arglst[k].in, O_RDONLY);
+		if (fd < 0)
+		{
+			data->arglst[k].run = FALSE;
+			data->exit_code = 1;
+			return (perror("open infile"), -1);
+		}
 	}
 	else if (data->args[i].token == HEREDOC)
 	{
@@ -47,29 +58,34 @@ static int	handle_redirs_arglst(t_data *data, int i, int k)
 	}
 	if (data->args[i].token == APPEND)
 		data->arglst[k].append = TRUE;
-	else
-		data->arglst[k].append = FALSE;
 	return (1);
 }
 
 static int	find_size_arglst(t_data *data, int *start, int total, int k)
 {
 	int	i;
+	int	ret;
 	int	count;
 
 	count = 0;
 	i = *start - 1;
+	ret = 0;
 	while (++i < total && data->args[i].token != PIPE)
 	{
 		if (data->args[i].token == WORD)
 			count++;
+		else if (ret != -1)
+		{
+			ret = handle_redirs_arglst(data, i, k);
+			i += 1;
+		}
 		else
-			i += handle_redirs_arglst(data, i, k);
+			i += 1;
 	}
 	return (count);
 }
 
-static void	assignment_arglst(t_data *data)
+static int	assignment_arglst(t_data *data)
 {
 	int	limit;
 	int	i;
@@ -81,6 +97,10 @@ static void	assignment_arglst(t_data *data)
 	while (++k >= 0 && ++i < data->arg_count && k < data->cmd_count)
 	{
 		limit = find_size_arglst(data, &i, data->arg_count, k);
+		if (limit < 0)
+			return (-1);
+		//if (limit < 0)
+		//	return (-1);
 		/*if (data->arglst[k].in)
 			printf("k:%i\tin:%s\n", k, data->arglst[k].in);
 		if (data->arglst[k].out)
@@ -90,14 +110,21 @@ static void	assignment_arglst(t_data *data)
 		if (data->arglst[k].append == TRUE)
 			printf("k:%i\tappend:%i\n", k, data->arglst[k].append);*/
 		data->arglst[k].args = (char **)malloc(sizeof(char *) * (limit + 1));
+		if (!data->arglst[k].args)
+			return (0);
+		if (limit == 0)
+			data->arglst[k].args[0] = NULL;
 		j = -1;
 		while (++j < limit)
 		{
-			if (data->args[i].token == PIPE)
+			if (i < data->arg_count && data->args[i].token == PIPE)
 				i++;
-			while (data->args[i].token != WORD)
+			while (i < data->arg_count && data->args[i].token != WORD)
 				i += 2;
-			data->arglst[k].args[j] = ft_strdup(data->args[i].s);
+			if (i < data->arg_count)
+				data->arglst[k].args[j] = ft_strdup(data->args[i].s);
+			else
+				data->arglst[k].args[j] = NULL;
 			//printf("k:%i\targs[%i]:%s\n", k, j, data->arglst[k].args[j]);
 			i++;
 		}
@@ -105,9 +132,10 @@ static void	assignment_arglst(t_data *data)
 			i += 2;
 		data->arglst[k].args[j] = NULL;
 	}
+	return (0);
 }
 
-void	arglst_generator(t_data *data)
+int	arglst_generator(t_data *data)
 {
 	int	i;
 
@@ -118,7 +146,7 @@ void	arglst_generator(t_data *data)
 			data->cmd_count++;
 	data->arglst = (t_arglst *)malloc(sizeof(t_arglst) * (data->cmd_count + 1));
 	if (!data)
-		return ;
+		return (-1);
 	i = -1;
 	while (++i <= data->cmd_count)
 	{
@@ -126,7 +154,10 @@ void	arglst_generator(t_data *data)
 		data->arglst[i].in = NULL;
 		data->arglst[i].out = NULL;
 		data->arglst[i].lmt = NULL;
+		data->arglst[i].run = TRUE;
 		data->arglst[i].append = FALSE;
 	}
-	assignment_arglst(data);
+	if (assignment_arglst(data) < 0)
+		return (-1);
+	return (0);
 }
