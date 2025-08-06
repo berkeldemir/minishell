@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 11:19:41 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/06 13:20:50 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/06 14:39:18 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	free_args(t_data *data)
 			j = -1;
 			while (data->arglst[i].args[++j])
 				safe_free((void *)&data->arglst[i].args[j]);
+			safe_free((void *)&data->arglst[i]);
 			safe_free((void *)&data->arglst[i].in);
 			safe_free((void *)&data->arglst[i].out);
 			safe_free((void *)&data->arglst[i].lmt);
@@ -64,7 +65,7 @@ void	free_args(t_data *data)
 	if (data->args)
 	{
 		i = -1;
-		while (++i < data->arg_count - 1)
+		while (++i < data->arg_count)
 			safe_free((void *)&data->args[i].s);
 		safe_free((void *)&data->args);
 	}
