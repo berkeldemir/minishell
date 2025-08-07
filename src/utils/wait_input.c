@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/07 20:02:33 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 22:24:46 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void	wait_input(t_data *data)
 					printf("[%i][%i]%s[%c]\n", i, j, data->arglst[i][j].s, data->arglst[i][j].token);
 			}
 			sleep(1000);*/
+			data->heredoc_fine = TRUE;
 			arglst_generator(data);
 			if (!data->arglst || !data->arglst[0].args || \
 			(!data->arglst[0].args[0] && (!data->arglst[0].lmt && \
@@ -157,7 +158,10 @@ void	wait_input(t_data *data)
 			//if (assign_pipes(data) != 0)
 			//	;
 			signal(SIGINT, handle_sigint_child);
-			exit_code(SET, executor(data));
+			//if (data->arglst[0].lmt)
+			//	printf("->%s\n", data->arglst[0].lmt);
+			if (data->heredoc_fine == TRUE)
+				exit_code(SET, executor(data));
 			free_args(data);
 			free_env(data, FALSE);
 			safe_free((void *)&data->fds);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/07 12:21:22 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 22:11:41 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static int	handle_redirs_arglst(t_data *data, int i, int k)
 		if (data->arglst[k].lmt)
 			free(data->arglst[k].lmt);
 		data->arglst[k].lmt = ft_strdup(data->args[i + 1].s);
-		launch_heredoc(data, k);
+		if (data->heredoc_fine == TRUE)
+			launch_heredoc(data, k);
 		if (data->arglst[k].in)
 			free(data->arglst[k].in);
 		data->arglst[k].in = ft_strdup(TMPFILE);
