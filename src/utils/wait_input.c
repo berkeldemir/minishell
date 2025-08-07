@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/06 19:46:46 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:24:24 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	print_prompt(t_data *data)
 void	handle_sigint_parent(int sig)
 {
 	(void)sig;
+	exit_code(SET, 130);
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -62,12 +63,14 @@ void	handle_sigint_parent(int sig)
 void	handle_sigint_child(int sig)
 {
 	(void)sig;
+	exit_code(SET, 130);
 	write(STDOUT_FILENO, "\n", 1);
 }
 
 void handle_sigquit(int sig)
 {
     (void)sig;
+	exit_code(SET, 131);
     write(1, "Quit (core dumped)\n", 19);
     signal(SIGQUIT, SIG_IGN);  // Varsayılan davranışı tekrar etkinleştir
     kill(getpid(), SIGQUIT);  // Gerçekten programı sonlandır
@@ -144,9 +147,9 @@ void	wait_input(t_data *data)
 			assign_pipes(data) != 0)
 			{
 				//write(2, "minishell: syntax error\n", 24);
-				//data->exit_code = 2;
+				//exit_code(SET, 2);
 				free_args(data);
-				data->exit_code = 1;
+				exit_code(SET, 1);
 				continue ;
 			}
 			data->curr_env = env_converter(data);
@@ -154,7 +157,7 @@ void	wait_input(t_data *data)
 			//if (assign_pipes(data) != 0)
 			//	;
 			signal(SIGINT, handle_sigint_child);
-			data->exit_code = executor(data);
+			exit_code(SET, executor(data));
 			free_args(data);
 			free_env(data, FALSE);
 			safe_free((void *)&data->fds);

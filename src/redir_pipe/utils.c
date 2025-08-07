@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/06 20:00:17 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:21:22 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	handle_redirs_arglst(t_data *data, int i, int k)
 		if (fd < 0)
 		{
 			data->arglst[k].run = FALSE;
-			data->exit_code = 1;
+			exit_code(SET, 1);
 			return (perror("open outfile"), -1);
 		}
 		close(fd);
@@ -42,7 +42,7 @@ static int	handle_redirs_arglst(t_data *data, int i, int k)
 		if (fd < 0)
 		{
 			data->arglst[k].run = FALSE;
-			data->exit_code = 1;
+			exit_code(SET, 1);
 			return (perror("open infile"), -1);
 		}
 	}

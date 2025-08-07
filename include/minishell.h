@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/06 20:21:23 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:16:17 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # define BLUE "\033[38;2;8;99;117m"
 # define ORANGE "\033[38;2;255;202;58m"
 # define DEFAULT "\033[0m"
+
+# define GET 'g'
+# define SET 's'
 
 # define WORD 'w'
 # define PIPE '|'
@@ -86,7 +89,6 @@ typedef struct s_data
 	int			arg_count;
 	char		cwd[4096];
 	int			cmd_count;
-	int			exit_code;
 	char		**curr_env;
 	t_args		*args;
 	t_arglst	*arglst;
@@ -164,5 +166,6 @@ void	*ft_calloc(int size);
 void	safe_quit(t_data *data, char **extra, int max);
 void	free_env(t_data *data, t_bool free_all);
 void	free_args(t_data *data);
+int		exit_code(char c, int value);
 
 #endif

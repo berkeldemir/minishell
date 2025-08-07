@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 15:21:16 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:31:55 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	assign_arg_helper(t_data *data, char *input, int *j)
 			if (input[i] == '0')
 				return (put_value_in_place(data, ft_strdup(data->program_name), j), ++i);
 			if (input[i] == '?')
-				return (put_value_in_place(data, ft_itoa(data->exit_code), j), ++i);
+				return (put_value_in_place(data, ft_itoa(exit_code(GET, 0)), j), ++i);
 		}
 		while (is_alnum(input[i]) || input[i] == '_')
 			i++;
@@ -85,7 +85,7 @@ static int	calc_env_var_len(t_data *data, char *input, int *len)
 		if (input[i] == '0')
 			*len += ft_strlen(data->program_name);
 		else if (input[i] == '?')
-			*len += ft_strlen(ft_itoa(data->exit_code));
+			*len += ft_strlen(ft_itoa(exit_code(GET, 0)));
 		else if (input[i] == ' ')
 			*len += 2;
 		else if (input[i] == '\0' || input[i] == data->tmps.quote)

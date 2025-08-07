@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:22:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/06 19:34:11 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:18:10 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	ft_export(t_data *data, char **args)
 		if (!is_valid_identifier(args[i]))
 		{
 			write(2, "export: not a valid identifier\n", 31);
-			data->exit_code = 1;
+			exit_code(SET, 1);
 			continue ;
 		}
 	}
@@ -149,5 +149,5 @@ int	ft_export(t_data *data, char **args)
 			continue ;
 		export_setter(data, args, i);
 	}
-	return (data->exit_code);
+	return (exit_code(GET, 0));
 }

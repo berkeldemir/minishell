@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/06 19:51:46 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:19:50 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ static int	is_built_in(t_data *data, char **args)
 		if (link_pipe_ends_and_redirs(data, 0) != 0)
 			return (1);
 	if (ft_strcmp(args[0], "echo")  == 0)
-		data->exit_code = ft_echo(data, args);
+		exit_code(SET, ft_echo(data, args));
 	else if (ft_strcmp(args[0], "cd")  == 0)
-		data->exit_code = ft_cd(data, args);
+		exit_code(SET, ft_cd(data, args));
 	else if (ft_strcmp(args[0], "pwd")  == 0)
-		data->exit_code = ft_pwd(data);
+		exit_code(SET, ft_pwd(data));
 	else if (ft_strcmp(args[0], "export")  == 0)
-		data->exit_code = ft_export(data, args);
+		exit_code(SET, ft_export(data, args));
 	else if (ft_strcmp(args[0], "unset")  == 0)
-		data->exit_code = ft_unset(data, args);
+		exit_code(SET, ft_unset(data, args));
 	else if (ft_strcmp(args[0], "env")  == 0)
-		data->exit_code = ft_env(data);
+		exit_code(SET, ft_env(data));
 	else if (ft_strcmp(args[0], "exit")  == 0)
-		data->exit_code = ft_exit(data, args);
+		exit_code(SET, ft_exit(data, args));
 	else
 		return (0);
 	(dup2(data->stdin_dup, STDIN_FILENO), close(data->stdin_dup));
@@ -122,7 +122,7 @@ static void	child_process(t_data *data, int i)
 	&& data->arglst[i].args[0] == NULL)
 		(safe_quit(data, NULL, 0), exit(0));
 	if (is_built_in(data, data->arglst[i].args))
-		(safe_quit(data, NULL, 0), exit(data->exit_code));
+		(safe_quit(data, NULL, 0), exit(exit_code(GET, 0)));
 	path = get_command_path(data->arglst[i].args[0], data);
 	if (!path)
 		handle_path_not_found(data, &path, data->arglst[i].args);
@@ -148,7 +148,7 @@ int	executor(t_data *data)
 	data->stdout_dup = dup(STDOUT_FILENO);
 	if (data->arglst[0].run == TRUE && data->cmd_count == 1 && \
 	is_built_in(data, data->arglst[0].args))
-		return (data->exit_code);
+		return (exit_code(GET, 0));
 	signal(SIGQUIT, handle_sigquit);
 	i = -1;
 	while (++i < data->cmd_count)
@@ -171,9 +171,9 @@ int	executor(t_data *data)
 		close(data->fds[i]);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-    	data->exit_code = WEXITSTATUS(status);	
+		exit_code(SET, WEXITSTATUS(status));
 	(dup2(data->stdin_dup, STDIN_FILENO), close(data->stdin_dup));
 	(dup2(data->stdout_dup, STDOUT_FILENO), close(data->stdout_dup));
 	unlink(TMPFILE);
-	return (data->exit_code);
+	return (exit_code(GET, 0));
 }

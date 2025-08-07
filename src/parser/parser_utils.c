@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/06 16:27:37 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:20:11 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	parser_syntax_checker(t_data *data)
 				{
 					//printf("->%s\n", data->args[i].s);
 					write(2, "minishell: syntax error\n", 24);
-					data->exit_code = 2;
+					exit_code(SET, 2);
 					return (2);
 				}
 			}
