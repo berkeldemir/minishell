@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/08 02:08:35 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 02:44:33 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,6 @@ static int	is_built_in(t_data *data, char **args)
 	return (dup2(data->stdout_dup, STDOUT_FILENO), close(data->stdout_dup), 1);
 }
 
-/*static char	**args_converter(t_data *data, int i)
-{
-	int j;
-	
-	j = 0;
-	while (data->arglst[i].args[j] != NULL)
-		j++;
-	char **ret = malloc(sizeof(char *) * (j + 1));
-	j = 0;
-	while (data->arglst[i].args[j] != NULL)
-	{
-		ret[j] = data->arglst[i].args[j];
-		j++;
-	}
-	ret[j] = NULL;
-	return ret;
-}*/
-
 static void	handle_path_not_found(t_data *data ,char **path, char **args)
 {
 	int	i;
@@ -84,7 +66,7 @@ int	link_pipe_ends_and_redirs(t_data *data, int i)
 	{
 		fd = open(data->arglst[i].in, O_RDONLY);
 		if (fd < 0)
-			return (perror("open infile1"), 1);
+			return (perror("open infile"), 1);
 		(dup2(fd, STDIN_FILENO), close(fd));
 	}
 	else if (i > 0)
