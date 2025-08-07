@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 12:43:58 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/05 17:16:16 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 21:37:43 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
 	//write(STDOUT_FILENO, "\n", 1);
-	exit(0);
+	safe_quit(env_data(GET, NULL), NULL, 0);
+	exit(130);
 }
 
 int	launch_heredoc(t_data *data, int i)
@@ -28,7 +29,10 @@ int	launch_heredoc(t_data *data, int i)
 	int		fd;
 	pid_t	pid;
 	char	*line;
-
+	int		status;
+	
+	env_data(SET, data);
+	
 	//if (access(TMPFILE, F_OK) == 0)
 	//	return (printf("minishell: %s already exist, remove it.", TMPFILE), 1);
 	pid = fork();
@@ -56,7 +60,12 @@ int	launch_heredoc(t_data *data, int i)
 	else
 	{
 		signal(SIGINT, handle_sigint_child);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		{
+			data->heredoc_fine = FALSE;
+			exit_code(SET, 130);
+		}
 	}
 			
 	return (0);

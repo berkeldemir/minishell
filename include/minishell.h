@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/07 12:16:17 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 21:37:30 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_data
 	int			stdout_dup;
 	char		*input;
 	int			arg_count;
+	t_bool		heredoc_fine;
 	char		cwd[4096];
 	int			cmd_count;
 	char		**curr_env;
@@ -167,5 +168,8 @@ void	safe_quit(t_data *data, char **extra, int max);
 void	free_env(t_data *data, t_bool free_all);
 void	free_args(t_data *data);
 int		exit_code(char c, int value);
+
+
+t_data	*env_data(char c, t_data *data);
 
 #endif
