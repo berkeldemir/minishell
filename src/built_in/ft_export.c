@@ -6,36 +6,31 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:22:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/07 12:18:10 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 13:48:02 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	export_write(t_data *data)
+static void	export_write(t_data *data, t_env *tmp, int i)
 {
-	t_env	*tmp;
 	t_env	**array;
-	int		size;
-	int		i;
 
-	size = 0;
-	tmp = data->env;
-	while (tmp && ++size)
+	data->tmps.len = 0;
+	while (tmp && ++data->tmps.len)
 		tmp = tmp->next;
-	array = malloc(sizeof(t_env *) * size);
+	array = malloc(sizeof(t_env *) * data->tmps.len);
 	if (!array)
 		return ;
 	tmp = data->env;
-	i = 0;
-	while (i < size)
+	while (i < data->tmps.len)
 	{
 		array[i++] = tmp;
 		tmp = tmp->next;
 	}
-	alpha_sort(array, size);
+	alpha_sort(array, data->tmps.len);
 	i = -1;
-	while (++i < size)
+	while (++i < data->tmps.len)
 	{
 		if (array[i]->value)
 			printf("declare -x %s=\"%s\"\n", array[i]->key, array[i]->value);
@@ -44,21 +39,6 @@ static void	export_write(t_data *data)
 	}
 	free(array);
 }
-
-/*static char	*export_strdup(char *s)
-{
-	int		i;
-	char	*toreturn;
-
-	i = -1;
-	toreturn = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!toreturn)
-		return (NULL);
-	while (s[++i] != '\0')
-		toreturn[i] = s[i];
-	toreturn[i] = '\0';
-	return (toreturn);
-}*/
 
 static char	*extract_key(char *str)
 {
@@ -118,9 +98,9 @@ static void export_setter(t_data *data, char **args, int i)
 		tmp = tmp->next;
 	if (tmp)
 	{
-		if (value)
-			safe_free((void **)&tmp->value);
-		tmp->value = ft_strdup(value);
+		safe_free((void **)&tmp->value);
+		tmp->value = value;
+		free(key);
 	}
 	else
 		env_add_back(&data->env, env_new(key, value));
@@ -128,11 +108,14 @@ static void export_setter(t_data *data, char **args, int i)
 
 int	ft_export(t_data *data, char **args)
 {
-	int	i;
+	int		i;
+	t_env	*tmp;
 
-	i = 0;
+	exit_code(SET, 0);
+	tmp = data->env;
 	if (!args[1])
-		return (export_write(data), 0);
+		return (export_write(data, tmp, 0), 0);
+	i = 0;
 	while (args[++i])
 	{
 		if (!is_valid_identifier(args[i]))
