@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/07 22:08:54 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/08 02:07:05 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,6 @@ static int	init_program(t_data *data, int ac, char **av, char **envp)
 	}
 	return (0);
 }
-
-/*static int	parser_tester(t_data *data)
-{
-	int	i;
-	t_env	*ptr;
-
-	ptr = *data->env;
-	while (ptr)
-	{
-		printf("%s = %s\n", ptr->key, ptr->value);
-		ptr = ptr->next;
-	}
-	printf("-----------------------");
-	char	**e = env_converter(data);
-	i = -1;
-	while (e[++i])
-		printf("%s\n", e[i]);
-	printf("%s%s@:%s deneme\n%s", GREEN, getenv("USER"), ORANGE, DEFAULT);
-	data->input = readline("\033[38;2;8;99;117m>₺ \033[0m");
-	if (!data->input)
-		return (0);
-	parser(data);
-	i = -1;
-	while (++i < data->arg_count)
-		printf("%s$\n", data->args[i].s);
-	free(data->input);
-	return (0);
-}*/
 
 int	main(int ac, char **av, char **envp)
 {

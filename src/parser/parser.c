@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/07 22:24:24 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/08 02:09:00 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	assign_arg_helper(t_data *data, char *in, int *j)
 			return (i);
 		return (put_inplace(data, ft_strdup(val), j), i);
 	}
-	//printf("%i:%i\n", data->tmps.arg_i, *j);
 	data->args[data->tmps.arg_i].s[*j] = *in;
 	return (++(*j), 1);
 }

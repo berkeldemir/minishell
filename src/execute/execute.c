@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/07 22:49:56 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/08 02:08:35 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,8 @@ static int	is_built_in(t_data *data, char **args)
 	!ft_strcmp(args[0], "cd") || !ft_strcmp(args[0], "pwd") || \
 	!ft_strcmp(args[0], "export") || !ft_strcmp(args[0], "unset") || \
 	!ft_strcmp(args[0], "env") || !ft_strcmp(args[0], "exit")))
-	{
-		printf("girdi\n");
-		printf("->%s\n", data->arglst[0].in);
 		if (link_pipe_ends_and_redirs(data, 0) != 0)
 			return (1);
-	}
 	if (ft_strcmp(args[0], "echo") == 0)
 		exit_code(SET, ft_echo(data, args));
 	else if (ft_strcmp(args[0], "cd") == 0)
@@ -84,19 +80,11 @@ int	link_pipe_ends_and_redirs(t_data *data, int i)
 {
 	int	fd;
 
-	/*if (data->arglst[i].lmt)
-	{
-		launch_heredoc(data, i);
-		data->arglst[i].in = TMPFILE;
-	}*/
-	printf("tekrar: %s\n", data->arglst[i].in);
 	if (data->arglst[i].in)
 	{
-		//printf("%s dosya aciliyor.\n", data->arglst[i].in);
 		fd = open(data->arglst[i].in, O_RDONLY);
 		if (fd < 0)
-			return (perror("open infile1"), 1);//printf("%s dosya acilamadi.\n", data->arglst[i].in), 1);
-		//printf("%s dosya acildi.\n", data->arglst[i].in);
+			return (perror("open infile1"), 1);
 		(dup2(fd, STDIN_FILENO), close(fd));
 	}
 	else if (i > 0)
@@ -122,7 +110,6 @@ static void	child_process(t_data *data, int i)
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	printf("?????%s\n", data->arglst[i].in);
 	if (link_pipe_ends_and_redirs(data, i) != 0)
 		(safe_quit(data, NULL, 0), exit(1));
 	if ((data->arglst[i].lmt || data->arglst[i].in || data->arglst[i].out) \
@@ -153,14 +140,9 @@ int	executor(t_data *data)
 
 	data->stdin_dup = dup(STDIN_FILENO);
 	data->stdout_dup = dup(STDOUT_FILENO);
-	printf("a%i\n", data->cmd_count);
-	printf("b%i, %s\n", data->arglst[0].run, data->arglst[0].args[0]);
 	if (data->arglst[0].run == TRUE && data->cmd_count == 1 && \
 	is_built_in(data, data->arglst[0].args))
-	{
-		printf("burda\n");
 		return (exit_code(GET, 0));
-	}
 	signal(SIGQUIT, handle_sigquit);
 	i = -1;
 	while (++i < data->cmd_count)

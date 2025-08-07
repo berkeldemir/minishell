@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/08 01:50:52 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 02:20:08 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ static char	*get_display_path(char *path)
 static void	print_prompt(t_data *data)
 {
 	data->input = readline("\033[38;2;175;252;65mMINISHELL>₺ \033[0m");
-	//printf("%s\n", getcwd(NULL, 0));
-	//printf("%s\n", data->input);
 }
 
 void	handle_sigint_parent(int sig)
@@ -71,7 +69,7 @@ void handle_sigquit(int sig)
 {
     (void)sig;
 	exit_code(SET, 131);
-    write(1, "Quit (core dumped)\n", 19);
+    write(2, "Quit (core dumped)\n", 19);
     signal(SIGQUIT, SIG_IGN);  // Varsayılan davranışı tekrar etkinleştir
     kill(getpid(), SIGQUIT);  // Gerçekten programı sonlandır
 }
@@ -111,11 +109,6 @@ void	wait_input(t_data *data)
 		if (getcwd(path, sizeof(path)) == NULL)
 			return ;
 		print_prompt(data);
-		//if (g_signal_received)
-		//{
-		//    g_signal_received = 0;  // Flag'i sıfırla
-		//	continue;  // Prompt'u yeniden göster
-		//}
 		if (!data->input)
 		{
 			write(1, "exit\n", 5);
@@ -131,18 +124,6 @@ void	wait_input(t_data *data)
 				free_args(data);	
 				continue ;
 			}
-			//printf("-----after parser------\n");
-			//arglst_generator(data); // data->args free yok.
-			//printf("cmd_count: %i\n", data->cmd_count);
-			/*int	i = -1;
-			while (++i < data->cmd_count)
-			{
-				printf("%i\n", i);
-				int	j = -1;
-				while (data->arglst[i][++j].s != NULL)
-					printf("[%i][%i]%s[%c]\n", i, j, data->arglst[i][j].s, data->arglst[i][j].token);
-			}
-			sleep(1000);*/
 			data->heredoc_fine = TRUE;
 			arglst_generator(data);
 			if (!data->arglst || !data->arglst[0].args || \
@@ -150,19 +131,12 @@ void	wait_input(t_data *data)
 			!data->arglst[0].in && !data->arglst[0].out)) || \
 			assign_pipes(data) != 0)
 			{
-				//write(2, "minishell: syntax error\n", 24);
-				//exit_code(SET, 2);
 				free_args(data);
 				exit_code(SET, 1);
 				continue ;
 			}
 			data->curr_env = env_converter(data);
-			//printf("cmdcnt: %i\n", data->cmd_count);
-			//if (assign_pipes(data) != 0)
-			//	;
 			signal(SIGINT, handle_sigint_child);
-			//if (data->arglst[0].lmt)
-			//	printf("->%s\n", data->arglst[0].lmt);
 			if (data->heredoc_fine == TRUE)
 				exit_code(SET, executor(data));
 			free_args(data);

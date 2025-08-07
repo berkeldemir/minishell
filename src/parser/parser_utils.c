@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/08 01:55:44 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 02:34:12 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,16 @@ int	parser_syntax_checker(t_data *data)
 	{
 		if (data->args[i].s && data->args[i].token != WORD)
 		{
-			if (i + 1 <= data->arg_count || data->args[i + 1].token != WORD)
+			if ((i + 1 == data->arg_count && data->args[i].token != WORD) || \
+			(i + 1 < data->arg_count && data->args[i + 1].token != WORD))
 			{
-				if (data->args[i].token == PIPE && \
-				(data->args[i + 1].token == REDIR_IN || \
-				data->args[i + 1].token == REDIR_OUT || \
-				data->args[i + 1].token == HEREDOC))
+				if (data->args[i].token == PIPE && i + 1 < data->arg_count \
+				&& (data->args[i + 1].s && data->args[i + 1].token != PIPE))
 					continue ;
-				if (data->args[i + 1].token != HEREDOC)
+				else
 				{
 					write(2, "minishell: syntax error\n", 24);
-					exit_code(SET, 2);
-					return (2);
+					return (exit_code(SET, 2), 2);
 				}
 			}
 		}
@@ -109,7 +107,7 @@ int	syntax_checker(char *input)
 			while (input[i] && input[i] != quote)
 				i++;
 			if (!input[i])
-				return (printf("minishell: unclosed quote\n"), 1);
+				return (write(2, "minishell: unclosed quote\n", 26), 1);
 		}
 		i++;
 	}
