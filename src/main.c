@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/07 12:16:13 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 20:02:22 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	init_program(t_data *data, int ac, char **av, char **envp)
 
 	if (ac != 1)
 		return (1);
-	data->program_name = ft_strdup(av[0]);
+	data->name = ft_strdup(av[0]);
 	data->env = NULL;
 	data->args = NULL;
 	data->input = NULL;

@@ -6,20 +6,13 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/07 12:20:11 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 21:50:38 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	is_quote(char c)
-{
-	if (c == '\'' || c == '\"')
-		return (1);
-	return (0);
-}
-
-int	put_value_in_place(t_data *data, char *str, int *j)
+int	put_inplace(t_data *data, char *str, int *j)
 {
 	int	i;
 
@@ -82,7 +75,6 @@ int	parser_syntax_checker(t_data *data)
 	{
 		if (data->args[i].s && data->args[i].token != WORD)
 		{
-			//printf("\ni:%i\tnext-token:%c\n", i, data->args[i + 1].token);
 			if (i + 1 == data->arg_count || data->args[i + 1].token != WORD)
 			{
 				if (data->args[i].token == PIPE && \
@@ -92,7 +84,6 @@ int	parser_syntax_checker(t_data *data)
 					continue ;
 				if (data->args[i + 1].token != HEREDOC)
 				{
-					//printf("->%s\n", data->args[i].s);
 					write(2, "minishell: syntax error\n", 24);
 					exit_code(SET, 2);
 					return (2);
@@ -124,14 +115,3 @@ int	syntax_checker(char *input)
 	}
 	return (0);
 }
-
-/*
-int main(void)
-{
-	t_data *data;
-	
-	printf("count: %d\n", count_args("  'A\"B'C\"D E\"'F'  \
-	'G\"'H\"I'J  K\"L'M  N\"O'P  ", NULL));
-	return (0);
-}
-*/

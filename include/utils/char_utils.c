@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 19:42:11 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/06 20:07:22 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 21:50:45 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ int	is_alnum(char c)
 int	is_alpha(int i)
 {
 	if (('a' <= i && i <= 'z') || ('A' <= i && i <= 'Z'))
+		return (1);
+	return (0);
+}
+
+int	is_quote(char c)
+{
+	if (c == '\'' || c == '\"')
 		return (1);
 	return (0);
 }

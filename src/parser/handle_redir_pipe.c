@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 12:34:14 by beldemir          #+#    #+#             */
-/*   Updated: 2025/06/27 19:38:04 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 21:50:59 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,14 @@ int	assign_handle_redir_pipe(t_data *data, char *input, int *i, int *j)
 		return (1);
 	}
 	return (0);
+}
+
+int	safe_strlen(char *str)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (str)
+		free(str);
+	return (len);
 }

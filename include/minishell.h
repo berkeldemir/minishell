@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/07 12:16:17 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 21:49:55 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	char		*program_name;
+	char		*name;
 	int			*fds;
 	int			stdin_dup;
 	int			stdout_dup;
@@ -104,7 +104,7 @@ int		count_handle_redir_pipe(char *input, int *count);
 int		calc_handle_redir_pipe(char *input, int *len, int *i);
 int		assign_handle_redir_pipe(t_data *data, char *input, int *i, int *j);
 char	*get_env_val(t_data *data, char *key);
-int		put_value_in_place(t_data *data, char *str, int *j);
+int		put_inplace(t_data *data, char *str, int *j);
 int		is_redir_pipe(char c);
 int		is_srp(char c);
 
@@ -167,5 +167,6 @@ void	safe_quit(t_data *data, char **extra, int max);
 void	free_env(t_data *data, t_bool free_all);
 void	free_args(t_data *data);
 int		exit_code(char c, int value);
+int		safe_strlen(char *str);
 
 #endif

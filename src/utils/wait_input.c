@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/07 12:24:24 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 20:02:33 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	wait_input(t_data *data)
 		{
 			write(1, "exit\n", 5);
 			free_env(data, TRUE);
-			safe_free((void *)&data->program_name);
+			safe_free((void *)&data->name);
 			break ;
 		}
 		if (data->input[0] != '\0')
