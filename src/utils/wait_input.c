@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/07 22:24:46 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/08 01:50:52 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,10 @@ void	wait_input(t_data *data)
 		{
 			add_history(data->input);
 			if (syntax_checker(data->input) != 0 || parser(data) != 0)
+			{
+				free_args(data);	
 				continue ;
+			}
 			//printf("-----after parser------\n");
 			//arglst_generator(data); // data->args free yok.
 			//printf("cmd_count: %i\n", data->cmd_count);

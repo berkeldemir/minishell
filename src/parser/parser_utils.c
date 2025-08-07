@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/07 21:50:38 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 01:55:44 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	parser_syntax_checker(t_data *data)
 	{
 		if (data->args[i].s && data->args[i].token != WORD)
 		{
-			if (i + 1 == data->arg_count || data->args[i + 1].token != WORD)
+			if (i + 1 <= data->arg_count || data->args[i + 1].token != WORD)
 			{
 				if (data->args[i].token == PIPE && \
 				(data->args[i + 1].token == REDIR_IN || \
