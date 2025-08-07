@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/07 12:19:50 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 13:59:34 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,26 @@
 
 static int	is_built_in(t_data *data, char **args)
 {
+	exit_code(SET, 0);
 	if (data->cmd_count == 1 && (!ft_strcmp(args[0], "echo") || \
 	!ft_strcmp(args[0], "cd") || !ft_strcmp(args[0], "pwd") || \
 	!ft_strcmp(args[0], "export") || !ft_strcmp(args[0], "unset") || \
 	!ft_strcmp(args[0], "env") || !ft_strcmp(args[0], "exit")))
 		if (link_pipe_ends_and_redirs(data, 0) != 0)
 			return (1);
-	if (ft_strcmp(args[0], "echo")  == 0)
+	if (ft_strcmp(args[0], "echo") == 0)
 		exit_code(SET, ft_echo(data, args));
-	else if (ft_strcmp(args[0], "cd")  == 0)
+	else if (ft_strcmp(args[0], "cd") == 0)
 		exit_code(SET, ft_cd(data, args));
-	else if (ft_strcmp(args[0], "pwd")  == 0)
+	else if (ft_strcmp(args[0], "pwd") == 0)
 		exit_code(SET, ft_pwd(data));
-	else if (ft_strcmp(args[0], "export")  == 0)
+	else if (ft_strcmp(args[0], "export") == 0)
 		exit_code(SET, ft_export(data, args));
-	else if (ft_strcmp(args[0], "unset")  == 0)
+	else if (ft_strcmp(args[0], "unset") == 0)
 		exit_code(SET, ft_unset(data, args));
 	else if (ft_strcmp(args[0], "env")  == 0)
 		exit_code(SET, ft_env(data));
-	else if (ft_strcmp(args[0], "exit")  == 0)
+	else if (ft_strcmp(args[0], "exit") == 0)
 		exit_code(SET, ft_exit(data, args));
 	else
 		return (0);

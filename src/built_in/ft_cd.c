@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:20:44 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/06 19:38:36 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 14:12:21 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_cd(t_data *data, char **args)
 	else if (!args[2])
 		path = args[1];
 	else
-		return (write(2, "cd: too many arguments\n", 20), free(oldpwd), 1);
+		return (write(2, "cd: too many arguments\n", 23), free(oldpwd), 1);
 	if (chdir(path) != 0)
 		return (perror("cd"), free(oldpwd), 1);
 	if (!getcwd(data->cwd, sizeof(data->cwd)))
