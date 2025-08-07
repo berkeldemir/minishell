@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:25:07 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/05 18:15:03 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/07 14:28:06 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ int	ft_exit(t_data *data, char **args)
 	if (args[1])
 	{
 		if (args[2])
-			return (write(STDERR_FILENO, " too many arguments\n", 19), 1);
+			return (write(STDERR_FILENO, "exit: too many arguments\n", 25), 1);
 		if (ft_atoi(args[1], (long *)&retval) == -2)
-			return (write(STDERR_FILENO, " numeric argument required\n", 26), 2);
-		if (data->cmd_count != 1)
-			safe_quit(data, NULL, 0);
+			return \
+			(write(STDERR_FILENO, "exit: numeric argument required\n", 32), 2);
 		write(STDOUT_FILENO, "exit\n", 5);
 		safe_quit(data, NULL, 0);
 		exit(retval % 256);
