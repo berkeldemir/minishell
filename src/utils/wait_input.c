@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:19:42 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/08 02:20:08 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 09:40:56 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,17 @@ static char	*get_display_path(char *path)
 	return (ms_ft_strdup(path));
 } */
 
-static void	print_prompt(t_data *data)
+static int	print_prompt(t_data *data)
 {
 	data->input = readline("\033[38;2;175;252;65mMINISHELL>₺ \033[0m");
+	if (!data->input)
+	{
+		write(1, "exit\n", 5);
+		free_env(data, TRUE);
+		safe_free((void *)&data->name);
+		return (1);
+	}
+	return (0);
 }
 
 void	handle_sigint_parent(int sig)
@@ -104,18 +112,11 @@ void	wait_input(t_data *data)
 	
 	while (1)
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, handle_sigint_parent);
+		(signal(SIGQUIT, SIG_IGN), signal(SIGINT, handle_sigint_parent));
 		if (getcwd(path, sizeof(path)) == NULL)
 			return ;
-		print_prompt(data);
-		if (!data->input)
-		{
-			write(1, "exit\n", 5);
-			free_env(data, TRUE);
-			safe_free((void *)&data->name);
+		if (print_prompt(data) != 0)
 			break ;
-		}
 		if (data->input[0] != '\0')
 		{
 			add_history(data->input);
@@ -124,23 +125,19 @@ void	wait_input(t_data *data)
 				free_args(data);	
 				continue ;
 			}
-			data->heredoc_fine = TRUE;
 			arglst_generator(data);
 			if (!data->arglst || !data->arglst[0].args || \
 			(!data->arglst[0].args[0] && (!data->arglst[0].lmt && \
 			!data->arglst[0].in && !data->arglst[0].out)) || \
 			assign_pipes(data) != 0)
 			{
-				free_args(data);
-				exit_code(SET, 1);
+				(free_args(data), exit_code(SET, 1));
 				continue ;
 			}
 			data->curr_env = env_converter(data);
-			signal(SIGINT, handle_sigint_child);
 			if (data->heredoc_fine == TRUE)
 				exit_code(SET, executor(data));
-			free_args(data);
-			free_env(data, FALSE);
+			(free_args(data), free_env(data, FALSE));
 			safe_free((void *)&data->fds);
 		}
 		free(data->input);

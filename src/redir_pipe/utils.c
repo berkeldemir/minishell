@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/08 02:09:27 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 09:36:23 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int	arglst_generator(t_data *data)
 
 	i = 0;
 	data->cmd_count = 1;
+	data->heredoc_fine = TRUE;
 	while (++i < data->arg_count)
 		if (data->args[i].token == PIPE)
 			data->cmd_count++;

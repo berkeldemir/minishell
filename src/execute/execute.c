@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/08 02:44:33 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 09:32:02 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int	executor(t_data *data)
 
 	data->stdin_dup = dup(STDIN_FILENO);
 	data->stdout_dup = dup(STDOUT_FILENO);
+	signal(SIGINT, handle_sigint_child);
 	if (data->arglst[0].run == TRUE && data->cmd_count == 1 && \
 	is_built_in(data, data->arglst[0].args))
 		return (exit_code(GET, 0));
