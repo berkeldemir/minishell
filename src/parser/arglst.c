@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arglst.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 19:38:40 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/08 12:21:44 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/08 12:51:52 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ static int	find_size_arglst(t_data *data, int *start, int total, int k)
 	return (count);
 }
 
-static void	assigning(t_data *data, int i, int k, int j)
+static void	assigning(t_data *data, int *i, int k, int j)
 {
-	if (i < data->arg_count && data->args[i].token == PIPE)
-		i++;
-	while (i < data->arg_count && data->args[i].token != WORD)
-		i += 2;
-	if (i < data->arg_count)
-		data->arglst[k].args[j] = ft_strdup(data->args[i].s);
+	if (*i < data->arg_count && data->args[*i].token == PIPE)
+		(*i)++;
+	while (*i < data->arg_count && data->args[*i].token != WORD)
+		*i += 2;
+	if (*i < data->arg_count)
+		data->arglst[k].args[j] = ft_strdup(data->args[*i].s);
 	else
 		data->arglst[k].args[j] = NULL;
-	i++;
+	(*i)++;
 }
 
 int	assignment_arglst(t_data *data)
@@ -70,7 +70,7 @@ int	assignment_arglst(t_data *data)
 			data->arglst[k].args[0] = NULL;
 		j = -1;
 		while (++j < limit)
-			assigning(data, i, k, j);
+			assigning(data, &i, k, j);
 		while (i < data->arg_count && data->args[i].token != PIPE)
 			i += 2;
 		data->arglst[k].args[j] = NULL;
