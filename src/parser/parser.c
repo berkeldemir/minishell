@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/08 11:56:46 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 14:03:29 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	calc_env_var_len(t_data *data, char *in, int *len, int quote)
 		return (1);
 	}
 	if (!is_alnum(in[i]) && in[i] != '_')
-		return (((*len) += 2), 1);
+		return (((*len) += 2), 0);
 	while (is_alnum(in[i]) || in[i] == '_')
 		i++;
 	val = get_env_val(data, ft_substr(&in[0], 0, i));

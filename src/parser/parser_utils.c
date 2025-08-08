@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/08 13:42:34 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 13:54:20 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	count_args(char *inp, t_data *data)
 
 	i = 0;
 	count = 0;
-	while (inp[i])
+	while (i < ft_strlen(inp))
 	{
 		data->tmps.quote = inp[i];
 		if (is_quote(data->tmps.quote) && ++i)
