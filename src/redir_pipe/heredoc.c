@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 12:43:58 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/08 01:23:38 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 12:28:06 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 
 /// @brief it will create a file called heredoc_tmp.txt and send it as a input.
 /// @param data : data structure which is used everywhere.
-
-static void	handle_sig_heredoc(int sig)
-{
-	(void)sig;
-	write(STDOUT_FILENO, "\n", 1);
-	safe_quit(env_data(GET, NULL), NULL, 0);
-	exit(130);
-}
 
 static void	heredoc_child(t_data *data, int fd, int i, char *line)
 {

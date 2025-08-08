@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:56:21 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/08 12:21:53 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/08 12:37:46 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,4 @@ int		exit_code(char c, int value);
 int		safe_strlen(char *str);
 
 t_data	*env_data(char c, t_data *data);
-
-int		handle_redirs_arglst(t_data *data, int i, int k);
-int		assignment_arglst(t_data *data);
-
 #endif
