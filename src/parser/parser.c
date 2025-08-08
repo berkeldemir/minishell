@@ -6,18 +6,19 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:18:36 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/08 02:09:00 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 11:56:46 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	assign_arg_helper(t_data *data, char *in, int *j)
+static int	assign_arg_helper(t_data *data, char *in, int *j, int flag)
 {
 	int		i;
 	char	*val;
 
-	if (in[0] == '$' && data->tmps.quote != '\'')
+	if (in[0] == '$' && ((flag == 1 && data->tmps.quote != '\'') || \
+	flag == 0))
 	{
 		i = 1;
 		if (in[i] == ' ' || !in[i] || in[i] == data->tmps.quote)
@@ -55,27 +56,27 @@ static void	assign_arg(t_data *data, char *in)
 		data->tmps.quote = in[i];
 		if (is_quote(data->tmps.quote) && ++i)
 			while (in[i] && in[i] != data->tmps.quote)
-				i += assign_arg_helper(data, &in[i], &j);
+				i += assign_arg_helper(data, &in[i], &j, 1);
 		if (is_quote(in[i]) && is_srp(in[++i]))
 			break ;
 		if (assign_handle_redir_pipe(data, &in[i], &i, &j))
 			break ;
 		if (in[i] && !is_quote(in[i]) && !is_redir_pipe(in[i]))
 			while (i < ft_strlen(in) && !is_srp(in[i]) && !is_quote(in[i]))
-				i += assign_arg_helper(data, &in[i], &j);
+				i += assign_arg_helper(data, &in[i], &j, 0);
 		if (in[i] && is_srp(in[i]))
 			break ;
 	}
 	data->args[data->tmps.arg_i].s[j] = '\0';
 }
 
-static int	calc_env_var_len(t_data *data, char *in, int *len)
+static int	calc_env_var_len(t_data *data, char *in, int *len, int quote)
 {
 	int		i;
 	char	*val;
 
 	i = 0;
-	if (data->tmps.quote == '\'')
+	if (quote == 1 && data->tmps.quote == '\'')
 		return (++(*len), 0);
 	if ((in[i] <= '9' && in[i] >= '0') || in[i] == '?' || in[i] == ' ' \
 	|| in[i] == '\0' || (in[i] == data->tmps.quote && in[i] == '\"'))
@@ -105,21 +106,21 @@ static int	calc_arg_len(t_data *data, char *in)
 
 	i = 0;
 	len = 0;
-	while (i < (int)ft_strlen(in))
+	while (i < ft_strlen(in))
 	{
 		data->tmps.quote = in[i];
 		if (is_quote(data->tmps.quote))
-			while (i < ft_strlen(in) && in[i] != data->tmps.quote && ++len)
-				if (in[i] == '$' && in[i + 1] && len-- && ++i)
-					i += calc_env_var_len(data, &in[i], &len);
-		if (is_quote(in[i]) && (is_srp(in[++i])))
+			while (++i <= ft_strlen(in) && in[i] != data->tmps.quote && ++len)
+				if (in[i - 1] == '$' && len--)
+					i += calc_env_var_len(data, &in[i], &len, 1);
+		if (is_quote(in[i]) && (i == ft_strlen(in) || (is_srp(in[++i]))))
 			break ;
 		if (calc_handle_redir_pipe(&in[i], &len, &i))
 			break ;
 		if (in[i] && !is_quote(in[i]) && !is_redir_pipe(in[i]))
 			while (i <= ft_strlen(in) && !is_srp(in[i]) && !is_quote(in[i]))
 				if (++len && ++i && in[i - 1] == '$' && len--)
-					i += calc_env_var_len(data, &in[i], &len) + 1;
+					i += calc_env_var_len(data, &in[i], &len, 0) + 1;
 		if (i <= ft_strlen(in) && is_srp(in[i]))
 			break ;
 	}
