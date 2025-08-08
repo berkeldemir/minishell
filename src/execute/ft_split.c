@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:51:40 by tmidik            #+#    #+#             */
-/*   Updated: 2025/07/31 13:09:31 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 13:30:33 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**ft_split(char *s, char c)
 	size_t	i;
 	size_t	len;
 
-	if (!s)
+	if (!s || !s[0])
 		return (NULL);
 	words = malloc(sizeof(char *) * (s_count_words(s, c) + 1));
 	if (!words)

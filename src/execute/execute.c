@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
+/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:44:26 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/08 12:18:42 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/08 13:39:27 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	handle_path_not_found(t_data *data, char **path, char **args)
 		}
 		i++;
 	}
-	(free(*path), safe_quit(data, NULL, 0), \
+	(safe_free((void *)path), safe_quit(data, NULL, 0), \
 	write(2, "minishell: command not found\n", 29), exit(127));
 }
 

@@ -6,7 +6,7 @@
 /*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:17:43 by tmidik            #+#    #+#             */
-/*   Updated: 2025/08/08 02:34:12 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 13:42:34 by beldemir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	count_args(char *inp, t_data *data)
 		if (is_quote(data->tmps.quote) && ++i)
 			while (inp[i] && inp[i] != data->tmps.quote)
 				i++;
-		if (is_quote(inp[i]) && is_srp(inp[++i]) && ++count)
+		if (is_quote(inp[i]) && inp[i] == data->tmps.quote && \
+		is_srp(inp[++i]) && ++count)
 			while (is_space(inp[i]))
 				i++;
 		i += count_args_helper(&inp[i], &count);
@@ -70,6 +71,9 @@ int	parser_syntax_checker(t_data *data)
 {
 	int	i;
 
+	data->args[data->tmps.arg_i].s = NULL;
+	data->args[data->tmps.arg_i].index = 0;
+	data->args[data->tmps.arg_i].token = WORD;
 	i = -1;
 	while (++i < data->arg_count)
 	{
