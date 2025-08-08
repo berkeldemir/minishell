@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 12:07:00 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/08 12:28:23 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 12:40:13 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,12 @@ void	handle_sigint_child(int sig)
 
 void	handle_sigquit(int sig)
 {
-    (void)sig;
+	(void)sig;
 	exit_code(SET, 131);
-    write(2, "Quit (core dumped)\n", 19);
-    signal(SIGQUIT, SIG_IGN);
-    kill(getpid(), SIGQUIT);
+	write(2, "Quit (core dumped)\n", 19);
+	signal(SIGQUIT, SIG_IGN);
+	kill(getpid(), SIGQUIT);
 }
-
 
 void	handle_sig_heredoc(int sig)
 {
