@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 20:03:53 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/06 20:07:00 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 11:13:55 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		new[i++] = s[start++];
 	new[i] = '\0';
 	return (new);
+}
+
+int	safe_strlen(char *str)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (str)
+		free(str);
+	return (len);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beldemir <beldemir@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:57:15 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/08 02:07:05 by beldemir         ###   ########.fr       */
+/*   Updated: 2025/08/08 10:41:24 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,6 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 1)
 		return (1);
-	//data = (t_data *)ft_calloc(sizeof(t_data));
-	//if (!data)
-	//	return (1);
 	init_program(&data, ac, av, envp);
 	wait_input(&data);
 }

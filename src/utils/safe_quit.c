@@ -6,7 +6,7 @@
 /*   By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 11:19:41 by beldemir          #+#    #+#             */
-/*   Updated: 2025/08/07 22:18:22 by tmidik           ###   ########.fr       */
+/*   Updated: 2025/08/08 11:27:13 by tmidik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	safe_free(void **ptr)
 
 void	free_env(t_data *data, t_bool free_all)
 {
-	int	i;
-	t_env *tmp;
+	int		i;
+	t_env	*tmp;
 
 	while (free_all == TRUE && data->env)
 	{
@@ -42,28 +42,34 @@ void	free_env(t_data *data, t_bool free_all)
 	safe_free((void *)&data->curr_env);
 }
 
+static void	free_arglst(t_data *data, int i)
+{
+	int	j;
+
+	while (++i < data->cmd_count)
+	{
+		j = -1;
+		if (data->arglst[i].args)
+		{
+			while (data->arglst[i].args[++j])
+				safe_free((void *)&data->arglst[i].args[j]);
+			safe_free((void *)&data->arglst[i].args);
+		}
+		safe_free((void *)&data->arglst[i].in);
+		safe_free((void *)&data->arglst[i].out);
+		safe_free((void *)&data->arglst[i].lmt);
+	}
+	safe_free((void *)&data->arglst);
+}
+
 void	free_args(t_data *data)
 {
 	int	i;
-	int	j;
 
 	if (data->arglst)
 	{
 		i = -1;
-		while (++i < data->cmd_count)
-		{
-			j = -1;
-			if (data->arglst[i].args)
-			{
-				while (data->arglst[i].args[++j])
-					safe_free((void *)&data->arglst[i].args[j]);
-				safe_free((void *)&data->arglst[i].args);
-			}
-			safe_free((void *)&data->arglst[i].in);
-			safe_free((void *)&data->arglst[i].out);
-			safe_free((void *)&data->arglst[i].lmt);
-		}
-		safe_free((void *)&data->arglst);
+		free_arglst(data, i);
 	}
 	if (data->args)
 	{
@@ -73,7 +79,6 @@ void	free_args(t_data *data)
 		safe_free((void *)&data->args);
 	}
 }
-
 
 void	safe_quit(t_data *data, char **extra, int max)
 {
@@ -87,5 +92,4 @@ void	safe_quit(t_data *data, char **extra, int max)
 	safe_free((void *)&data->name);
 	free_env(data, TRUE);
 	free_args(data);
-	//safe_free((void *)&data);
 }

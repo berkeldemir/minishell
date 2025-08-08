@@ -6,7 +6,7 @@
 #    By: tmidik <tibetmdk@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/06 11:29:21 by beldemir          #+#    #+#              #
-#    Updated: 2025/08/07 21:26:56 by tmidik           ###   ########.fr        #
+#    Updated: 2025/08/08 12:13:32 by tmidik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ SRCS =	src/main.c src/utils/wait_input.c src/utils/alpha_sort.c src/env.c \
 	src/execute/find_path.c src/execute/ft_split.c \
 	src/built_in/ft_echo.c src/built_in/ft_cd.c src/built_in/ft_pwd.c src/built_in/ft_exit.c \
 	src/built_in/ft_env.c src/built_in/ft_export.c src/built_in/ft_unset.c \
-	src/redir_pipe/utils.c src/redir_pipe/heredoc.c src/utils/safe_quit.c \
+	src/redir_pipe/heredoc.c src/utils/safe_quit.c src/parser/arglst.c src/parser/arglst_utils.c\
 	include/utils/char_utils.c include/utils/str_utils1.c include/utils/str_utils2.c include/utils/ft_itoa.c \
-	src/signal.c src/redir_pipe/env_data.c \
+	src/signal.c src/redir_pipe/env_data.c src/redir_pipe/link_pipe_redirs.c\
 
 OBJS = $(SRCS:.c=.o)
 
